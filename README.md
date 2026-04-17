@@ -72,8 +72,19 @@
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1920');
             background-size: cover; background-position: center;
         }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; margin-bottom: 10px; }
         .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 300; }
+
+        /* --- STATS BAR --- */
+        .stats-bar {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 50px 5%; display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px; text-align: center; color: white;
+            position: relative; z-index: 10;
+        }
+        .stat-item h2 { font-size: 3.2rem; margin: 0; font-weight: 900; line-height: 1; }
+        .stat-item p { font-weight: bold; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-top: 5px; }
 
         /* --- SECTIONS --- */
         section { padding: 100px 8%; max-width: 1400px; margin: auto; }
@@ -98,6 +109,13 @@
         .card ul li { font-size: 0.9rem; margin-bottom: 10px; color: #bbb; padding-left: 25px; position: relative; }
         .card ul li::before { content: '\f058'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; left: 0; color: var(--primary); }
 
+        /* --- ACTUALITÉS --- */
+        .news-card { background: #111; border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .news-card:hover { transform: translateY(-10px); border-color: var(--secondary); }
+        .news-img { width: 100%; height: 220px; background-size: cover; background-position: center; }
+        .news-content { padding: 25px; }
+        .news-date { color: var(--secondary); font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+
         /* --- EQUIPE SLIDER --- */
         .team-wrapper { position: relative; overflow: hidden; }
         .team-slider { display: flex; gap: 30px; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
@@ -108,14 +126,6 @@
         .arrow { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: 0.3s; }
         .arrow:hover { background: var(--secondary); transform: scale(1.1); }
 
-        /* --- BOUTON PARTENARIAT --- */
-        .btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none;
-            display: inline-block; font-weight: 700; text-transform: uppercase; transition: 0.3s; border: none;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,198,255,0.3); }
-
         /* --- FOOTER --- */
         footer { background: #000; padding: 80px 8% 40px; border-top: 1px solid #222; }
         .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; }
@@ -125,6 +135,12 @@
         .social-box { margin-top: 30px; display: flex; gap: 15px; }
         .social-box a { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.3s; font-size: 1.3rem; }
         .social-box a:hover { background: var(--primary); transform: translateY(-5px); }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; padding: 15px 35px; border-radius: 50px; text-decoration: none;
+            display: inline-block; font-weight: 700; text-transform: uppercase; transition: 0.3s; border: none; cursor: pointer;
+        }
 
         @media (max-width: 992px) { .director-box { grid-template-columns: 1fr; text-align: center; } .team-member { flex: 0 0 calc(50% - 15px); } }
         @media (max-width: 600px) { .team-member { flex: 0 0 100%; } .logo-text span { font-size: 0.55rem; } }
@@ -149,6 +165,7 @@
     <a href="#propos" onclick="toggleMenu()">À Propos</a>
     <a href="#formations" onclick="toggleMenu()">Nos Formations</a>
     <a href="#services" onclick="toggleMenu()">Nos Services</a>
+    <a href="#actualites" onclick="toggleMenu()">Actualités</a>
     <a href="#equipe" onclick="toggleMenu()">Notre Équipe</a>
     <a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
@@ -157,6 +174,21 @@
     <h1 data-aos="zoom-out" data-aos-duration="1500">CENTEC GEO</h1>
     <p data-aos="fade-up" data-aos-delay="500">Maîtriser la géomatique pour mieux comprendre et gérer les territoires</p>
 </section>
+
+<div class="stats-bar">
+    <div class="stat-item">
+        <h2>+500</h2>
+        <p>Professionnels Formés</p>
+    </div>
+    <div class="stat-item">
+        <h2>+120</h2>
+        <p>Missions Drones</p>
+    </div>
+    <div class="stat-item">
+        <h2>25</h2>
+        <p>Partenaires Publics</p>
+    </div>
+</div>
 
 <section id="propos">
     <div class="content-box director-box" data-aos="fade-up">
@@ -168,9 +200,9 @@
         <div>
             <h2 style="color: var(--secondary); margin-bottom: 20px;">Le Mot du Directeur</h2>
             <p style="font-style: italic; font-size: 1.15rem; border-left: 4px solid var(--primary); padding-left: 20px; margin-bottom: 20px;">
-                "Le CENTEC est né d’un constat : la nécessité d'intégrer les technologies spatiales au cœur de nos stratégies de développement. Notre mission est de vous fournir l'expertise pour transformer chaque donnée territoriale en une décision éclairée."
+                "Notre mission est de vous fournir l'expertise pour transformer chaque donnée territoriale en une décision éclairée."
             </p>
-            <p>Le <strong>Centre National d’Étude en Territoire et Cartographie (CENTEC)</strong> est un pilier de l'innovation géospatiale en Côte d'Ivoire, offrant des solutions de pointe pour l'analyse des territoires.</p>
+            <p>Le <strong>CENTEC GEO</strong> est une institution de référence en Côte d'Ivoire. Nous formons les cadres de demain aux outils SIG, à la télédétection et à l'usage professionnel des drones.</p>
         </div>
     </div>
 </section>
@@ -182,54 +214,78 @@
             <i class="fas fa-map-marked-alt"></i>
             <h3>DIGI MAP</h3>
             <ul>
-                <li>Maîtrise de QGIS & ArcGIS Pro</li>
-                <li>Sémiologie graphique & Cartographie</li>
-                <li>Analyse de données géospatiales</li>
+                <li>Maîtrise de QGIS & ArcGIS</li>
+                <li>Cartographie numérique</li>
+                <li>Analyse spatiale</li>
             </ul>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="200">
             <i class="fas fa-satellite"></i>
             <h3>TeleSense Pro</h3>
             <ul>
-                <li>Télédétection & Imagerie</li>
-                <li>Classification d'occupation du sol</li>
-                <li>Indices de végétation (NDVI)</li>
+                <li>Télédétection avancée</li>
+                <li>Traitement d'images satellite</li>
+                <li>Suivi environnemental</li>
             </ul>
         </div>
         <div class="card" data-aos="fade-up" data-aos-delay="400">
             <i class="fas fa-mobile-alt"></i>
             <h3>E-Enquêteur</h3>
             <ul>
-                <li>Formulaires KoboToolbox</li>
-                <li>Collecte mobile géolocalisée</li>
-                <li>Bases de données SQL/PostGIS</li>
+                <li>Collecte mobile (Kobo/ODK)</li>
+                <li>Gestion de bases de données</li>
+                <li>Géolocalisation terrain</li>
             </ul>
         </div>
     </div>
 </section>
 
 <section id="services">
-    <h2 class="section-title" data-aos="fade-up">Nos Services</h2>
+    <h2 class="section-title" data-aos="fade-up">Expertise & Services</h2>
     <div class="grid">
         <div class="card" data-aos="zoom-in">
             <i class="fas fa-drone"></i>
-            <h3>Photogrammétrie Drone</h3>
-            <p>Production de MNT/MNS, orthophotos haute résolution et cubatures précises.</p>
+            <h3>Photogrammétrie</h3>
+            <p>Modélisation 3D et relevés par drones haute résolution.</p>
         </div>
         <div class="card" data-aos="zoom-in" data-aos-delay="200">
-            <i class="fas fa-city"></i>
-            <h3>Aménagement Urbain</h3>
-            <p>Études de planification territoriale et diagnostic urbain par le SIG.</p>
+            <i class="fas fa-layer-group"></i>
+            <h3>Solutions SIG</h3>
+            <p>Déploiement de systèmes d'information pour collectivités.</p>
         </div>
         <div class="card" data-aos="zoom-in" data-aos-delay="400">
             <i class="fas fa-database"></i>
-            <h3>Ingénierie de Données</h3>
-            <p>Structuration et hébergement de Systèmes d'Information Géographique (SIG).</p>
+            <h3>Bases de Données</h3>
+            <p>Structuration et administration de DATA spatiales (PostGIS).</p>
         </div>
     </div>
 </section>
 
-<section id="equipe" style="background: rgba(255,255,255,0.01);">
+<section id="actualites" style="background: rgba(255,255,255,0.01);">
+    <h2 class="section-title" data-aos="fade-up">Actualités</h2>
+    <div class="grid">
+        <div class="news-card" data-aos="fade-up">
+            <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1473960104312-3c712850684b');"></div>
+            <div class="news-content">
+                <span class="news-date">Avril 2026</span>
+                <h4 style="color:white; margin:10px 0;">Nouveaux modules IA</h4>
+                <p style="font-size:0.9rem;">L'intelligence artificielle s'invite dans nos formations SIG.</p>
+                <a href="#" style="color:var(--secondary); text-decoration:none; font-size:0.8rem; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
+            </div>
+        </div>
+        <div class="news-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1508614589041-895b88991e3e');"></div>
+            <div class="news-content">
+                <span class="news-date">Mars 2026</span>
+                <h4 style="color:white; margin:10px 0;">Projet Cadastre National</h4>
+                <p style="font-size:0.9rem;">Signature d'une convention majeure pour la cartographie urbaine.</p>
+                <a href="#" style="color:var(--secondary); text-decoration:none; font-size:0.8rem; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="equipe">
     <h2 class="section-title" data-aos="fade-up">Notre Équipe</h2>
     <div class="team-wrapper">
         <div class="team-slider" id="slider">
@@ -261,35 +317,28 @@
     </div>
 </section>
 
-<section id="contact">
-    <h2 class="section-title" data-aos="fade-up">Partenariat</h2>
-    <div class="content-box" style="text-align: center;" data-aos="zoom-in">
-        <p style="font-size: 1.2rem; margin-bottom: 30px;">
-            Collaborons pour bâtir des solutions territoriales innovantes. <br>
-            Le CENTEC GEO accompagne les institutions et entreprises dans leur transformation numérique.
-        </p>
-        <a href="mailto:contact@centec.ci" class="btn">Proposer une collaboration</a>
-    </div>
-</section>
-
-<footer>
-    <div class="footer-grid">
-        <div data-aos="fade-right">
+<footer id="contact">
+    <div class="footer-grid" data-aos="fade-up">
+        <div>
             <h2 style="color: white; margin-bottom: 20px;">CENTEC GEO</h2>
-            <p>L’expertise géospatiale au service du développement durable.</p>
+            <p>L’expertise géospatiale au service du territoire.</p>
             <div class="social-box">
                 <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                 <a href="#"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
-        <div data-aos="fade-left">
+        <div>
             <h3 style="color: white; margin-bottom: 25px;">Contact & Siège</h3>
             <ul class="contact-list">
                 <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan, CI</li>
                 <li><i class="fas fa-phone-alt"></i> +225 00 00 00 00 00</li>
                 <li><i class="fas fa-envelope"></i> contact@centec.ci</li>
             </ul>
+        </div>
+        <div style="text-align: center;">
+            <h3 style="color: white; margin-bottom: 25px;">Partenariat</h3>
+            <a href="mailto:contact@centec.ci" class="btn">Devenir Partenaire</a>
         </div>
     </div>
     <div style="text-align: center; margin-top: 60px; color: #555; font-size: 0.85rem; border-top: 1px solid #222; padding-top: 30px;">
