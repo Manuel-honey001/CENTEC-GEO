@@ -31,7 +31,7 @@
             position: fixed; width: 100%; height: 100%; background: #000;
             display: flex; align-items: center; justify-content: center; z-index: 9999;
         }
-        #loader span { color: white; letter-spacing: 5px; animation: pulse 1.5s infinite; }
+        #loader span { color: white; letter-spacing: 5px; animation: pulse 1.5s infinite; font-weight: bold;}
         @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
         /* --- HEADER & LOGO --- */
@@ -57,7 +57,7 @@
         }
 
         .logo-container img {
-            height: 70px; /* Ajusté pour ton logo */
+            height: 70px; 
             width: auto;
         }
 
@@ -170,6 +170,94 @@
         }
         .btn:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0, 198, 255, 0.3); }
 
+        /* --- NOUVELLE SECTION : MOT DU DIRECTEUR --- */
+        .director-box {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .director-photo {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 5px solid rgba(255,255,255,0.1);
+            object-fit: cover;
+        }
+        .director-text {
+            font-style: italic;
+            color: #ddd;
+        }
+        .director-signature {
+            margin-top: 20px;
+            font-weight: bold;
+            color: white;
+            font-style: normal;
+        }
+
+        /* --- NOUVELLE SECTION : POURQUOI NOUS CHOISIR --- */
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .why-us-card {
+            background: rgba(255,255,255,0.02);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            transition: var(--transition);
+        }
+        .why-us-card:hover {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.05);
+        }
+        .why-us-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        .why-us-card h4 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        /* --- NOUVELLE SECTION : NOTRE EQUIPE (CARROUSEL) --- */
+        #equipe {
+            overflow: hidden; /* Important pour masquer ce qui dépasse */
+            position: relative;
+            padding-bottom: 60px; /* Espace pour les contrôles si besoin */
+        }
+        .team-slider-container {
+            width: 100%;
+            overflow: hidden;
+            cursor: grab;
+        }
+        .team-slider {
+            display: flex;
+            gap: 30px;
+            transition: transform 0.5s ease-out; /* Animation fluide */
+        }
+        .team-member {
+            flex: 0 0 calc(25% - 22.5px); /* 4 membres par ligne sur grand écran */
+            background: var(--glass);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--primary);
+        }
+        .team-member h4 { color: white; margin-bottom: 5px; }
+        .team-member p { color: var(--secondary); font-size: 0.8rem; text-transform: uppercase; font-weight: bold;}
+
         /* --- FOOTER --- */
         footer { background: #000; padding: 60px 5%; text-align: center; border-top: 1px solid #222; }
         .social-links i { margin: 0 15px; font-size: 1.5rem; cursor: pointer; transition: 0.3s; }
@@ -178,11 +266,18 @@
         /* --- RESPONSIVE --- */
         @media (max-width: 1024px) {
             .logo-text { display: none; }
+            .team-member { flex: 0 0 calc(33.33% - 20px); } /* 3 membres sur tablette */
         }
         @media (max-width: 768px) {
             header { padding: 10px 20px; }
             nav ul { display: none; }
             .hero h1 { font-size: 2.2rem; }
+            .director-box { grid-template-columns: 1fr; text-align: center; }
+            .director-photo { max-width: 200px; margin: auto; }
+            .team-member { flex: 0 0 calc(50% - 15px); } /* 2 membres sur grand mobile */
+        }
+        @media (max-width: 480px) {
+            .team-member { flex: 0 0 100%; } /* 1 membre sur petit mobile */
         }
     </style>
 </head>
@@ -207,6 +302,7 @@
             <li><a href="#propos">À Propos</a></li>
             <li><a href="#formations">Formations</a></li>
             <li><a href="#services">Services</a></li>
+            <li><a href="#equipe">Équipe</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
@@ -219,11 +315,47 @@
 </section>
 
 <section id="propos">
-    <div class="content-box">
+    <div class="content-box" style="margin-bottom: 40px;">
         <h2 style="color: var(--secondary); margin-bottom: 25px;">Bienvenue au CENTEC</h2>
         <p>Le <strong>Centre National d’Étude en Territoire et Cartographie (CENTEC)</strong> est une structure spécialisée dans la <strong>formation professionnelle et l’expertise en géomatique appliquée</strong>.</p>
         <br>
-        <p>Le centre intervient notamment dans les domaines de la <span class="highlight">cartographie numérique, des systèmes d’information géographique (SIG), de la télédétection, de la collecte de données géolocalisées, du pilotage de drone et photogrammétrie</span>.</p>
+        <p>Le centre intervient notamment dans les domaines de la <span class="highlight">cartographie numérique, des systèmes d’information graphique (SIG), de la télédétection, de la collecte de données géolocalisées, du pilotage de drone et photogrammétrie</span>.</p>
+    </div>
+
+    <div class="content-box director-box">
+        <img src="director-placeholder.jpg" alt="Photo du Directeur" class="director-photo">
+        <div>
+            <h3>Le Mot du Directeur</h3>
+            <br>
+            <p class="director-text">"Notre ambition est de démocratiser l'accès aux technologies géospatiales de pointe. Nous formons des experts capables de transformer la donnée territoriale en levier de développement durable pour la Côte d'Ivoire et la sous-région."</p>
+            <p class="director-signature">Nom du Directeur<br>Directeur Général</p>
+        </div>
+    </div>
+</section>
+
+<section id="why-us" style="background: rgba(255,255,255,0.01);">
+    <h2 class="section-title">Pourquoi nous choisir ?</h2>
+    <div class="why-us-grid">
+        <div class="why-us-card">
+            <i class="fas fa-certificate"></i>
+            <h4>Certifications Reconnues</h4>
+            <p>Des programmes validés par des experts du secteur.</p>
+        </div>
+        <div class="why-us-card">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h4>Experts Praticiens</h4>
+            <p>Formateurs issus du monde professionnel.</p>
+        </div>
+        <div class="why-us-card">
+            <i class="fas fa-drone"></i>
+            <h4>Équipements de Pointe</h4>
+            <p>Accès aux dernières technologies (Drones, GNSS, SIG).</p>
+        </div>
+        <div class="why-us-card">
+            <i class="fas fa-handshake"></i>
+            <h4>Accompagnement Pro</h4>
+            <p>Suivi post-formation et insertion facilitée.</p>
+        </div>
     </div>
 </section>
 
@@ -286,16 +418,55 @@
     </div>
 </section>
 
+<section id="equipe">
+    <h2 class="section-title">Notre Équipe</h2>
+    <div class="team-slider-container">
+        <div class="team-slider">
+            <div class="team-member">
+                <img src="profile-placeholder.jpg" alt="Nom du Membre">
+                <h4>Nom du Membre</h4>
+                <p>Poste / Service</p>
+            </div>
+            <div class="team-member">
+                <img src="profile-placeholder.jpg" alt="Nom du Membre">
+                <h4>Nom du Membre</h4>
+                <p>Poste / Service</p>
+            </div>
+            <div class="team-member">
+                <img src="profile-placeholder.jpg" alt="Nom du Membre">
+                <h4>Nom du Membre</h4>
+                <p>Poste / Service</p>
+            </div>
+            <div class="team-member">
+                <img src="profile-placeholder.jpg" alt="Nom du Membre">
+                <h4>Nom du Membre</h4>
+                <p>Poste / Service</p>
+            </div>
+            <div class="team-member">
+                <img src="profile-placeholder.jpg" alt="Nom du Membre">
+                <h4>Nom du Membre 5</h4>
+                <p>Poste / Service</p>
+            </div>
+            <div class="team-member">
+                <img src="profile-placeholder.jpg" alt="Nom du Membre">
+                <h4>Nom du Membre 6</h4>
+                <p>Poste / Service</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="contact">
     <h2 class="section-title">Devenir Partenaire</h2>
     <div class="content-box" style="text-align: center;">
-        <p style="margin-bottom: 30px;">Nous accompagnons les administrations, les bureaux d’études et les ONG dans l’intégration de la géomatique.</p>
+        <p style="margin-bottom: 30px;">Nous accompagnons les administrations, les bureaux d’études et les ONG dans l’intégration de la géomatique au cœur de leurs stratégies.</p>
         <a href="mailto:contact@centec.ci" class="btn">Envoyer une demande d'étude</a>
     </div>
 </section>
 
 <footer>
     <p>© 2026 CENTEC GEO – Excellence en Géomatique Appliquée</p>
+    <p style="font-size: 0.75rem; color: #555; margin-top: 10px;">Centre National d’Étude en Territoire et Cartographie CI</p>
     <div class="social-links" style="margin-top: 20px;">
         <i class="fab fa-linkedin"></i>
         <i class="fab fa-facebook"></i>
@@ -310,7 +481,7 @@
         setTimeout(() => loader.style.display = "none", 500);
     });
 
-    // Animation simple au scroll
+    // Animation simple au scroll (Observer)
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -320,12 +491,44 @@
         });
     });
 
-    document.querySelectorAll('section, .card').forEach(el => {
+    document.querySelectorAll('section, .card, .content-box, .why-us-card').forEach(el => {
         el.style.opacity = 0;
         el.style.transform = "translateY(20px)";
         el.style.transition = "all 0.6s ease-out";
         observer.observe(el);
     });
+
+    // --- JAVASCRIPT : CARROUSEL EQUIPE (INFINI AUTOMATIQUE) ---
+    const slider = document.querySelector('.team-slider');
+    const members = document.querySelectorAll('.team-member');
+    
+    // Dupliquer les membres pour l'effet infini
+    members.forEach(member => {
+        const clone = member.cloneNode(true);
+        slider.appendChild(clone);
+    });
+
+    let currentTranslate = 0;
+    const scrollSpeed = 1; // Ajuste la vitesse ici (plus bas = plus lent)
+
+    function animateSlider() {
+        currentTranslate -= scrollSpeed;
+        
+        // Calculer la largeur totale d'un set de membres (y compris le gap)
+        const totalWidth = (members[0].offsetWidth + 30) * members.length;
+
+        // Si on a fait défiler tout le premier set, on reset sans transition visuelle
+        if (Math.abs(currentTranslate) >= totalWidth) {
+            currentTranslate = 0;
+        }
+
+        slider.style.transform = `translateX(${currentTranslate}px)`;
+        requestAnimationFrame(animateSlider); // Boucle d'animation fluide
+    }
+
+    // Lancer l'animation une fois que tout est chargé
+    window.addEventListener('load', animateSlider);
+
 </script>
 
 </body>
