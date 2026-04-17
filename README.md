@@ -92,7 +92,7 @@
         .stat-card p { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--secondary); font-weight: 700; }
 
         /* --- SECTIONS --- */
-        section { padding: 120px 8%; max-width: 1400px; margin: auto; }
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
         .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
         .section-subtitle { text-align: center; color: #a0aec0; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
         .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
@@ -105,17 +105,24 @@
         .director-name { color: white; font-size: 1.5rem; font-weight: 800; margin-top: 20px; }
         .director-title { color: var(--secondary); font-size: 0.8rem; text-transform: uppercase; }
 
-        /* --- CARDS --- */
+        /* --- GRID CARDS (FORMATIONS & SERVICES) --- */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
         .card { background: rgba(255,255,255,0.02); padding: 45px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
-        .card:hover { transform: translateY(-12px); border-color: var(--secondary); }
+        .card:hover { transform: translateY(-12px); border-color: var(--secondary); background: rgba(255,255,255,0.04); }
         .card i { font-size: 2.8rem; color: var(--secondary); margin-bottom: 25px; display: block; }
-        .card h3 { color: white; margin-bottom: 20px; }
+        .card h3 { color: white; font-size: 1.5rem; margin-bottom: 20px; }
         .card ul li { font-size: 0.95rem; margin-bottom: 12px; color: #a0aec0; padding-left: 30px; position: relative; list-style: none; }
         .card ul li::before { content: '\f058'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; left: 0; color: var(--primary); }
 
-        /* --- ÉQUIPE (DESIGN INTÉGRÉ) --- */
-        .team-wrapper { position: relative; overflow: hidden; padding: 20px 0; }
+        /* --- ACTUALITÉS --- */
+        .news-card { background: var(--darker); border-radius: 25px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .news-card:hover { border-color: var(--secondary); }
+        .news-img { width: 100%; height: 230px; background-size: cover; background-position: center; position: relative; }
+        .news-content { padding: 30px; }
+        .news-date { color: var(--secondary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- ÉQUIPE (SLIDER) --- */
+        .team-wrapper { position: relative; overflow: hidden; padding: 10px 0; }
         .team-slider { display: flex; gap: 25px; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
         .team-member { 
             flex: 0 0 calc(33.333% - 17px); 
@@ -126,17 +133,10 @@
             border: 1px solid rgba(255,255,255,0.05);
             transition: var(--transition);
         }
-        .team-member:hover { 
-            transform: scale(1.05); 
-            background: rgba(255,255,255,0.07);
-            border-color: var(--secondary);
-        }
-        .team-member .member-img {
-            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
-            margin: 0 auto 20px; border: 3px solid var(--primary); padding: 5px;
-        }
-        .team-title { color: white; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
-        .team-description { color: var(--secondary); font-size: 0.9rem; text-transform: uppercase; font-weight: 600; }
+        .team-member:hover { transform: scale(1.05); background: rgba(255,255,255,0.07); border-color: var(--secondary); }
+        .member-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; border: 3px solid var(--primary); padding: 5px; }
+        .team-member-name { color: white; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
+        .team-member-job { color: var(--secondary); font-size: 0.9rem; text-transform: uppercase; font-weight: 600; }
 
         .nav-arrows { display: flex; justify-content: center; gap: 20px; margin-top: 40px; }
         .arrow { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: 0.3s; }
@@ -154,10 +154,7 @@
             display: inline-block; font-weight: 700; text-transform: uppercase; transition: 0.3s; border: none; cursor: pointer;
         }
 
-        @media (max-width: 992px) { 
-            .director-box { grid-template-columns: 1fr; text-align: center; } 
-            .team-member { flex: 0 0 calc(50% - 13px); } 
-        }
+        @media (max-width: 992px) { .director-box { grid-template-columns: 1fr; text-align: center; } .team-member { flex: 0 0 calc(50% - 13px); } }
         @media (max-width: 600px) { .team-member { flex: 0 0 100%; } }
     </style>
 </head>
@@ -178,9 +175,10 @@
     <i class="fas fa-times close-menu" onclick="toggleMenu()"></i>
     <a href="#accueil" onclick="toggleMenu()">Accueil</a>
     <a href="#propos" onclick="toggleMenu()">À Propos</a>
-    <a href="#formations" onclick="toggleMenu()">Nos Formations</a>
-    <a href="#services" onclick="toggleMenu()">Nos Services</a>
-    <a href="#equipe" onclick="toggleMenu()">Notre Équipe</a>
+    <a href="#formations" onclick="toggleMenu()">Formations</a>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="#equipe" onclick="toggleMenu()">Équipe</a>
     <a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
 
@@ -216,36 +214,109 @@
             <p style="font-style: italic; font-size: 1.15rem; color: #fff; border-left: 4px solid var(--primary); padding-left: 25px; margin-bottom: 25px;">
                 "Transformer chaque donnée territoriale en une décision stratégique éclairée est au cœur de notre engagement."
             </p>
-            <p style="color: #a0aec0;">Le <strong>CENTEC GEO</strong> s'impose comme un pôle technologique majeur en Côte d'Ivoire. Nous formons les cadres de demain aux outils SIG et à l'expertise par drone.</p>
+            <p style="color: #a0aec0;">Le <strong>CENTEC GEO</strong> est une institution de référence en Côte d'Ivoire. Nous formons les cadres de demain aux outils SIG et à la télédétection.</p>
+        </div>
+    </div>
+</section>
+
+<section id="formations">
+    <h2 class="section-title" data-aos="fade-up">Nos Formations</h2>
+    <div class="grid">
+        <div class="card" data-aos="fade-up">
+            <i class="fas fa-map-marked-alt"></i>
+            <h3>DIGI MAP</h3>
+            <ul>
+                <li>Maîtrise de QGIS & ArcGIS Pro</li>
+                <li>Conception cartographique</li>
+                <li>Analyse spatiale complexe</li>
+            </ul>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-satellite"></i>
+            <h3>TeleSense Pro</h3>
+            <ul>
+                <li>Télédétection & Imagerie</li>
+                <li>Traitement spectral</li>
+                <li>Suivi environnemental</li>
+            </ul>
+        </div>
+        <div class="card" data-aos="fade-up" data-aos-delay="400">
+            <i class="fas fa-mobile-alt"></i>
+            <h3>E-Enquêteur</h3>
+            <ul>
+                <li>Collecte mobile (Kobo/ODK)</li>
+                <li>Gestion de bases de données</li>
+                <li>Inventaires géolocalisés</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <h2 class="section-title" data-aos="fade-up">Nos Services</h2>
+    <div class="grid">
+        <div class="card" data-aos="zoom-in">
+            <i class="fas fa-paper-plane"></i>
+            <h3>Photogrammétrie</h3>
+            <p>Modélisation 3D et relevés par drones haute résolution pour vos projets.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fas fa-draw-polygon"></i>
+            <h3>Solutions SIG</h3>
+            <p>Conception et implémentation de systèmes d'information sur mesure.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="400">
+            <i class="fas fa-server"></i>
+            <h3>Ingénierie DATA</h3>
+            <p>Administration de bases de données spatiales pour les collectivités.</p>
+        </div>
+    </div>
+</section>
+
+<section id="actualites">
+    <h2 class="section-title" data-aos="fade-up">Actualités</h2>
+    <div class="grid">
+        <div class="news-card" data-aos="fade-up">
+            <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1473960104312-3c712850684b'); height: 230px; background-size: cover;"></div>
+            <div class="news-content">
+                <span class="news-date">Avril 2026</span>
+                <h4 style="color:white; margin:15px 0;">L'IA et la Géomatique</h4>
+                <p style="font-size:0.9rem; color: #a0aec0;">Intégration de l'intelligence artificielle pour l'analyse prédictive.</p>
+                <a href="#" style="color:var(--secondary); text-decoration:none; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
+            </div>
+        </div>
+        <div class="news-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1508614589041-895b88991e3e'); height: 230px; background-size: cover;"></div>
+            <div class="news-content">
+                <span class="news-date">Mars 2026</span>
+                <h4 style="color:white; margin:15px 0;">Projet Cadastre</h4>
+                <p style="font-size:0.9rem; color: #a0aec0;">Signature d'une convention pour la numérisation foncière.</p>
+                <a href="#" style="color:var(--secondary); text-decoration:none; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
+            </div>
         </div>
     </div>
 </section>
 
 <section id="equipe">
     <h2 class="section-title" data-aos="fade-up">Notre Équipe</h2>
-    <p class="section-subtitle" data-aos="fade-up">Bienvenue dans notre section dédiée. Nous sommes passionnés par notre travail et heureux de vous présenter les membres qui composent notre équipe dynamique.</p>
+    <p class="section-subtitle" data-aos="fade-up">Bienvenue dans notre section dédiée à l'équipe. Nous sommes passionnés par notre travail et heureux de vous présenter les membres qui composent notre équipe dynamique.</p>
     
     <div class="team-wrapper">
         <div class="team-slider" id="slider">
             <div class="team-member" data-aos="fade-up">
                 <img src="https://i.pravatar.cc/150?u=alice" alt="Alice" class="member-img">
-                <div class="team-title">Alice Dupont</div>
-                <div class="team-description">Chef de Projet</div>
+                <div class="team-member-name">Alice Dupont</div>
+                <div class="team-member-job">Chef de Projet</div>
             </div>
             <div class="team-member" data-aos="fade-up" data-aos-delay="100">
                 <img src="https://i.pravatar.cc/150?u=bob" alt="Bob" class="member-img">
-                <div class="team-title">Bob Martin</div>
-                <div class="team-description">Développeur Frontend</div>
+                <div class="team-member-name">Bob Martin</div>
+                <div class="team-member-job">Développeur Frontend</div>
             </div>
             <div class="team-member" data-aos="fade-up" data-aos-delay="200">
                 <img src="https://i.pravatar.cc/150?u=carla" alt="Carla" class="member-img">
-                <div class="team-title">Carla Jean</div>
-                <div class="team-description">Designer UI/UX</div>
-            </div>
-            <div class="team-member">
-                <img src="https://i.pravatar.cc/150?u=marc" alt="Marc" class="member-img">
-                <div class="team-title">Marc Koffi</div>
-                <div class="team-description">Expert Drone</div>
+                <div class="team-member-name">Carla Jean</div>
+                <div class="team-member-job">Designer UI/UX</div>
             </div>
         </div>
     </div>
@@ -264,7 +335,7 @@
     <div class="footer-grid">
         <div>
             <h2 style="color: white; margin-bottom: 25px;">CENTEC GEO</h2>
-            <p style="color: #a0aec0; margin-bottom: 30px;">L’expertise géospatiale de référence au service du développement durable.</p>
+            <p style="color: #a0aec0; margin-bottom: 30px;">L’expertise géospatiale de référence en Côte d'Ivoire.</p>
             <div style="display: flex; gap: 15px;">
                 <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
                 <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
@@ -280,8 +351,11 @@
         </div>
         <div style="text-align: center;">
             <h3 style="color: white; margin-bottom: 30px;">Partenariat</h3>
-            <a href="mailto:contact@centec.ci" class="btn">Écrivez-nous</a>
+            <a href="mailto:contact@centec.ci" class="btn">Devenir Partenaire</a>
         </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px;">
+        © 2026 CENTEC GEO – Expertise en Géomatique
     </div>
 </footer>
 
