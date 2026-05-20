@@ -433,7 +433,7 @@
         <div style="text-align: center;">
             <img src="wili 1 (2).png" alt="Président CENTEC GEO" class="director-photo" loading="lazy">
             <div class="director-name">WILFRIED CODJO</div>
-            <div class="director-title">GÉOMATICIEN - EXPERT PHOTOGRAMMÉTRIE</div>
+            <div class="director-title">DIRECTEUR GENERAL- GÉOMATICIEN</div>
         </div>
         <div>
             <h2 style="color: var(--secondary); margin-bottom: 25px;">Le Mot du Directeur</h2>
@@ -588,12 +588,12 @@ Il forme des experts capables d’exploiter les données géographiques à trave
             <div class="team-member" data-aos="fade-up">
                 <img src="wili 1 (1).jpeg" alt="Wilfried Codjo" class="member-img" loading="lazy">
                 <div class="team-member-name">Wilfried Codjo</div>
-                <div class="team-member-job">Chef de cabinet</div>
+                <div class="team-member-job">Géomaticien</div>
             </div>
             <div class="team-member" data-aos="fade-up" data-aos-delay="100">
                 <img src="PHOTO 2.jpeg" alt="Hemane BONGA" class="member-img" loading="lazy">
                 <div class="team-member-name">Hemane BONGA</div>
-                <div class="team-member-job">Géomaticienne en chef</div>
+                <div class="team-member-job">Géomaticienne</div>
             </div>
             <div class="team-member" data-aos="fade-up" data-aos-delay="200">
                 <img src="ludo.jpg" alt="Ludovic" class="member-img" loading="lazy">
