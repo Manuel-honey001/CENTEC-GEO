@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Module 1 - Fondamentaux | DIGIMAP</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00ff88;
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0,255,136,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 15px;
+        }
+
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 6px 15px rgba(0,255,136,0.5));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .logo-container:hover img {
+            transform: scale(1.05) rotate(-1deg);
+        }
+
+        .logo-text {
+            border-left: 2px solid rgba(0,255,136,0.6);
+            padding-left: 15px;
+        }
+
+        .logo-text h2 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+            font-size: 0.65rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .menu-btn {
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,255,136,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+        }
+
+        .nav-overlay.active { right: 0; }
+
+        .nav-overlay a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .nav-overlay a:hover {
+            color: var(--secondary);
+            padding-left: 12px;
+            text-shadow: 0 0 10px rgba(0,255,136,0.8);
+        }
+
+        .nav-overlay .close-menu {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            align-self: flex-end;
+            margin-bottom: 35px;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .nav-overlay .close-menu:hover {
+            color: var(--secondary);
+        }
+
+        main {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .inscription-container {
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .inscription-info {
+            color: #e0e6ed;
+        }
+
+        .inscription-info h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .inscription-info p {
+            font-size: 1.1rem;
+            color: #a0aec0;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .highlights {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0,255,136,0.1);
+            border-left: 4px solid var(--secondary);
+            border-radius: 8px;
+        }
+
+        .highlights h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .highlights ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .highlights li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            color: #a0aec0;
+        }
+
+        .highlights li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .form-section {
+            background: rgba(255,255,255,0.04);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0,255,136,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-section h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #e0e6ed;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            color: #e0e6ed;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(0,255,136,0.05);
+            box-shadow: 0 0 10px rgba(0,255,136,0.1);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #9fb5cf;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,255,136,0.3);
+        }
+
+        .required {
+            color: var(--secondary);
+        }
+
+        @media (max-width: 992px) {
+            .inscription-container {
+                grid-template-columns: 1fr;
+            }
+
+            .inscription-info h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            main {
+                padding: 20px 15px;
+            }
+
+            .form-section {
+                padding: 25px;
+            }
+
+            .inscription-info h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="DIGIMAP.html" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>DIGIMAP</h2>
+            <span>Module 1 - Fondamentaux</span>
+        </div>
+    </a>
+    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay">
+    <button class="close-menu" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+    <a href="CENTEC GEO.html#accueil">Accueil</a>
+    <a href="CENTEC GEO.html#formations">Formations</a>
+    <a href="DIGIMAP.html">DIGIMAP</a>
+    <a href="CENTEC GEO.html#contact">Contact</a>
+</nav>
+
+<main>
+    <div class="inscription-container" data-aos="fade-up">
+        <div class="inscription-info">
+            <div class="level-badge">Niveau 1 - Fondamentaux</div>
+            <h1>S'inscrire au Module 1</h1>
+            <p>Débuter votre parcours en cartographie numérique et système d'information géographique (SIG).</p>
+
+            <div class="highlights">
+                <h3>Ce que vous apprendrez</h3>
+                <ul>
+                    <li>Introduction complète aux SIG</li>
+                    <li>Prise en main de QGIS</li>
+                    <li>Création de cartes simples</li>
+                    <li>Gestion des couches géographiques</li>
+                    <li>Mise en page cartographique</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: rgba(11,94,215,0.1); border-left: 4px solid var(--primary); border-radius: 8px;">
+                <h3 style="color: var(--primary); margin-bottom: 10px;">Durée et conditions</h3>
+                <p style="margin-bottom: 8px;"><strong>Durée :</strong> 4 semaines</p>
+                <p style="margin-bottom: 8px;"><strong>Rythme :</strong> 3 sessions par semaine</p>
+                <p><strong>Prérequis :</strong> Notions basiques en informatique</p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Formulaire d'Inscription</h2>
+            <form action="mailto:contact@centec.ci" method="post" enctype="text/plain">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="prenom">Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" name="prenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nom">Nom <span class="required">*</span></label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Adresse email <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone <span class="required">*</span></label>
+                    <input type="tel" id="telephone" name="telephone" placeholder="+225 XX XX XX XX" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="organisation">Organisation</label>
+                        <input type="text" id="organisation" name="organisation" placeholder="Votre entreprise/institution">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Expérience en SIG <span class="required">*</span></label>
+                        <select id="experience" name="experience" required>
+                            <option value="">-- Sélectionnez --</option>
+                            <option value="Aucune">Aucune</option>
+                            <option value="Débutant">Débutant (< 1 an)</option>
+                            <option value="Intermédiaire">Intermédiaire (1-3 ans)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="motivation">Message de motivation <span class="required">*</span></label>
+                    <textarea id="motivation" name="motivation" rows="4" placeholder="Dites-nous pourquoi vous souhaitez suivre cette formation..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-check-circle"></i> Confirmer mon inscription
+                </button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    function toggleMenu() {
+        document.getElementById('navOverlay').classList.toggle('active');
+    }
+    window.toggleMenu = toggleMenu;
+
+    AOS.init({ duration: 1000, once: true });
+</script>
+
+</body>
+</html>

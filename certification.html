@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification de Certification | CENTEC GEO</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,198,255,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0,198,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img { height: 80px; width: auto; filter: drop-shadow(0 6px 15px rgba(0,198,255,0.5)); transition: transform 0.3s ease, filter 0.3s ease; }
+        .logo-container:hover img { transform: scale(1.05) rotate(-1deg); }
+        .logo-text { border-left: 2px solid rgba(0,198,255,0.6); padding-left: 15px; }
+        .logo-text h2 { color: white; font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .logo-text span { color: var(--secondary); font-size: 0.7rem; font-weight: 600; opacity: 0.9; }
+        .menu-btn { background: var(--primary); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; transition: 0.3s; border: none; }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,198,255,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; text-shadow: 0 0 10px rgba(0,198,255,0.8); }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.4rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; padding: 0; }
+        .nav-overlay .close-menu:hover { color: var(--secondary); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.6), rgba(10, 15, 26, 0.9)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; margin-bottom: 15px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 300; margin-bottom: 32px; max-width: 900px; }
+
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
+        .section-subtitle { text-align: center; color: #a0aec0; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .cert-form { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); max-width: 600px; margin: auto; }
+        .cert-form h2 { color: white; margin-bottom: 30px; text-align: center; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; color: #e0e6ed; margin-bottom: 8px; font-weight: 600; }
+        .form-group select, .form-group input { width: 100%; padding: 16px 18px; border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; background: rgba(255,255,255,0.05); color: #e0e6ed; font-size: 1rem; }
+        .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--secondary); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 16px 36px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 700; text-transform: uppercase; transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; cursor: pointer; width: 100%; text-align: center; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0, 198, 255, 0.25); }
+
+        footer { background: var(--darker); padding: 100px 8% 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; }
+        .footer-grid h2 { color: white; margin-bottom: 25px; }
+        .footer-grid p { color: #a0aec0; margin-bottom: 30px; }
+        .contact-list li { margin-bottom: 25px; display: flex; align-items: center; gap: 20px; color: #a0aec0; list-style: none; }
+        .contact-list i { color: var(--secondary); font-size: 1.2rem; background: rgba(0,198,255,0.1); padding: 12px; border-radius: 12px; }
+        .footer-bottom { text-align: center; margin-top: 50px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
+
+        @media (max-width: 768px) { header { padding: 12px 4%; } .cert-form { padding: 30px; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="CENTEC GEO.html" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="CENTEC GEO.html#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="CENTEC GEO.html#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="CENTEC GEO.html#formations" onclick="toggleMenu()">Formations</a>
+    <a href="CENTEC GEO.html#services" onclick="toggleMenu()">Services</a>
+    <a href="CENTEC GEO.html#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="CENTEC GEO.html#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="certification.html" onclick="toggleMenu()">Certification</a>
+    <a href="CENTEC GEO.html#contact" onclick="toggleMenu()">Contact</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1 data-aos="fade-down" data-aos-duration="1200">Vérification de Certification</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Vérifiez votre statut de certification CENTEC GEO en renseignant vos informations.</p>
+</section>
+
+<section>
+    <h2 class="section-title" data-aos="fade-up">Vérification de Certification</h2>
+    <p class="section-subtitle" data-aos="fade-up">Renseignez vos informations pour vérifier votre certification dans notre base de données.</p>
+
+    <div class="cert-form" data-aos="fade-up">
+        <h2>Informations du Candidat</h2>
+        <form id="certForm">
+            <div class="form-group">
+                <label for="formation">Formation suivie</label>
+                <select id="formation" name="formation" required>
+                    <option value="">Sélectionnez une formation</option>
+                    <option value="DIGIMAP">DIGIMAP</option>
+                    <option value="TeleSense Pro">TeleSense Pro</option>
+                    <option value="E-Enquêteur">E-Enquêteur</option>
+                    <option value="GEOSKIL">GEOSKIL</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nom">Nom complet</label>
+                <input type="text" id="nom" name="nom" placeholder="Votre nom complet" required>
+            </div>
+            <div class="form-group">
+                <label for="annee">Année de formation</label>
+                <input type="number" id="annee" name="annee" placeholder="Ex: 2026" min="2020" max="2030" required>
+            </div>
+            <div class="form-group">
+                <label for="id">ID de participant (optionnel)</label>
+                <input type="text" id="id" name="id" placeholder="Votre ID de participant">
+            </div>
+            <button type="submit" class="btn-primary">Vérifier la Certification</button>
+        </form>
+    </div>
+
+    <div id="verification-result" style="display: none;"></div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h2>CENTEC GEO</h2>
+            <p>L'expertise géospatiale de référence en Côte d'Ivoire.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+            </div>
+            <div style="margin-top: 30px;">
+                <a href="mailto:contact@centec.ci" class="btn-primary">Devenir partenaire</a>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Contact</h3>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> +225 00 00 00 00</li>
+                <li><i class="fas fa-envelope"></i> contact@centec.ci</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Écrivez-nous</h3>
+            <form class="contact-form" action="mailto:contact@centec.ci" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Votre nom" required>
+                <input type="email" name="email" placeholder="Votre email" required>
+                <textarea name="message" rows="4" placeholder="Votre message"></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 CENTEC GEO – Expertise en Géomatique</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+    function toggleMenu() {
+        document.getElementById('navOverlay').classList.toggle('active');
+    }
+
+    document.getElementById('certForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const nom = formData.get('nom').trim();
+        const formation = formData.get('formation');
+        const annee = formData.get('annee');
+        const id = formData.get('id').trim();
+
+        // Simulation d'une base de données de participants certifiés
+        const participants = [
+            { nom: 'Jean Dupont', formation: 'DIGIMAP', annee: '2026', id: 'JD001' },
+            { nom: 'Marie Kouassi', formation: 'TeleSense Pro', annee: '2026', id: 'MK002' },
+            { nom: 'Paul N\'Guessan', formation: 'E-Enquêteur', annee: '2026', id: 'PN003' },
+            { nom: 'Sophie Traoré', formation: 'GEOSKIL', annee: '2026', id: 'ST004' },
+            { nom: 'Ahmed Diallo', formation: 'DIGIMAP', annee: '2025', id: 'AD005' },
+            { nom: 'Fatou Camara', formation: 'TeleSense Pro', annee: '2025', id: 'FC006' }
+        ];
+
+        // Vérifier si le participant est enregistré
+        const participant = participants.find(p =>
+            p.nom.toLowerCase() === nom.toLowerCase() &&
+            p.formation === formation &&
+            p.annee === annee &&
+            (id === '' || p.id === id)
+        );
+
+        if (participant) {
+            // Afficher le message de vérification
+            const resultDiv = document.getElementById('verification-result');
+            resultDiv.innerHTML = `
+                <div style="background: rgba(0,198,255,0.1); border: 1px solid var(--secondary); border-radius: 20px; padding: 30px; text-align: center; margin-top: 40px;">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--secondary); margin-bottom: 20px;"></i>
+                    <h3 style="color: white; margin-bottom: 15px;">Vérification Réussie</h3>
+                    <p style="color: #e0e6ed; font-size: 1.1rem; margin-bottom: 20px;">
+                        Vous avez effectivement participé à la formation <strong>${participant.formation}</strong> en <strong>${participant.annee}</strong>.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-top: 20px;">
+                        <p style="color: #a0aec0; margin: 5px 0;"><strong>Nom :</strong> ${participant.nom}</p>
+                        <p style="color: #a0aec0; margin: 5px 0;"><strong>Formation :</strong> ${participant.formation}</p>
+                        <p style="color: #a0aec0; margin: 5px 0;"><strong>Année :</strong> ${participant.annee}</p>
+                        <p style="color: #a0aec0; margin: 5px 0;"><strong>ID Participant :</strong> ${participant.id}</p>
+                    </div>
+                    <p style="color: var(--secondary); font-style: italic; margin-top: 20px;">
+                        Félicitations ! Votre certification est validée par le CENTEC GEO.
+                    </p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        } else {
+            // Afficher un message d'erreur
+            const resultDiv = document.getElementById('verification-result');
+            resultDiv.innerHTML = `
+                <div style="background: rgba(255,0,0,0.1); border: 1px solid #ff4444; border-radius: 20px; padding: 30px; text-align: center; margin-top: 40px;">
+                    <i class="fas fa-times-circle" style="font-size: 3rem; color: #ff4444; margin-bottom: 20px;"></i>
+                    <h3 style="color: white; margin-bottom: 15px;">Vérification Échouée</h3>
+                    <p style="color: #e0e6ed; font-size: 1.1rem;">
+                        Désolé, vos informations ne correspondent à aucun participant certifié dans notre base de données.
+                    </p>
+                    <p style="color: #a0aec0; margin-top: 15px;">
+                        Veuillez vérifier vos données ou contacter le CENTEC GEO pour plus d'informations.
+                    </p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>

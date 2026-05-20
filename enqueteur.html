@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Enquêteur | Formation Géomatique Mobile</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,198,255,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0,198,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 6px 15px rgba(0,198,255,0.5));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .logo-container:hover img { transform: scale(1.05) rotate(-1deg); }
+        .logo-text { border-left: 2px solid rgba(0,198,255,0.6); padding-left: 15px; }
+        .logo-text h2 { color: white; font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .logo-text span { color: var(--secondary); font-size: 0.7rem; font-weight: 600; opacity: 0.9; }
+        .menu-btn { background: var(--primary); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; transition: 0.3s; border: none; }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,198,255,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; text-shadow: 0 0 10px rgba(0,198,255,0.8); }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.4rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; padding: 0; }
+        .nav-overlay .close-menu:hover { color: var(--secondary); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.6), rgba(10, 15, 26, 0.9)), url('https://images.unsplash.com/photo-1528311994577-0f20e0e1e61a?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; margin-bottom: 15px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 300; margin-bottom: 32px; max-width: 900px; }
+        .hero .hero-actions { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary, .btn-secondary { color: white; padding: 16px 36px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 700; text-transform: uppercase; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0, 198, 255, 0.25); }
+        .btn-secondary { background: rgba(255,255,255,0.08); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
+        .section-subtitle { text-align: center; color: #a0aec0; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .module-card { background: rgba(255,255,255,0.02); padding: 45px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); text-align: center; }
+        .module-card:hover { transform: translateY(-12px); border-color: var(--secondary); background: rgba(255,255,255,0.04); }
+        .level { display: inline-block; background: var(--primary); color: white; padding: 8px 18px; border-radius: 30px; font-size: 14px; margin-bottom: 20px; font-weight: bold; }
+        .module-card h3 { color: white; font-size: 1.5rem; margin-bottom: 20px; }
+        .module-card p { color: #a0aec0; line-height: 1.7; margin-bottom: 20px; }
+        .module-card ul { text-align: left; margin-bottom: 25px; padding-left: 20px; }
+        .module-card ul li { margin-bottom: 12px; color: #a0aec0; padding-left: 30px; position: relative; list-style: none; }
+        .module-card ul li::before { content: '\f058'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--primary); }
+        .btn-inscription { display: inline-block; width: 100%; text-align: center; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 16px; border-radius: 50px; text-decoration: none; font-weight: 700; text-transform: uppercase; transition: transform 0.3s ease; }
+        .btn-inscription:hover { transform: translateY(-3px); }
+        .content-box { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
+
+        .why { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); margin-top: 80px; }
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+        .why-box { background: rgba(255,255,255,0.03); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.08); transition: var(--transition); text-align: center; }
+        .why-box:hover { transform: translateY(-8px); border-color: var(--secondary); }
+        .why-box i { font-size: 2.8rem; color: var(--secondary); margin-bottom: 20px; display: block; }
+        .why-box h3 { color: white; font-size: 1.2rem; margin-bottom: 15px; }
+        .why-box p { color: #a0aec0; line-height: 1.7; }
+
+        footer { background: var(--darker); padding: 100px 8% 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; }
+        .footer-grid h2 { color: white; margin-bottom: 25px; }
+        .footer-grid p { color: #a0aec0; margin-bottom: 30px; }
+        .contact-list li { margin-bottom: 25px; display: flex; align-items: center; gap: 20px; color: #a0aec0; list-style: none; }
+        .contact-list i { color: var(--secondary); font-size: 1.2rem; background: rgba(0,198,255,0.1); padding: 12px; border-radius: 12px; }
+        .footer-bottom { text-align: center; margin-top: 50px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
+
+        @media (max-width: 992px) { .module-card { padding: 35px; } }
+        @media (max-width: 768px) { header { padding: 12px 4%; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="CENTEC GEO.html" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="CENTEC GEO.html#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="CENTEC GEO.html#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="CENTEC GEO.html#formations" onclick="toggleMenu()">Formations</a>
+    <a href="CENTEC GEO.html#services" onclick="toggleMenu()">Services</a>
+    <a href="CENTEC GEO.html#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="CENTEC GEO.html#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="CENTEC GEO.html#contact" onclick="toggleMenu()">Contact</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1 data-aos="fade-down" data-aos-duration="1200">E-Enquêteur</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Développez des compétences de collecte mobile, de gestion de données terrain et d’analyse géospatiale pour vos enquêtes et projets de terrain.</p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="700">
+        <a href="#modules" class="btn-primary">Voir le programme</a>
+        <a href="CENTEC GEO.html#formations" class="btn-secondary">Retour aux formations</a>
+    </div>
+</section>
+
+<section id="modules">
+    <h2 class="section-title" data-aos="fade-up">Programme de la formation</h2>
+    <p class="section-subtitle" data-aos="fade-up">Une formation orientée terrain pour maîtriser la collecte, le traitement et l’exploitation des données géolocalisées.</p>
+
+    <div class="modules">
+        <div class="module-card" data-aos="fade-up">
+            <span class="level">Module 1</span>
+            <h3>Collecte mobile</h3>
+            <p>Introduction aux outils Kobo, ODK et aux méthodes de terrain pour collecter des données fiables et géoréférencées.</p>
+            <ul>
+                <li>Paramétrage des formulaires</li>
+                <li>Gestion des questions et des médias</li>
+                <li>Collecte hors-ligne</li>
+                <li>Synchronisation et transfert sécurisé</li>
+                <li>Bonnes pratiques terrain</li>
+            </ul>
+            <a href="inscription-module1.html" class="btn-inscription">S'inscrire maintenant</a>
+        </div>
+
+        <div class="module-card" data-aos="fade-up" data-aos-delay="200">
+            <span class="level">Module 2</span>
+            <h3>Gestion de données</h3>
+            <p>Organisation et traitement des résultats d’enquête pour garantir qualité, cohérence et préparation à l’analyse.</p>
+            <ul>
+                <li>Nettoyage et validation</li>
+                <li>Structuration des bases de données</li>
+                <li>Import/export vers SIG</li>
+                <li>Analyse statistique de base</li>
+                <li>Production de rapports</li>
+            </ul>
+            <a href="inscription-module2.html" class="btn-inscription">S'inscrire maintenant</a>
+        </div>
+
+        <div class="module-card" data-aos="fade-up" data-aos-delay="400">
+            <span class="level">Module 3</span>
+            <h3>Analyse géospatiale</h3>
+            <p>Exploitez les données collectées pour créer des cartographies, des diagnostics et des indicateurs utiles à la décision.</p>
+            <ul>
+                <li>Visualisation cartographique</li>
+                <li>Analyse spatiale des enquêtes</li>
+                <li>Cartographie thématique</li>
+                <li>Création de tableaux de bord</li>
+                <li>Présentation des résultats</li>
+            </ul>
+            <a href="inscription-module3.html" class="btn-inscription">S'inscrire maintenant</a>
+        </div>
+    </div>
+
+    <div class="why" data-aos="fade-up">
+        <h2>Pourquoi choisir E-Enquêteur ?</h2>
+        <div class="why-grid">
+            <div class="why-box">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Compétences terrain</h3>
+                <p>Maîtrisez les outils mobiles indispensables pour la collecte de données sur le terrain.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-database"></i>
+                <h3>Données fiables</h3>
+                <p>Apprenez à organiser, valider et exploiter vos bases de données d’enquête.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Analyse géospatiale</h3>
+                <p>Transformez vos résultats terrain en cartes et indicateurs utiles pour la prise de décision.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-network-wired"></i>
+                <h3>Intégration SIG</h3>
+                <p>Reliez vos enquêtes mobiles aux systèmes d'information géographique pour des projets complets.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box" data-aos="fade-up">
+        <h2 style="color: white; margin-bottom: 20px; text-align: center;">Objectifs de la formation</h2>
+        <ul style="list-style: none; padding: 0; max-width: 900px; margin: auto;">
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i> Maîtriser les outils Kobo/ODK pour la collecte mobile de données.</li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i> Assurer la qualité, la validation et le traitement des données terrain.</li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i> Produire des cartes et analyses exploitables à partir des enquêtes géolocalisées.</li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;"><i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i> Intégrer vos données terrain dans des projets SIG et de développement territorial.</li>
+        </ul>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h2>CENTEC GEO</h2>
+            <p>L’expertise géospatiale de référence en Côte d'Ivoire.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+            </div>
+            <div style="margin-top: 30px;">
+                <a href="mailto:contact@centec.ci" class="btn-primary">Devenir partenaire</a>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Contact</h3>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> +225 00 00 00 00</li>
+                <li><i class="fas fa-envelope"></i> contact@centec.ci</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Écrivez-nous</h3>
+            <form class="contact-form" action="mailto:contact@centec.ci" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Votre nom" required>
+                <input type="email" name="email" placeholder="Votre email" required>
+                <textarea name="message" rows="4" placeholder="Votre message"></textarea>
+                <button type="submit" class="btn-primary">Envoyer</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 CENTEC GEO – Expertise en Géomatique</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+    function toggleMenu() {
+        document.getElementById('navOverlay').classList.toggle('active');
+    }
+    window.toggleMenu = toggleMenu;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificat | CENTEC GEO</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,198,255,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0,198,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img { height: 80px; width: auto; filter: drop-shadow(0 6px 15px rgba(0,198,255,0.5)); transition: transform 0.3s ease, filter 0.3s ease; }
+        .logo-container:hover img { transform: scale(1.05) rotate(-1deg); }
+        .logo-text { border-left: 2px solid rgba(0,198,255,0.6); padding-left: 15px; }
+        .logo-text h2 { color: white; font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .logo-text span { color: var(--secondary); font-size: 0.7rem; font-weight: 600; opacity: 0.9; }
+        .menu-btn { background: var(--primary); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; transition: 0.3s; border: none; }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,198,255,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; text-shadow: 0 0 10px rgba(0,198,255,0.8); }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.4rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; padding: 0; }
+        .nav-overlay .close-menu:hover { color: var(--secondary); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.6), rgba(10, 15, 26, 0.9)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; margin-bottom: 15px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 300; margin-bottom: 32px; max-width: 900px; }
+
+        .certificate {
+            background: white;
+            border-radius: 25px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            max-width: 800px;
+            margin: 50px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        .certificate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        .certificate img { width: 120px; margin-bottom: 30px; }
+        .certificate h1 { color: #0a0f1a; font-size: 2.5rem; margin-bottom: 20px; }
+        .certificate .subtitle { color: #666; font-size: 1.2rem; margin-bottom: 40px; }
+        .certificate .recipient { font-size: 1.8rem; color: #0a0f1a; font-weight: bold; margin-bottom: 20px; }
+        .certificate .details { color: #333; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; }
+        .certificate .signatures { display: flex; justify-content: space-around; margin-top: 50px; }
+        .signature { text-align: center; }
+        .signature .line { width: 150px; height: 2px; background: #333; margin: 10px auto; }
+        .signature .name { font-weight: bold; color: #0a0f1a; }
+        .signature .title { color: #666; font-size: 0.9rem; }
+
+        .actions { text-align: center; margin-top: 50px; }
+        .btn-secondary { background: rgba(255,255,255,0.08); color: white; padding: 16px 36px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 700; text-transform: uppercase; transition: background 0.3s ease, transform 0.3s ease; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+        footer { background: var(--darker); padding: 100px 8% 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; }
+        .footer-grid h2 { color: white; margin-bottom: 25px; }
+        .footer-grid p { color: #a0aec0; margin-bottom: 30px; }
+        .contact-list li { margin-bottom: 25px; display: flex; align-items: center; gap: 20px; color: #a0aec0; list-style: none; }
+        .contact-list i { color: var(--secondary); font-size: 1.2rem; background: rgba(0,198,255,0.1); padding: 12px; border-radius: 12px; }
+        .footer-bottom { text-align: center; margin-top: 50px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
+
+        @media (max-width: 768px) { header { padding: 12px 4%; } .certificate { padding: 40px 20px; } .signatures { flex-direction: column; gap: 30px; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="CENTEC GEO.html" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="CENTEC GEO.html#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="CENTEC GEO.html#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="CENTEC GEO.html#formations" onclick="toggleMenu()">Formations</a>
+    <a href="CENTEC GEO.html#services" onclick="toggleMenu()">Services</a>
+    <a href="CENTEC GEO.html#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="CENTEC GEO.html#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="certification.html" onclick="toggleMenu()">Certification</a>
+    <a href="CENTEC GEO.html#contact" onclick="toggleMenu()">Contact</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1 data-aos="fade-down" data-aos-duration="1200">Votre Certificat</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Félicitations ! Voici votre certificat officiel de formation CENTEC GEO.</p>
+</section>
+
+<section>
+    <div class="certificate" data-aos="fade-up">
+        <img src="CENTEC GEO LOGO.png" alt="CENTEC GEO" loading="lazy">
+        <h1>CERTIFICAT DE FORMATION</h1>
+        <div class="subtitle">Centre National d'Étude en Territoire et Cartographie - Côte d'Ivoire</div>
+        <div class="recipient" id="recipient">Nom du Participant</div>
+        <div class="details" id="details">
+            A suivi avec succès la formation <strong id="formation">FORMATION</strong> en <strong id="annee">ANNÉE</strong>.<br>
+            Cette certification atteste de la participation et de la maîtrise des compétences enseignées.
+        </div>
+        <div class="signatures">
+            <div class="signature">
+                <div class="line"></div>
+                <div class="name">Wilfried Codjo</div>
+                <div class="title">Directeur CENTEC GEO</div>
+            </div>
+            <div class="signature">
+                <div class="line"></div>
+                <div class="name">CENTEC GEO</div>
+                <div class="title">Centre de Formation</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button onclick="window.print()" class="btn-secondary">Imprimer le Certificat</button>
+        <a href="certification.html" class="btn-secondary" style="margin-left: 20px;">Nouvelle Demande</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <h2>CENTEC GEO</h2>
+            <p>L'expertise géospatiale de référence en Côte d'Ivoire.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+            </div>
+            <div style="margin-top: 30px;">
+                <a href="mailto:contact@centec.ci" class="btn-primary">Devenir partenaire</a>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Contact</h3>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> +225 00 00 00 00</li>
+                <li><i class="fas fa-envelope"></i> contact@centec.ci</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Écrivez-nous</h3>
+            <form class="contact-form" action="mailto:contact@centec.ci" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Votre nom" required>
+                <input type="email" name="email" placeholder="Votre email" required>
+                <textarea name="message" rows="4" placeholder="Votre message"></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 CENTEC GEO – Expertise en Géomatique</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+    function toggleMenu() {
+        document.getElementById('navOverlay').classList.toggle('active');
+    }
+
+    // Récupérer les paramètres URL et remplir le certificat
+    const urlParams = new URLSearchParams(window.location.search);
+    const nom = urlParams.get('nom') || 'Nom du Participant';
+    const formation = urlParams.get('formation') || 'FORMATION';
+    const annee = urlParams.get('annee') || 'ANNÉE';
+
+    document.getElementById('recipient').textContent = nom;
+    document.getElementById('formation').textContent = formation;
+    document.getElementById('annee').textContent = annee;
+</script>
+
+</body>
+</html>

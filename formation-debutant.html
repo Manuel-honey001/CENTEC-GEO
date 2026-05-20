@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formation Cartographie Numérique - Niveau Débutant – CENTEC</title>
+  <meta name="description" content="Formation Certification en Cartographie Numérique et SIG - Niveau Débutant" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #0b5ed7;
+      --secondary: #22c55e;
+      --dark: #111;
+    }
+
+    * { 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      line-height: 1.7;
+      color: #222;
+      background: #f9fafb;
+    }
+
+    header {
+      background: linear-gradient(135deg, #7ec8ff 0%, #2ea3ff 100%);
+      color: #fff;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(46,163,255,0.2);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 2rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 52px;
+      width: auto;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.2);
+      padding: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.05);
+    }
+
+    header h1 { 
+      margin: 0; 
+      font-size: 1.3rem; 
+      font-weight: 700;
+    }
+    
+    .tagline { 
+      margin: 0.2rem 0 0 0; 
+      font-size: 0.85rem; 
+      opacity: 0.95;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      opacity: 0.9;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover { 
+      opacity: 1;
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      color: var(--secondary);
+      margin: 0 0 1.2rem 0;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .hero-text .subtitle {
+      font-size: 1.4rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .hero-text .description {
+      font-size: 1.15rem;
+      color: #444;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 2rem;
+      font-weight: 700;
+      color: #555;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-meta i {
+      color: var(--secondary);
+      font-size: 1.2rem;
+    }
+
+    .hero-image {
+      text-align: center;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 30px 60px rgba(34, 197, 94, 0.25);
+      border: 3px solid white;
+      transition: all 0.3s ease;
+    }
+
+    .hero-image img:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 40px 80px rgba(34, 197, 94, 0.3);
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      margin: 0 0 1.5rem 0;
+      color: var(--secondary);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .module-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border-left: 5px solid var(--secondary);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(34, 197, 94, 0.2);
+    }
+
+    .module-card:hover::before {
+      opacity: 1;
+    }
+
+    .module-card h3 {
+      margin: 0 0 1rem 0;
+      color: var(--secondary);
+      font-size: 1.2rem;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .module-card p {
+      margin: 0;
+      color: #666;
+      font-size: 0.95rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .checkmark {
+      color: var(--secondary);
+      font-weight: bold;
+      margin-right: 0.8rem;
+      font-size: 1.3rem;
+    }
+
+    .info-box {
+      background: #fff;
+      padding: 2.5rem;
+      border-radius: 14px;
+      margin: 2rem 0;
+      border-left: 5px solid var(--secondary);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .detail-item {
+      background: linear-gradient(135deg, #fff 0%, #f9fafb 100%);
+      padding: 2rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      border-top: 4px solid var(--secondary);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .detail-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(34, 197, 94, 0.15);
+    }
+
+    .detail-item i {
+      color: var(--secondary);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .detail-item:hover i {
+      transform: scale(1.1) rotateZ(10deg);
+    }
+
+    .detail-item h4 {
+      margin: 0.5rem 0;
+      color: var(--secondary);
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .detail-item p {
+      margin: 0;
+      color: #666;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .form-section {
+      background: linear-gradient(135deg, #fff 0%, #f9fafb 100%);
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      max-width: 750px;
+      margin: 3rem auto;
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .form-section h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      color: #222;
+      font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border-radius: 10px;
+      border: 2px solid #e5e7eb;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      background: #fff;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.8rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1.3rem;
+      background: linear-gradient(135deg, var(--secondary) 0%, #16a34a 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(34, 197, 94, 0.4);
+    }
+
+    .required {
+      color: #ef4444;
+      font-weight: bold;
+    }
+
+    .help-box {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-radius: 10px;
+      text-align: center;
+      color: #666;
+      font-size: 0.95rem;
+      border: 2px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .help-box i {
+      color: var(--secondary);
+      margin-right: 0.6rem;
+      font-weight: bold;
+    }
+
+    .help-box strong {
+      color: var(--secondary);
+    }
+
+    footer {
+      background: linear-gradient(135deg, var(--dark) 0%, #1a1a1a 100%);
+      color: #fff;
+      padding: 3rem 1rem;
+      text-align: center;
+      margin-top: 4rem;
+      border-top: 3px solid var(--secondary);
+    }
+
+    footer p {
+      margin: 0.8rem 0;
+    }
+
+    footer a { 
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    footer a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+      }
+
+      .header-inner {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: center;
+      }
+
+      section {
+        padding: 2rem 1rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .hero-text h1 {
+        font-size: 1.8rem;
+      }
+
+      .modules-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-section {
+        padding: 2rem;
+        margin: 2rem 0;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-text h1 {
+        font-size: 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <img src="assets/logo.jpg" alt="Logo CENTEC" class="logo" onerror="this.style.display='none'">
+      <div>
+        <h1>CENTEC</h1>
+        <p class="tagline">Formation Professionnelle</p>
+      </div>
+    </div>
+    <nav>
+      <a href="CENTEC 2.html#formations">← Retour aux formations</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>PROGRAMME DE CERTIFICATION EN CARTOGRAPHIE NUMÉRIQUE ET SIG</h1>
+      <p class="subtitle">Niveau Débutant</p>
+      <p class="description">Acquérir les bases solides de la cartographie et des SIG pour produire des cartes simples et professionnelles.</p>
+      <div class="hero-meta">
+        <span><i class="fa-solid fa-calendar"></i>DU 07 AU 22 FÉVRIER 2026</span>
+        <span><i class="fa-solid fa-location-dot"></i>Abidjan, Cocody</span>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="../../../../Downloads/Formation niveau Debutant .jpeg" alt="Formation Niveau Débutant">
+    </div>
+  </div>
+</div>
+
+<section>
+  <h2><i class="fa-solid fa-cubes" style="color: var(--secondary); margin-right: 0.8rem;"></i>MODULES DE FORMATION</h2>
+  
+  <div class="modules-grid">
+    <div class="module-card">
+      <h3><span class="checkmark">✓</span> Introduction à la cartographie et aux SIG</h3>
+      <p>Concepts fondamentaux, histoire et applications pratiques de la cartographie numérique.</p>
+    </div>
+    <div class="module-card">
+      <h3><span class="checkmark">✓</span> Principes des SIG</h3>
+      <p>Systèmes d'Information Géographique, architecture et fonctionnalités principales.</p>
+    </div>
+    <div class="module-card">
+      <h3><span class="checkmark">✓</span> Données géographiques</h3>
+      <p>Données vecteur et raster, formats, sources et gestion des données spatiales.</p>
+    </div>
+    <div class="module-card">
+      <h3><span class="checkmark">✓</span> Prise en main des logiciels</h3>
+      <p>Pratique intensive avec QGIS et ArcGIS Desktop pour maîtriser les outils.</p>
+    </div>
+    <div class="module-card">
+      <h3><span class="checkmark">✓</span> Symbolisation et mise en page</h3>
+      <p>Rendu visuel des données, légendes, échelles et composition cartographique.</p>
+    </div>
+    <div class="module-card">
+      <h3><span class="checkmark">✓</span> Production et export de cartes</h3>
+      <p>Finalisation, impression et export de cartes en différents formats professionnels.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><i class="fa-solid fa-info-circle" style="color: var(--secondary); margin-right: 0.8rem;"></i>INFORMATIONS DÉTAILLÉES</h2>
+  
+  <div class="details-grid">
+    <div class="detail-item">
+      <i class="fa-solid fa-hourglass-end"></i>
+      <h4>Durée totale</h4>
+      <p>16 jours / 112 heures</p>
+    </div>
+    <div class="detail-item">
+      <i class="fa-solid fa-users"></i>
+      <h4>Taille du groupe</h4>
+      <p>5-15 participants</p>
+    </div>
+    <div class="detail-item">
+      <i class="fa-solid fa-laptop"></i>
+      <h4>Logiciels</h4>
+      <p>QGIS, ArcGIS Desktop</p>
+    </div>
+    <div class="detail-item">
+      <i class="fa-solid fa-medal"></i>
+      <h4>Certification</h4>
+      <p>Certificat professionnel</p>
+    </div>
+    <div class="detail-item">
+      <i class="fa-solid fa-building"></i>
+      <h4>Format</h4>
+      <p>En Présentiel / En ligne</p>
+    </div>
+    <div class="detail-item">
+      <i class="fa-solid fa-bullseye"></i>
+      <h4>Niveau</h4>
+      <p>Débutant - Sans prérequis</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><i class="fa-solid fa-target" style="color: var(--secondary); margin-right: 0.8rem;"></i>PUBLIC CIBLE</h2>
+  
+  <div class="info-box">
+    <p style="font-size: 1.05rem;">Cette formation s'adresse à :</p>
+    <ul style="list-style: none; padding: 0; margin-top: 1rem;">
+      <li style="padding: 0.8rem 0; border-bottom: 1px solid #ddd; color: #666;"><span class="checkmark">✓</span> <strong>Débutants</strong> souhaitant apprendre les SIG de zéro</li>
+      <li style="padding: 0.8rem 0; border-bottom: 1px solid #ddd; color: #666;"><span class="checkmark">✓</span> <strong>Étudiants</strong> en géographie, environnement, aménagement ou domaines connexes</li>
+      <li style="padding: 0.8rem 0; border-bottom: 1px solid #ddd; color: #666;"><span class="checkmark">✓</span> <strong>Professionnels</strong> sans base en cartographie numérique</li>
+      <li style="padding: 0.8rem 0; color: #666;"><span class="checkmark">✓</span> <strong>Collectivités et entreprises</strong> souhaitant renforcer les capacités de leurs équipes</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="form-section">
+    <h2>FORMULAIRE D'INSCRIPTION</h2>
+    <p style="text-align: center; color: #666; margin-bottom: 2rem;">Remplissez ce formulaire pour vous inscrire. Nous vous confirmerons votre place dans les 48 heures.</p>
+    
+    <form onsubmit="return handleFormSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="nom">Nom complet <span class="required">*</span></label>
+          <input type="text" id="nom" name="nom" placeholder="Ex: Jean Dupont" required>
+        </div>
+        <div class="form-group">
+          <label for="prenom">Prénom <span class="required">*</span></label>
+          <input type="text" id="prenom" name="prenom" placeholder="Ex: Jean" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Adresse email <span class="required">*</span></label>
+          <input type="email" id="email" name="email" placeholder="exemple@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="telephone">Téléphone <span class="required">*</span></label>
+          <input type="tel" id="telephone" name="telephone" placeholder="+225 XX XX XX XX" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="organisation">Organisation / Entreprise</label>
+          <input type="text" id="organisation" name="organisation" placeholder="Facultatif">
+        </div>
+        <div class="form-group">
+          <label for="fonction">Fonction / Poste</label>
+          <input type="text" id="fonction" name="fonction" placeholder="Facultatif">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="experience">Expérience SIG <span class="required">*</span></label>
+          <select id="experience" name="experience" required>
+            <option value="">-- Sélectionnez votre niveau --</option>
+            <option value="aucune">Aucune expérience</option>
+            <option value="notions">Notions basiques</option>
+            <option value="moderee">Expérience modérée</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="formation">Type de formation <span class="required">*</span></label>
+          <select id="formation" name="formation" required>
+            <option value="">-- Choisissez --</option>
+            <option value="presentiel">En Présentiel</option>
+            <option value="enligne">En Ligne</option>
+            <option value="hybrid">Hybride</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="motivation">Motivations et attentes <span class="required">*</span></label>
+        <textarea id="motivation" name="motivation" placeholder="Décrivez pourquoi vous souhaitez suivre cette formation..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Envoyer mon inscription</button>
+    </form>
+
+    <div class="help-box">
+      <i class="fa-solid fa-phone"></i> <strong>Besoin d'aide ?</strong> Appelez-nous au <strong>+225 07 13 177 415</strong> ou envoyez un email à <strong>centrecartographie@gmail.com</strong>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 CENTEC – Tous droits réservés</p>
+  <p><a href="CENTEC 2.html">← Retour au site principal</a></p>
+</footer>
+
+<script>
+  const form = document.querySelector('form');
+  form.action = 'https://formsubmit.co/centrecartographie@gmail.com';
+  form.method = 'POST';
+
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    const nom = document.getElementById('nom').value;
+    alert(`Merci ${nom}! Votre inscription est en cours d'envoi. Nous vous confirmerons dans les 48h.`);
+    setTimeout(() => form.submit(), 1500);
+  }
+</script>
+
+</body>
+</html>
