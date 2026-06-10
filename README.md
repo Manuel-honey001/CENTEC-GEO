@@ -207,28 +207,146 @@
         
         .content-box { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); }
         .intro-panel {
-            margin-top: 60px;
-            background: white;
-            border-radius: 25px;
-            padding: 50px 30px;
+            margin-top: 0;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 28px;
+            padding: 40px 35px;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.16);
-            color: #0a0f1a;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .intro-panel .tag {
+            display: inline-block;
+            color: #7dd3fc;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
         }
         .intro-panel img {
-            width: 140px;
-            margin-bottom: 25px;
+            width: 120px;
+            margin: 0 auto 20px;
+            display: block;
+            background: white;
+            padding: 12px;
+            border-radius: 18px;
         }
+
+        /* small drone icon near service title */
+        .card .main-icon { font-size: 2.6rem; color: var(--secondary); margin-bottom: 18px; }
+        .card .small-drone { font-size: 0.9rem; color: var(--secondary); margin-left: 8px; vertical-align: middle; display: inline-block; }
         .intro-panel h2 {
-            color: #0a0f1a;
+            color: #f8fafc;
             margin-bottom: 15px;
+            letter-spacing: 0.5px;
         }
         .intro-panel p {
-            color: #333;
-            font-size: 1.05rem;
+            color: #cbd5e1;
+            font-size: 1rem;
             line-height: 1.8;
-            max-width: 800px;
+            max-width: 720px;
             margin: auto;
+        }
+        .propos-extra {
+            padding: 60px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .panels-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: 1fr;
+        }
+        .intro-panel,
+        .white-card {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 28px;
+            padding: 40px 35px;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(96, 165, 250, 0.15);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .intro-panel:hover,
+        .white-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(96, 165, 250, 0.35);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.4);
+        }
+        .white-card {
+            text-align: left;
+            position: relative;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding-top: 50px;
+        }
+        .white-card::before {
+            content: "";
+            position: absolute;
+            top: 24px;
+            left: 30px;
+            width: 60px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(59,130,246,1), rgba(14,165,233,1));
+        }
+        .white-card h2,
+        .white-card h3,
+        .intro-panel h2 {
+            color: #f8fafc;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+        .white-card p,
+        .intro-panel p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 18px;
+        }
+        .white-card ul {
+            margin: 18px 0;
+            padding-left: 20px;
+            color: #475569;
+            list-style: disc inside;
+        }
+        .white-card ul li {
+            margin-bottom: 12px;
+        }
+        .intro-panel p {
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 1024px) {
+            .panels-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (max-width: 1023px) {
+            .panels-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .propos-extra {
+                padding: 40px 6%;
+            }
+            .panels-grid {
+                grid-template-columns: 1fr;
+            }
+            .intro-panel,
+            .white-card {
+                padding: 30px 25px;
+                min-height: auto;
+            }
         }
         .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
         .benefit-card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.08); transition: var(--transition); }
@@ -339,13 +457,6 @@
     transform: scale(1.05);
     transition: 0.3s ease;
 }
-.white-card {
-    background: white;
-    border-radius: 25px;
-    padding: 50px 30px;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-}
 </style>
 </head>
 <body>
@@ -445,41 +556,32 @@
     
     </div>
 </section>
-<div class="intro-panel" data-aos="fade-up">
-    <img src="CENTEC GEO LOGO.png" alt="CENTEC GEO" loading="lazy">
-    <h2>CENTEC GEO</h2>
-    <p>Le CENTEC GEO (Centre National d’Étude en Territoire et Cartographie – Côte d’Ivoire) est une structure spécialisée dans la géomatique, la cartographie et les technologies géospatiales.
-
-Il forme des experts capables d’exploiter les données géographiques à travers les SIG, la télédétection et les drones, afin de soutenir la prise de décision dans la gestion et le développement des territoires.</p>
-</div>
-    <div class="white-card" data-aos="fade-up">
-        <h2 style="color: #0a0f1a; margin-bottom: 15px;">Notre Vision</h2>
-        <p style="color: #333;">
-            Être le leader en formation et en solutions géomatiques en Afrique.
-        </p>
+<section class="propos-extra" data-aos="fade-up">
+    <div class="propos-header">
+        <h2 class="section-title">CENTEC GEO en action</h2>
+        <p class="section-subtitle">Deux blocs clairs pour présenter notre vision et notre mission, avec un style plus moderne et lisible.</p>
     </div>
-
-    <div class="white-card" data-aos="fade-up" style="margin-top: 40px;">
-        <h3 style="color: var(--dark); margin-bottom: 20px;">Bienvenue au CENTEC</h3>
-        <p style="color:#333; line-height:1.8; font-size:1.05rem; margin-bottom:15px;">
-            Le Centre National d’Étude en Territoire et Cartographie (CENTEC) est une structure spécialisée dans la formation professionnelle et l’expertise en géomatique appliquée.
-        </p>
-        <p style="color:#333; line-height:1.8; font-size:1.05rem; margin-bottom:15px;">
-            Dans un contexte où les données territoriales jouent un rôle central dans la planification et la prise de décision, le CENTEC accompagne les administrations publiques, les bureaux d’études, les entreprises et les organisations de développement dans la maîtrise des outils modernes d’analyse spatiale.
-        </p>
-        <p style="color:#333; line-height:1.8; font-size:1.05rem; margin-bottom:15px;">
-            À travers ses programmes de formation et ses services d’expertise, le CENTEC contribue au renforcement des capacités techniques et à l’intégration des technologies géospatiales dans les projets de développement territorial.
-        </p>
-        <p style="color:#333; line-height:1.8; font-size:1.05rem; margin-bottom:15px;">
-            Le centre intervient notamment dans la cartographie numérique, les systèmes d’information géographique (SIG), la télédétection, la collecte de données géolocalisées, le pilotage de drones et la photogrammétrie.
-        </p>
-        <p style="color:#333; line-height:1.8; font-size:1.05rem; margin-bottom:15px;">
-            Grâce à une approche pédagogique axée sur la pratique et l’innovation, le CENTEC forme des professionnels capables d’exploiter efficacement les données géographiques pour analyser les territoires, soutenir la planification et améliorer la prise de décision.
-        </p>
-        <p style="color:#333; line-height:1.8; font-size:1.05rem;">
-            Le CENTEC se positionne ainsi comme un partenaire technique des institutions et organisations souhaitant intégrer la géomatique au cœur de leurs projets et stratégies de développement.
-        </p>
+    <div class="panels-grid">
+        <div class="intro-panel">
+            <span class="tag">Notre identité</span>
+            <img src="CENTEC GEO LOGO.png" alt="CENTEC GEO" loading="lazy">
+            <h2>CENTEC GEO</h2>
+            <p>Le CENTEC GEO (Centre National d’Étude en Territoire et Cartographie – Côte d’Ivoire) forme des experts en géomatique, SIG, télédétection et cartographie digitale.</p>
+            <p>Nous accompagnons les organisations publiques et privées avec des formations orientées vers l’opérationnel et les usages métiers.</p>
+        </div>
+        <div class="white-card">
+            <span class="eyebrow">Notre engagement</span>
+            <h3>Vision et mission</h3>
+            <p>Nous voulons faire de la géomatique un levier stratégique pour la gestion territoriale, en alliant innovation, pédagogie et accompagnement terrain.</p>
+            <ul>
+                <li>Formations pratiques basées sur des cas réels</li>
+                <li>Accompagnement personnalisé pour chaque projet</li>
+                <li>Solutions géospatiales adaptées aux besoins locaux</li>
+            </ul>
+            <p>Chaque action vise à renforcer les compétences et à faciliter la prise de décision pour les décideurs et les professionnels du territoire.</p>
+        </div>
     </div>
+</section>
 
 <section id="formations">
     <h2 class="section-title" data-aos="fade-up">Nos Formations</h2>
@@ -548,9 +650,19 @@ Il forme des experts capables d’exploiter les données géographiques à trave
             <p>Administration de bases de données spatiales pour les collectivités.</p>
         </div>
         <div class="card" data-aos="zoom-in" data-aos-delay="600">
-            <i class="fas fa-drone"></i>
-            <h3>Vente & Location de Drones</h3>
+            <i class="fas fa-drone main-icon"></i>
+            <h3>Vente & Location de Drones <span class="small-drone" aria-hidden="true"><i class="fas fa-drone"></i></span></h3>
             <p>Fourniture, vente et location de drones professionnels pour levés et missions de terrain.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="800">
+            <i class="fas fa-database"></i>
+            <h3>Collecte & Traitements de Données</h3>
+            <p>Collecte terrain, validation et traitement des données géospatiales pour produire des jeux de données fiables et exploitables.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="1000">
+            <i class="fas fa-map"></i>
+            <h3>Édition de Cartes Thématiques</h3>
+            <p>Conception, stylisation et édition de cartes thématiques personnalisées pour l’aide à la décision.</p>
         </div>
     </div>
 </section>
@@ -561,9 +673,9 @@ Il forme des experts capables d’exploiter les données géographiques à trave
         <div class="news-card" data-aos="fade-up">
             <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1473960104312-3c712850684b'); height: 230px; background-size: cover;"></div>
             <div class="news-content">
-                <span class="news-date">Avril 2026</span>
-                <h4 style="color:white; margin:15px 0;">L'IA et la Géomatique</h4>
-                <p style="font-size:0.9rem; color: #a0aec0;">Intégration de l'intelligence artificielle pour l'analyse prédictive.</p>
+                <span class="news-date">30 Mai 2026</span>
+                <h4 style="color:white; margin:15px 0;">Cérémonie de graduation</h4>
+                <p style="font-size:0.9rem; color: #a0aec0;">Image à venir — je t'enverrai une image bientôt.</p>
                 <a href="#" style="color:var(--secondary); text-decoration:none; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
             </div>
         </div>
@@ -643,20 +755,20 @@ Il forme des experts capables d’exploiter les données géographiques à trave
                 <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
             </div>
             <div style="margin-top: 30px;">
-                <a href="mailto:contact@centec.ci" class="btn">Devenir partenaire</a>
+                <a href="mailto:centrecartographie@gmail.com" class="btn">Devenir partenaire</a>
             </div>
         </div>
         <div>
             <h3 style="color: white; margin-bottom: 30px;">Contact</h3>
             <ul class="contact-list">
                 <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
-                <li><i class="fas fa-phone-alt"></i> +225 00 00 00 00</li>
-                <li><i class="fas fa-envelope"></i> contact@centec.ci</li>
+                <li><i class="fas fa-phone-alt"></i> +225 0713177415</li>
+                <li><i class="fas fa-envelope"></i> centrecartographie@gmail.com</li>
             </ul>
         </div>
         <div>
             <h3 style="color: white; margin-bottom: 30px;">Écrivez-nous</h3>
-            <form class="contact-form" action="mailto:contact@centec.ci" method="post" enctype="text/plain">
+            <form class="contact-form" action="mailto:centrecartographie@gmail.com" method="post" enctype="text/plain">
                 <input type="text" name="name" placeholder="Votre nom" required>
                 <input type="email" name="email" placeholder="Votre email" required>
                 <textarea name="message" rows="4" placeholder="Votre message"></textarea>
@@ -683,30 +795,35 @@ document.addEventListener("DOMContentLoaded", function () {
 window.toggleMenu = toggleMenu;
 
     // ===== SLIDER =====
-    let currentScroll = 0;
+    let currentIndex = 0;
     const slider = document.getElementById('slider');
     function moveSlider(direction) {
-    const card = document.querySelector('.team-member');
-    if (!card || !slider) return;
+        const cards = document.querySelectorAll('.team-member');
+        const card = cards[0];
 
-    const cardWidth = card.offsetWidth + 25;
-    const maxScroll = slider.scrollWidth - slider.parentElement.offsetWidth;
+        if (!card || !slider) return;
 
-    currentScroll += direction * cardWidth;
+        const visibleCards =
+            window.innerWidth <= 600 ? 1 :
+            window.innerWidth <= 992 ? 2 : 3;
 
-    if (currentScroll < 0) currentScroll = maxScroll;
-    if (currentScroll > maxScroll) currentScroll = 0;
+        const maxIndex = cards.length - visibleCards;
 
-    slider.style.transform = `translateX(-${currentScroll}px)`;
-}
+        currentIndex += direction;
 
-window.moveSlider = moveSlider;
+        if (currentIndex > maxIndex) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = maxIndex;
 
-setInterval(() => {
-    moveSlider(1);
-}, 4500);
+        const cardWidth = card.offsetWidth + 25;
 
-    
+        slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+    }
+
+    window.moveSlider = moveSlider;
+
+    setInterval(() => {
+        moveSlider(1);
+    }, 4500);
 
     // ===== COUNTERS =====
     
