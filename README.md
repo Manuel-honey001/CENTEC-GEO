@@ -559,7 +559,7 @@
 <section class="propos-extra" data-aos="fade-up">
     <div class="propos-header">
         <h2 class="section-title">CENTEC GEO en action</h2>
-        <p class="section-subtitle">Deux blocs clairs pour présenter notre vision et notre mission, avec un style plus moderne et lisible.</p>
+        <p class="section-subtitle">Deux blocs clairs pour présenter notre vision et notre mission.</p>
     </div>
     <div class="panels-grid">
         <div class="intro-panel">
