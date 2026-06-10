@@ -155,26 +155,41 @@
         <h2>Informations du Candidat</h2>
         <form id="certForm">
             <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" placeholder="Votre nom">
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" placeholder="Votre prénom">
+            </div>
+            <div class="form-group">
                 <label for="formation">Formation suivie</label>
                 <select id="formation" name="formation" required>
                     <option value="">Sélectionnez une formation</option>
+                    <option value="CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO">CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO</option>
+                    <option value="COLLECTE DE DONNEES">COLLECTE DE DONNEES</option>
                     <option value="DIGIMAP">DIGIMAP</option>
-                    <option value="TeleSense Pro">TeleSense Pro</option>
-                    <option value="E-Enquêteur">E-Enquêteur</option>
-                    <option value="GEOSKIL">GEOSKIL</option>
+                    <option value="SF CARTO STATISTIQUE">SF CARTO STATISTIQUE</option>
+                    <option value="TELESENSE PRO">TELESENSE PRO</option>
+                    <option value="DRONE ET PHOTOGRAMMETRIE">DRONE ET PHOTOGRAMMETRIE</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="nom">Nom complet</label>
-                <input type="text" id="nom" name="nom" placeholder="Votre nom complet" required>
+                <label for="niveau">Niveau de formation</label>
+                <select id="niveau" name="niveau" required>
+                    <option value="">Sélectionnez le niveau</option>
+                    <option value="Débutant">Débutant</option>
+                    <option value="Intermédiaire">Intermédiaire</option>
+                    <option value="Expert">Expert</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="annee">Année de formation</label>
                 <input type="number" id="annee" name="annee" placeholder="Ex: 2026" min="2020" max="2030" required>
             </div>
             <div class="form-group">
-                <label for="id">ID de participant (optionnel)</label>
-                <input type="text" id="id" name="id" placeholder="Votre ID de participant">
+                <label for="id">ID de participant</label>
+                <input type="text" id="id" name="id" placeholder="Votre ID de participant" required>
             </div>
             <button type="submit" class="btn-primary">Vérifier la Certification</button>
         </form>
@@ -224,57 +239,185 @@
         document.getElementById('navOverlay').classList.toggle('active');
     }
 
+    // Afficher/masquer le champ `niveau` selon la formation sélectionnée
+    (function setupNiveauToggle() {
+        const formationSelect = document.getElementById('formation');
+        const niveauSelect = document.getElementById('niveau');
+        const niveauGroup = niveauSelect && niveauSelect.closest('.form-group');
+        function toggleNiveau() {
+            const val = (formationSelect.value || '').toLowerCase();
+            if (val.includes('digi map') || val.includes('digimap') || val.includes('telesense')) {
+                if (niveauGroup) niveauGroup.style.display = '';
+                if (niveauSelect) niveauSelect.required = true;
+            } else {
+                if (niveauGroup) niveauGroup.style.display = 'none';
+                if (niveauSelect) { niveauSelect.required = false; niveauSelect.value = ''; }
+            }
+        }
+        formationSelect.addEventListener('change', toggleNiveau);
+        // initial
+        toggleNiveau();
+    })();
+
     document.getElementById('certForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
         const nom = formData.get('nom').trim();
+        const prenom = formData.get('prenom').trim();
         const formation = formData.get('formation');
+        const niveau = formData.get('niveau');
         const annee = formData.get('annee');
         const id = formData.get('id').trim();
+        
+        // Au moins nom ou prénom doit être renseigné
+        const resultDiv = document.getElementById('verification-result');
+        if (!nom && !prenom) {
+            resultDiv.innerHTML = `
+                <div style="background: rgba(255,165,0,0.08); border: 1px solid #ffb84d; border-radius: 20px; padding: 20px; text-align: center;">
+                    <i class="fas fa-exclamation-triangle" style="color: #ffb84d; font-size: 2rem; display: block; margin-bottom: 10px;"></i>
+                    <strong style="color: white;">Veuillez saisir au moins le nom ou le prénom.</strong>
+                </div>`;
+            resultDiv.style.display = 'block';
+            return;
+        }
 
-        // Simulation d'une base de données de participants certifiés
+        // Liste des participants certifiés importée depuis LISTE DE CERTIFICATION.xlsx
         const participants = [
-            { nom: 'Jean Dupont', formation: 'DIGIMAP', annee: '2026', id: 'JD001' },
-            { nom: 'Marie Kouassi', formation: 'TeleSense Pro', annee: '2026', id: 'MK002' },
-            { nom: 'Paul N\'Guessan', formation: 'E-Enquêteur', annee: '2026', id: 'PN003' },
-            { nom: 'Sophie Traoré', formation: 'GEOSKIL', annee: '2026', id: 'ST004' },
-            { nom: 'Ahmed Diallo', formation: 'DIGIMAP', annee: '2025', id: 'AD005' },
-            { nom: 'Fatou Camara', formation: 'TeleSense Pro', annee: '2025', id: 'FC006' }
+            { nom: 'TRAORE', prenom: 'SIAKA', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-007', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Traore.PNG' },
+            { nom: 'COULIBALY', prenom: 'YIREKINNI SALI', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-008', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Sali.PNG' },
+            { nom: 'GOURIZAN', prenom: 'YOBOUE NATE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '', id: 'CENTEC-GEO-CTD-2026-008', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Nate08.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-001', photo: 'CERTIFICATS/DIGIMAP/N1/jeremie1.png' },
+            { nom: 'ACKA', prenom: 'AFFOUE GRACE FALONE ANDREA', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-002', photo: 'CERTIFICATS/DIGIMAP/N1/andrea1.png' },
+            { nom: 'AMADOU', prenom: 'DIOP', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-003', photo: 'CERTIFICATS/DIGIMAP/N1/diop1.png' },
+            { nom: 'AMADOU', prenom: 'DIOP', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-001', photo: 'CERTIFICATS/DIGIMAP/N2/diop2.png' },
+            { nom: 'GOLI', prenom: 'MIEN-YO JERIEL KADMIEL', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-003', photo: 'CERTIFICATS/DIGIMAP/N3/GOLI3.PNG' },
+            { nom: "N'GUESSAN", prenom: 'KOFFI LAURENT GBACALO', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-004', photo: 'CERTIFICATS/DIGIMAP/N3/Koffi3.PNG' },
+            { nom: 'BROU', prenom: 'KOUAKOU RODRIGUE', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-005', photo: 'CERTIFICATS/DIGIMAP/N3/Brou3.PNG' },
+            { nom: 'YEO', prenom: 'PETHANHANGUI ARNAUD', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-006', photo: 'CERTIFICATS/DIGIMAP/N3/Yeo3.PNG' },
+            { nom: 'YAO', prenom: 'KOFFI FELIX', formation: 'SF CARTO STATISTIQUE', niveau: '', annee: '2026', id: 'CENTEC-GEO-SFCS-2026-002', photo: 'CERTIFICATS/SF CARTOGRAPHIE STATISTIQUE/felix02.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-001', photo: 'CERTIFICATS/TELESENSE PRO/N1/jeremie1.PNG' },
+            { nom: 'KOUADIO', prenom: 'CHI KOUASSI MARIE CHARLENE', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-002', photo: 'CERTIFICATS/TELESENSE PRO/N1/charlene1.PNG' },
+            { nom: 'JEAN', prenom: 'CARLO DIEGDIAM DIOUF', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-003', photo: 'CERTIFICATS/TELESENSE PRO/N1/Kouadio1.PNG' },
+            { nom: 'OUATTARA', prenom: 'KATIENTIMPI SANKON', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-004', photo: 'CERTIFICATS/TELESENSE PRO/N1/ouattara1.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-001', photo: 'CERTIFICATS/TELESENSE PRO/N2/Jeremie2.PNG' },
+            { nom: 'OUATTARA', prenom: 'BALA MAMADOU', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-002', photo: 'CERTIFICATS/TELESENSE PRO/N2/Bala2.PNG' },
+            { nom: 'KOUASSI', prenom: 'BREDOU', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-003', photo: 'CERTIFICATS/TELESENSE PRO/N2/Bredou2.PNG' },
+            { nom: 'MELEDJE', prenom: 'RAMEAU', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-001', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Meledje.PNG' },
+            { nom: 'COULIBALY', prenom: 'GBAMBELE ADAMA', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-002', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Adama.PNG' },
+            { nom: 'DJEZOU', prenom: 'BERTRAND', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-003', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Djezou.PNG' },
+            { nom: 'KONAN', prenom: 'SERGE WILLIAMS', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-004', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Serge.PNG' },
+            { nom: 'KOUADIO', prenom: 'KOFFI HANS', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-005', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Koffi.PNG' },
+            { nom: 'AMARI', prenom: 'ISAAC', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-006', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Amari.PNG' },
+            { nom: 'SANGARE', prenom: 'ABDOULAYE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-001', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Sangare01.PNG' },
+            { nom: "N'GUESSAN", prenom: 'DENIS KOFFI', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-003', photo: 'CERTIFICATS/COLLECTE DE DONNEES/denis03.PNG' },
+            { nom: 'KONE', prenom: 'CHIEMMAILA GRACE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-004', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Kone04.PNG' },
+            { nom: 'SEA', prenom: 'DOUAMIN JASPE AMETISTE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-005', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Sea05.PNG' },
+            { nom: 'KOUAKOU', prenom: 'MIENTKPA PRISCILLE DANIELLE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-006', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Danielle06.PNG' },
+            { nom: 'MARLENE', prenom: 'COULIBALY KADY', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-002', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Marlene02.PNG' },
+            { nom: 'ALI', prenom: 'BITIBROH KOSSIA MARIE RUTH', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-007', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Kossia07.PNG' },
+            { nom: 'AKOUASSA', prenom: 'DIDO JUNIOR', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-004', photo: 'CERTIFICATS/DIGIMAP/N1/Akouassa1.png' },
+            { nom: 'OUATTARA', prenom: 'YIGUELEHO ERIC JUNIOR', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-005', photo: 'CERTIFICATS/DIGIMAP/N1/ouattara.png' },
+            { nom: 'YAO', prenom: 'ADJOUA FLORE LAURELLE', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-006', photo: 'CERTIFICATS/DIGIMAP/N1/Flore1.png' },
+            { nom: 'OUATTARA', prenom: 'SIAKA', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-007', photo: 'CERTIFICATS/DIGIMAP/N1/Siaka.png' },
+            { nom: 'BINI', prenom: 'TAMIA MELISSA GRACE', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-008', photo: 'CERTIFICATS/DIGIMAP/N1/BINI.png' },
+            { nom: 'HENSCHEL', prenom: 'ABRO ELIEZER', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-002', photo: 'CERTIFICATS/DIGIMAP/N2/Henscherl.png' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-003', photo: 'CERTIFICATS/DIGIMAP/N2/Jeremie2.png' },
+            { nom: 'AKOUASSA', prenom: 'DIDO JUNIOR', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-004', photo: 'CERTIFICATS/DIGIMAP/N2/Akouassa2.png' },
+            { nom: 'NOBA', prenom: 'NOBA ARMEL', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-005', photo: 'CERTIFICATS/DIGIMAP/N2/Armel.png' },
+            { nom: 'ARMAND', prenom: 'BROU TAHUI AKA', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee:'2026', id:'CENTEC-GEO-DM2-2026-006', photo:'CERTIFICATS/DIGIMAP/N2/Armand2.png' },
+            { nom: 'AKOUASSA', prenom: 'DIDO JUNIOR', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-001', photo: 'CERTIFICATS/DIGIMAP/N3/Akouassa3.png' },
+            { nom: 'NOBA', prenom: 'NOBA ARMEL', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-002', photo: 'CERTIFICATS/DIGIMAP/N3/Armel3.png' },
+            { nom: 'PLEKA', prenom: 'OKOBE JEAN CEDRICK', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-002', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Pleka002.PNG' },
+            { nom: "M'BE", prenom: 'AMON EMMA Esther', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-003', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Esther003.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-001', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Jeremie001.PNG' },
+            { nom: 'CISSE', prenom: 'ISMAEL ABRAHAM', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-004', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Cisse004.PNG' },
+            { nom: 'DIOMANDE', prenom: 'MOHAMED SOGBETY', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-005', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/SOGBETY005.PNG' },
+            { nom: 'YOUAN BI', prenom: 'IRIE CHARLES', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-006', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Charles006.PNG' },
+            { nom: "N'GUESSAN", prenom: 'KONAN PATRICK', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-007', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Patrick007.PNG' },
+            { nom: 'ARRA', prenom: " N'GBESSO ANGE MICHEL", formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-008', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Arra008.PNG' },
+            { nom: 'MADOU', prenom: 'LANDEAUX BRIGUI SOPHONIE', formation: 'SF CARTO STATISTIQUE', niveau: '', annee: '2026', id: 'CENTEC-GEO-SFCS-2026-003', photo: 'CERTIFICATS/SF CARTOGRAPHIE STATISTIQUE/Madou03.PNG' },
+            { nom: 'TIA', prenom: 'GUEU BONAVENTUR', formation: 'SF CARTO STATISTIQUE', niveau: '', annee: '2026', id: 'CENTEC-GEO-SFCS-2026-001', photo: 'CERTIFICATS/SF CARTOGRAPHIE STATISTIQUE/TIA01.PNG' },
+            { nom: 'CISSE', prenom: 'MOHAMED JUNIOR ELVIS', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-005', photo: 'CERTIFICATS/TELESENSE PRO/N1/cisse1.PNG' },
+            { nom: 'ZAMBLE', prenom: 'KOUAME MARIUS', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-006', photo: 'CERTIFICATS/TELESENSE PRO/N1/Zamble1.PNG' },
+            { nom: 'IDI', prenom: 'MEHDI KENNETH', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-004', photo: 'CERTIFICATS/TELESENSE PRO/N2/Kenneth1.PNG' },
         ];
 
-        // Vérifier si le participant est enregistré
-        const participant = participants.find(p =>
-            p.nom.toLowerCase() === nom.toLowerCase() &&
-            p.formation === formation &&
-            p.annee === annee &&
-            (id === '' || p.id === id)
-        );
+        // Vérifier si le participant est enregistré (recherche tolérante)
+        function normalize(str) {
+            if (!str) return '';
+            return String(str)
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')            // enlever accents
+                .replace(/[^0-9A-Za-z\u00C0-\u017F\s'\-]/g, '') // garder lettres, chiffres, espaces, ' et -
+                .replace(/\s+/g, ' ')                      // réduire espaces multiples
+                .trim()
+                .toLowerCase();
+        }
+
+        // Pré-calcul des versions normalisées pour accélérer la recherche
+        participants.forEach(p => {
+            p._nom = normalize(p.nom);
+            p._prenom = normalize(p.prenom);
+            p._formation = normalize(p.formation);
+            p._id = normalize(p.id);
+            p._niveau = normalize(p.niveau);
+            p._annee = normalize(p.annee);
+        });
+
+        const nomNorm = normalize(nom);
+        const prenomNorm = normalize(prenom);
+        const formationNorm = normalize(formation);
+        const idNorm = normalize(id);
+        const niveauNorm = normalize(niveau);
+        const anneeNorm = normalize(annee);
+
+        const participant = participants.find(p => {
+            const matchNom = !nomNorm || p._nom.includes(nomNorm) || nomNorm.includes(p._nom);
+            const matchPrenom = !prenomNorm || p._prenom.includes(prenomNorm) || prenomNorm.includes(p._prenom);
+            const matchName = matchNom || matchPrenom; // autorise nom OU prénom
+            const matchFormation = !formationNorm || p._formation.includes(formationNorm) || formationNorm.includes(p._formation);
+            const matchId = !idNorm || p._id.includes(idNorm) || idNorm.includes(p._id);
+
+            // Ne considérer le niveau que pour DIGIMAP et TELESENSE PRO
+            const formationKey = formationNorm || p._formation || '';
+            let matchNiveau;
+            if (formationKey.includes('digi map') || formationKey.includes('telesense')) {
+                matchNiveau = !niveauNorm || !p._niveau || p._niveau === niveauNorm;
+            } else {
+                matchNiveau = true;
+            }
+
+            const matchAnnee = !anneeNorm || !p._annee || p._annee === anneeNorm;
+            return matchName && matchFormation && matchId && matchNiveau && matchAnnee;
+        });
 
         if (participant) {
-            // Afficher le message de vérification
-            const resultDiv = document.getElementById('verification-result');
             resultDiv.innerHTML = `
-                <div style="background: rgba(0,198,255,0.1); border: 1px solid var(--secondary); border-radius: 20px; padding: 30px; text-align: center; margin-top: 40px;">
-                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <h3 style="color: white; margin-bottom: 15px;">Vérification Réussie</h3>
-                    <p style="color: #e0e6ed; font-size: 1.1rem; margin-bottom: 20px;">
-                        Vous avez effectivement participé à la formation <strong>${participant.formation}</strong> en <strong>${participant.annee}</strong>.
-                    </p>
-                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin-top: 20px;">
-                        <p style="color: #a0aec0; margin: 5px 0;"><strong>Nom :</strong> ${participant.nom}</p>
-                        <p style="color: #a0aec0; margin: 5px 0;"><strong>Formation :</strong> ${participant.formation}</p>
-                        <p style="color: #a0aec0; margin: 5px 0;"><strong>Année :</strong> ${participant.annee}</p>
-                        <p style="color: #a0aec0; margin: 5px 0;"><strong>ID Participant :</strong> ${participant.id}</p>
+                <div style="background: rgba(0,198,255,0.12); border: 1px solid var(--secondary); border-radius: 24px; padding: 30px; margin-top: 40px; display: grid; gap: 25px;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--secondary); margin-bottom: 15px;"></i>
+                        <h3 style="color: white; margin-bottom: 10px;">Vérification Réussie</h3>
+                        <p style="color: #e0e6ed; font-size: 1.05rem;">Le certificat de <strong>${participant.prenom} ${participant.nom}</strong> est authentique.</p>
                     </div>
-                    <p style="color: var(--secondary); font-style: italic; margin-top: 20px;">
-                        Félicitations ! Votre certification est validée par le CENTEC GEO.
-                    </p>
+                    <div style="display: grid; gap: 20px; grid-template-columns: 1fr 1fr; align-items: start;">
+                        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 22px;">
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Nom :</strong> ${participant.nom}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Prénom :</strong> ${participant.prenom}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Formation :</strong> ${participant.formation}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Niveau :</strong> ${participant.niveau}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Année :</strong> ${participant.annee}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>ID :</strong> ${participant.id}</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="color: #e0e6ed; margin-bottom: 15px;">Photo du certificat :</p>
+                            <img src="${participant.photo}" alt="Certificat de ${participant.prenom} ${participant.nom}" style="width: 100%; max-width: 100%; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 20px 50px rgba(0,0,0,0.35);">
+                        </div>
+                    </div>
+                    <p style="color: var(--secondary); font-style: italic; margin-top: 10px; text-align: center;">Félicitations ! Votre certification est confirmée par le CENTEC GEO.</p>
                 </div>
             `;
             resultDiv.style.display = 'block';
         } else {
-            // Afficher un message d'erreur
-            const resultDiv = document.getElementById('verification-result');
             resultDiv.innerHTML = `
                 <div style="background: rgba(255,0,0,0.1); border: 1px solid #ff4444; border-radius: 20px; padding: 30px; text-align: center; margin-top: 40px;">
                     <i class="fas fa-times-circle" style="font-size: 3rem; color: #ff4444; margin-bottom: 20px;"></i>
