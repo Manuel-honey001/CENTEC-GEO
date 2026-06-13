@@ -499,17 +499,17 @@
 
 <div class="stats-container">
 
-    <div class="stat-card" data-target="500">
+    <div class="stat-card" data-target="200">
         <h2>0</h2>
-        <p>Formation privée</p>
+        <p>Formation dispensé</p>
     </div>
 
-    <div class="stat-card" data-target="120">
+    <div class="stat-card" data-target="50">
         <h2>0</h2>
         <p>Missions Drones</p>
     </div>
 
-    <div class="stat-card" data-target="25">
+    <div class="stat-card" data-target="10">
         <h2>0</h2>
         <p>Partenaires Publics</p>
     </div>
