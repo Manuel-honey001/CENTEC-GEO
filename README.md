@@ -474,18 +474,21 @@
     </button>
 </header>
 
+<button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
+
 <nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
     <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
         <i class="fas fa-times"></i>
     </button>
-    <a href="#accueil" onclick="toggleMenu()">Accueil</a>
-    <a href="#propos" onclick="toggleMenu()">À Propos</a>
-    <a href="#formations" onclick="toggleMenu()">Formations</a>
-    <a href="#services" onclick="toggleMenu()">Services</a>
-    <a href="#actualites" onclick="toggleMenu()">Actualités</a>
-    <a href="#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#formations" onclick="toggleMenu()">Formations</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#services" onclick="toggleMenu()">Services</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#equipe" onclick="toggleMenu()">Équipe</a>
     <a href="certification.html" onclick="toggleMenu()">Certification</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#contact" onclick="toggleMenu()">Contact</a>
 </nav>
 
 <section class="hero" id="accueil">
@@ -501,7 +504,7 @@
 
     <div class="stat-card" data-target="200">
         <h2>0</h2>
-        <p>Formation dispensé</p>
+        <p>Formation privée</p>
     </div>
 
     <div class="stat-card" data-target="50">
@@ -559,7 +562,7 @@
 <section class="propos-extra" data-aos="fade-up">
     <div class="propos-header">
         <h2 class="section-title">CENTEC GEO en action</h2>
-        <p class="section-subtitle">Deux blocs clairs pour présenter notre vision et notre mission.</p>
+        <p class="section-subtitle">Deux blocs clairs pour présenter notre vision et notre mission, avec un style plus moderne et lisible.</p>
     </div>
     <div class="panels-grid">
         <div class="intro-panel">
