@@ -1,932 +1,948 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CENTEC â€“ Centre de Formation & GÃ©omatique</title>
-  <meta name="description" content="CENTEC â€“ Centre National d'Etude en Territoire et Cartographie" />
-
-  <!-- IcÃ´nes Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <style>
-    :root {
-      --primary: #0b5ed7;
-      --secondary: #198754;
-      --dark: #111;
-      --light: #f5f7fa;
-      --text: #222;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      margin: 0;
-      line-height: 1.7;
-      color: var(--text);
-      background: #fff;
-    }
-
-    header {
-      background: linear-gradient(135deg, #7ec8ff 0%, #2ea3ff 100%);
-      color: #fff;
-      padding: 1.5rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 6px 18px rgba(46,163,255,0.12);
-    }
-
-    header h1 { margin: 0; font-size: 1.8rem; }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-      gap: 1rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-    }
-
-    .logo {
-      height: 56px;
-      width: auto;
-      border-radius: 8px;
-      object-fit: contain;
-      background: #fff;
-      padding: 6px;
-    }
-
-    .tagline { margin: 0; font-size: 0.95rem; opacity: 0.95; }
-
-    .header-photo {
-      height: 56px;
-      width: 56px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.15);
-    }
-
-    .header-decor {
-      display: flex;
-      gap: 0.6rem;
-      align-items: center;
-    }
-
-    .decor-item {
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-      padding: 0.45rem 0.7rem;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .decor-item .fa {
-      color: #fff;
-      opacity: 0.95;
-    }
-
-    .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #fff;
-      font-size: 1.5rem;
-      padding: 0.5rem;
-    }
-
-    nav {
-      margin-top: 0.5rem;
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    nav.mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100px;
-      left: 0;
-      right: 0;
-      background: linear-gradient(135deg, #7ec8ff 0%, #2ea3ff 100%);
-      flex-direction: column;
-      padding: 1rem;
-      gap: 0.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      z-index: 999;
-    }
-
-    nav.mobile-menu.active {
-      display: flex;
-    }
-
-    nav a {
-      color: #fff;
-      margin-right: 1rem;
-      text-decoration: none;
-      font-weight: 600;
-      opacity: 0.9;
-    }
-
-    nav a:hover { opacity: 1; text-decoration: underline; }
-
-    section {
-      padding: 4rem 2rem;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
-      background-size: cover;
-      background-position: center;
-      color: #fff;
-      text-align: center;
-      padding: 6rem 2rem;
-    }
-
-    .hero h2 { font-size: 2.6rem; margin-bottom: 1rem; }
-    .hero p { max-width: 700px; margin: auto; font-size: 1.1rem; }
-
-    h2 { font-size: 2.2rem; margin-bottom: 1.5rem; color: var(--primary); }
-
-    .btn {
-      display: inline-block;
-      background: var(--secondary);
-      color: #fff;
-      padding: 0.8rem 1.8rem;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 1.5rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-    }
-
-    .icon {
-      color: var(--primary);
-      margin-right: 0.5rem;
-    }
-
-    .apropos-card {
-      text-align: center;
-    }
-
-    .apropos-img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-    }
-
-    .card {
-  background: #fff;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-    }
-
-    form input, form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      font-size: 1rem;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    form input:focus, form textarea:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 8px rgba(11, 94, 215, 0.2);
-    }
-
-    form textarea { resize: vertical; }
-
-    .form-group { margin-bottom: 1.2rem; }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    footer {
-      background: var(--dark);
-      color: #fff;
-      padding: 2.5rem 1rem;
-    }
-
-    footer a { color: #fff; opacity: 0.8; text-decoration: none; }
-    footer a:hover { opacity: 1; text-decoration: underline; }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      text-align: left;
-      margin-bottom: 2rem;
-    }
-
-    .footer-section h4 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
-      border-bottom: 2px solid var(--primary);
-      padding-bottom: 0.5rem;
-    }
-
-    .footer-section p {
-      margin: 0.5rem 0;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .footer-links a {
-      display: inline-block;
-      width: fit-content;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      color: #fff;
-      transition: all 0.3s ease;
-    }
-
-    .social-links a:hover {
-      background: var(--primary);
-      transform: translateY(-3px);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.2);
-      padding-top: 1.5rem;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    .testimonial {
-      border-left: 4px solid var(--primary);
-      padding-left: 1.5rem;
-      font-style: italic;
-      color: #666;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 2rem;
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .stat-item h3 {
-      font-size: 2.5rem;
-      color: var(--primary);
-      margin: 0.5rem 0;
-    }
-
-    .stat-item p {
-      color: #666;
-      margin: 0;
-    }
-
-    .formation-card {
-      border: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .formation-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-    }
-
-    .formation-header {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .formation-header h3 {
-      margin: 0;
-      color: var(--primary);
-      font-size: 1.3rem;
-    }
-
-    .badge {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: bold;
-      margin-bottom: 0.8rem;
-    }
-
-    .badge.intermediate {
-      background: #ffc107;
-    }
-
-    .badge.advanced {
-      background: #dc3545;
-    }
-
-    .formation-meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-      margin: 1rem 0;
-      padding: 0.8rem 0;
-      border-top: 1px solid #eee;
-      border-bottom: 1px solid #eee;
-      font-size: 0.9rem;
-    }
-
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: #666;
-    }
-
-    .meta-item .fa {
-      color: var(--primary);
-      width: 16px;
-    }
-
-    .formation-price {
-      font-size: 1.5rem;
-      color: var(--secondary);
-      font-weight: bold;
-      margin: 0.8rem 0;
-    }
-
-    .inscription-btn {
-      display: inline-block;
-      background: var(--primary);
-      color: #fff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 0.5rem;
-      transition: all 0.3s ease;
-    }
-
-    .inscription-btn:hover {
-      background: #0a4cc4;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(11, 94, 215, 0.2);
-    }
-
-    .service-card {
-      border: none;
-      position: relative;
-      background: linear-gradient(135deg, #fff 0%, #f9fbff 100%);
-    }
-
-    .service-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.8rem;
-      display: block;
-    }
-
-    .service-icon.icon-blue { color: var(--primary); }
-    .service-icon.icon-green { color: var(--secondary); }
-    .service-icon.icon-orange { color: #fd7e14; }
-
-    .service-card h3 {
-      color: var(--text);
-      font-size: 1.3rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .service-list {
-      list-style: none;
-      padding: 0;
-      margin: 1rem 0;
-    }
-
-    .service-list li {
-      padding: 0.5rem 0;
-      color: #666;
-      display
-
-    .service-list li:before {
-      content: 'âœ“';
-      color: var(--secondary);
-      font-weight: bold;
-      margin-right: 0.3rem;
-    }
-
-    .contact-service-btn {
-      display: inline-block;
-      background: var(--secondary);
-      color: #fff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 1rem;
-      transition: all 0.3s ease;
-    }
-
-    .contact-service-btn:hover {
-      background: #157347;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(25, 135, 84, 0.2);
-    }
-
-    .facebook-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 1rem !important;
-      background: #fff !important;
-    }
-
-    .facebook-wrapper iframe {
-      max-width: 100%;
-      width: 100% !important;
-      height: auto !important;
-      min-height: 400px;
-    }
-
-    @supports (aspect-ratio: 500/729) {
-      .facebook-wrapper iframe {
-        aspect-ratio: 500 / 729;
-        height: auto;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hamburger {
-        display: block;
-      }
-
-      header {
-        position: relative;
-      }
-
-      nav:not(.mobile-menu) {
-        display: none !important;
-      }
-
-      .hero h2 { font-size: 2rem; }
-      .stats { grid-template-columns: repeat(2, 1fr); }
-
-      .footer-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
-
-      .footer-section h4 {
-        text-align: center;
-      }
-
-      .footer-links {
-        align-items: center;
-      }
-
-      .social-links {
-        justify-content: center;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CENTEC GEO – Centre National d’Étude en Territoire et Cartographie CI</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --dark: #0a0f1a; 
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 70%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 12px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(7, 11, 20, 0.75);
+    backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(0,198,255,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img { height: 70px; width: auto; }
+        .logo-container img {
+    height: 75px;
+    filter: drop-shadow(0 4px 10px rgba(0,198,255,0.4));
+}.logo-container img {
+    height: 80px;
+    filter: drop-shadow(0 6px 15px rgba(0,198,255,0.5));
+    transition: 0.3s ease;
+}
+
+.logo-container img:hover {
+    transform: scale(1.08) rotate(-1deg);
+}
+        .logo-text {
+    border-left: 2px solid rgba(0,198,255,0.6);
+    padding-left: 15px;
+}
+
+.logo-text h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo-text span {
+    color: var(--secondary);
+    font-size: 0.7rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.menu-btn {
+    background: var(--primary);
+    color: white; width: 45px; height: 45px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px; cursor: pointer; transition: 0.3s; border: none;
+}
+.menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+    /* NAV OVERLAY */
+    .nav-overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 320px;
+    height: 100vh;
+
+    background: rgba(10, 15, 26, 0.85);
+    backdrop-filter: blur(25px);
+
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    padding: 110px 40px;
+
+    transition: 0.5s ease;
+    border-left: 1px solid rgba(0,198,255,0.3);
+
+    box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+}
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.nav-overlay a:hover {
+    color: var(--secondary);
+    padding-left: 12px;
+    text-shadow: 0 0 10px rgba(0,198,255,0.8);
+}
+        .nav-overlay .close-menu {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            align-self: flex-end;
+            margin-bottom: 35px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .nav-overlay .close-menu:hover {
+            color: var(--secondary);
+        }
+        /* --- HERO --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.6), rgba(10, 15, 26, 0.9)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1920');
+            background-size: cover; background-position: center;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; margin-bottom: 15px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 300; }
+        .hero .hero-actions { margin-top: 32px; display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 198, 255, 0.25);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        /* --- STATS --- */
+        .stats-container {
+            max-width: 1200px; margin: -80px auto 0; padding: 0 5%;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px; position: relative; z-index: 100;
+        }
+        .stat-card {
+            background: rgba(22, 32, 53, 0.8); backdrop-filter: blur(15px);
+            padding: 40px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); transition: var(--transition);
+        }
+        .stat-card h2 {
+    background: linear-gradient(to right, #fff, var(--secondary));
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+}
+        .stat-card p { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--secondary); font-weight: 700; }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .section-subtitle { text-align: center; color: #a0aec0; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
+        
+        .content-box { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); }
+        .intro-panel {
+            margin-top: 0;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 28px;
+            padding: 40px 35px;
+            text-align: center;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .intro-panel .tag {
+            display: inline-block;
+            color: #7dd3fc;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .intro-panel img {
+            width: 120px;
+            margin: 0 auto 20px;
+            display: block;
+            background: white;
+            padding: 12px;
+            border-radius: 18px;
+        }
+
+        /* small drone icon near service title */
+        .card .main-icon { font-size: 2.6rem; color: var(--secondary); margin-bottom: 18px; }
+        .card .small-drone { font-size: 0.9rem; color: var(--secondary); margin-left: 8px; vertical-align: middle; display: inline-block; }
+        .intro-panel h2 {
+            color: #f8fafc;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+        .intro-panel p {
+            color: #cbd5e1;
+            font-size: 1rem;
+            line-height: 1.8;
+            max-width: 720px;
+            margin: auto;
+        }
+        .propos-extra {
+            padding: 60px 8%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .panels-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: 1fr;
+        }
+        .intro-panel,
+        .white-card {
+            background: rgba(15, 23, 42, 0.92);
+            border-radius: 28px;
+            padding: 40px 35px;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(96, 165, 250, 0.15);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .intro-panel:hover,
+        .white-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(96, 165, 250, 0.35);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.4);
+        }
+        .white-card {
+            text-align: left;
+            position: relative;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding-top: 50px;
+        }
+        .white-card::before {
+            content: "";
+            position: absolute;
+            top: 24px;
+            left: 30px;
+            width: 60px;
+            height: 4px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(59,130,246,1), rgba(14,165,233,1));
+        }
+        .white-card h2,
+        .white-card h3,
+        .intro-panel h2 {
+            color: #f8fafc;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+        .white-card p,
+        .intro-panel p {
+            color: #cbd5e1;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 18px;
+        }
+        .white-card ul {
+            margin: 18px 0;
+            padding-left: 20px;
+            color: #475569;
+            list-style: disc inside;
+        }
+        .white-card ul li {
+            margin-bottom: 12px;
+        }
+        .intro-panel p {
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 1024px) {
+            .panels-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (max-width: 1023px) {
+            .panels-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .propos-extra {
+                padding: 40px 6%;
+            }
+            .panels-grid {
+                grid-template-columns: 1fr;
+            }
+            .intro-panel,
+            .white-card {
+                padding: 30px 25px;
+                min-height: auto;
+            }
+        }
+        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+        .benefit-card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.08); transition: var(--transition); }
+        .benefit-card:hover { transform: translateY(-8px); border-color: var(--secondary); }
+        .benefit-card h3 { color: white; font-size: 1.2rem; margin-bottom: 15px; }
+        .benefit-card p { color: #a0aec0; line-height: 1.7; }
+
+        /* --- DIRECTEUR --- */
+        .director-box { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; align-items: center; }
+        .director-photo { width: 100%; max-width: 350px; border-radius: 25px; border: 2px solid rgba(0,198,255,0.3); }
+        .director-name { color: white; font-size: 1.5rem; font-weight: 800; margin-top: 20px; }
+        .director-title { color: var(--secondary); font-size: 0.8rem; text-transform: uppercase; }
+
+        /* --- GRID CARDS (FORMATIONS & SERVICES) --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .card { background: rgba(255,255,255,0.02); padding: 45px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); }
+        .card-link { text-decoration: none; display: block; }
+        .card:hover { transform: translateY(-12px); border-color: var(--secondary); background: rgba(255,255,255,0.04); }
+        .card i { font-size: 2.8rem; color: var(--secondary); margin-bottom: 25px; display: block; }
+        .card h3 { color: white; font-size: 1.5rem; margin-bottom: 20px; }
+        .card ul li { font-size: 0.95rem; margin-bottom: 12px; color: #a0aec0; padding-left: 30px; position: relative; list-style: none; }
+        .card ul li::before { content: '\f058'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--primary); }
+
+        /* --- ACTUALITÉS --- */
+        .news-card { background: var(--darker); border-radius: 25px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
+        .news-card:hover { border-color: var(--secondary); }
+        .news-img { width: 100%; height: 230px; background-size: cover; background-position: center; position: relative; }
+        .news-content { padding: 30px; }
+        .news-date { color: var(--secondary); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- ÉQUIPE (SLIDER) --- */
+        .team-wrapper { position: relative; overflow: hidden; padding: 10px 0; }
+        .team-slider { display: flex; gap: 25px; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .team-member { 
+            flex: 0 0 calc(33.333% - 17px); 
+            background: rgba(255,255,255,0.03); 
+            padding: 40px 20px; 
+            border-radius: 25px; 
+            text-align: center; 
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: var(--transition);
+        }
+        .team-member:hover { transform: scale(1.05); background: rgba(255,255,255,0.07); border-color: var(--secondary); }
+        .member-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; border: 3px solid var(--primary); padding: 5px; }
+        .team-member-name { color: white; font-size: 1.4rem; font-weight: bold; margin-bottom: 5px; }
+        .team-member-job { color: var(--secondary); font-size: 0.9rem; text-transform: uppercase; font-weight: 600; }
+
+        .nav-arrows { display: flex; justify-content: center; gap: 20px; margin-top: 40px; }
+        .arrow { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: 0.3s; }
+        .arrow:hover { background: var(--secondary); }
+
+        /* --- FOOTER --- */
+        footer { background: var(--darker); padding: 100px 8% 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; }
+        .contact-list li { margin-bottom: 25px; display: flex; align-items: center; gap: 20px; color: #a0aec0; list-style: none; }
+        .contact-list i { color: var(--secondary); font-size: 1.2rem; background: rgba(0,198,255,0.1); padding: 12px; border-radius: 12px; }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none;
+            display: inline-block; font-weight: 700; text-transform: uppercase; transition: 0.3s; border: none; cursor: pointer;
+        }
+        .contact-form {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            color: #e0e6ed;
+            font-size: 1rem;
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #9fb5cf;
+        }
+        .contact-form button {
+            width: fit-content;
+            padding: 14px 30px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .contact-form button:hover {
+            transform: translateY(-2px);
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            color: #4a5568;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+        }
+
+        @media (max-width: 992px) { .director-box { grid-template-columns: 1fr; text-align: center; } .team-member { flex: 0 0 calc(50% - 13px); } }
+        @media (max-width: 600px) { .team-member { flex: 0 0 100%; } }
+    .logo-container:hover img {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+}
+</style>
 </head>
 <body>
 
 <header>
-  <div class="header-inner">
-    <div class="brand">
-      
-      <img src="assets/logo.jpg" alt="Logo CENTEC" class="logo" onerror="this.style.display='none'">
-      <div>
-        <h1>CENTEC</h1>
-        <p class="tagline">Centre National d'Etude en Territoire et Cartographie</p>
-      </div>
-    </div>
-
-    <div style="display:flex; align-items:center; gap:1rem;">
-      <!-- Remplacez assets/header-photo.jpg par votre photo (bÃ¢timent, Ã©quipe...) -->
-      <img src="assets/header-photo.jpg" alt="Photo CENTEC" class="header-photo" onerror="this.style.display='none'">
-      <div class="header-decor" aria-hidden="true">
-        <span class="decor-item"><i class="fa-solid fa-map-location-dot"></i> SIG</span>
-        <span class="decor-item">ðŸ“¡ Drones</span>
-        <span class="decor-item"><i class="fa-solid fa-globe"></i> Web</span>
-        <span class="decor-item">ðŸŒ¤ï¸</span>
-      </div>
-    </div>
-  </div>
-
-  <nav>
-    <a href="#accueil">Accueil</a>
-    <a href="#apropos">Ã€ propos</a>
-    <a href="#formations">Formations</a>
-    <a href="#services">Services</a>
-    <a href="#projets">Projets</a>
-    <a href="#actualites">ActualitÃ©s</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <nav class="mobile-menu" id="mobileMenu">
-    <a href="#accueil">Accueil</a>
-    <a href="#apropos">Ã€ propos</a>
-    <a href="#formations">Formations</a>
-    <a href="#services">Services</a>
-    <a href="#projets">Projets</a>
-    <a href="#actualites">ActualitÃ©s</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <button class="hamburger" id="hamburger" aria-label="Menu">â˜°</button>
+    <a href="#" class="logo-container" aria-label="Retour en haut de page">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu">
+        <i class="fas fa-bars"></i>
+    </button>
 </header>
 
-<section id="accueil" class="hero">
-  <h2>Former, analyser et cartographier pour un meilleur territoire</h2>
-  <p>CENTEC est un centre spÃ©cialisÃ© en SIG, cartographie, tÃ©lÃ©dÃ©tection, drones et collecte de donnÃ©es en Afrique francophone.</p>
-  <a href="#formations" class="btn">DÃ©couvrir nos formations</a>
+<button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#formations" onclick="toggleMenu()">Formations</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#services" onclick="toggleMenu()">Services</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="certification.html" onclick="toggleMenu()">Certification</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#contact" onclick="toggleMenu()">Contact</a>
+</nav>
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="#formations" onclick="toggleMenu()">Formations</a>
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="certification.html" onclick="toggleMenu()">Certification</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1 data-aos="fade-down" data-aos-duration="1200">CENTEC GEO</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Maîtriser la géomatique pour mieux comprendre et gérer les territoires</p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="700">
+        <a href="#formations" class="btn btn-primary">Découvrir nos formations</a>
+        <a href="#contact" class="btn btn-secondary">Contact rapide</a>
+    </div>
 </section>
 
-<section id="apropos">
-  <h2>Qui sommes-nous ?</h2>
-  <p><strong>CENTEC (Centre National d'Etude en Territoire et Cartographie)</strong> est une structure spÃ©cialisÃ©e dans la formation, la recherche appliquÃ©e et les prestations de services en gÃ©omatique. NÃ© du constat dâ€™un besoin croissant en compÃ©tences locales dans les domaines des SIG, de la cartographie, de la tÃ©lÃ©dÃ©tection et de lâ€™analyse spatiale, CENTEC Å“uvre pour le renforcement des capacitÃ©s techniques et professionnelles des Ã©tudiants, des institutions, des collectivitÃ©s et des entreprises en Afrique francophone.</p>
-  <p>Notre approche repose sur une combinaison Ã©quilibrÃ©e entre la thÃ©orie, la pratique terrain et lâ€™utilisation dâ€™outils professionnels reconnus (SIG, drones, images satellites, collecte mobile de donnÃ©es). CENTEC se positionne ainsi comme un acteur clÃ© du dÃ©veloppement territorial et de la prise de dÃ©cision basÃ©e sur les donnÃ©es spatiales.</p>
+<div class="stats-container">
 
-  <div class="grid">
-    <div class="card apropos-card">
-      <img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72" alt="Mission CENTEC" class="apropos-img">
-      <h3>Notre mission</h3>
-      <p>Former, accompagner et outiller des professionnels capables de collecter, analyser, interprÃ©ter et valoriser les donnÃ©es gÃ©ospatiales afin de rÃ©pondre efficacement aux enjeux de dÃ©veloppement, dâ€™amÃ©nagement du territoire et de gouvernance.</p>
+    <div class="stat-card" data-target="200">
+        <h2>0</h2>
+        <p>Formation privée</p>
     </div>
 
-    <div class="card apropos-card">
-      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Vision CENTEC" class="apropos-img">
-      <h3>Notre vision</h3>
-      <p>Devenir une rÃ©fÃ©rence rÃ©gionale et africaine en matiÃ¨re de formation et dâ€™expertise en gÃ©omatique, en mettant lâ€™innovation, la qualitÃ© pÃ©dagogique et lâ€™excellence technique au service du dÃ©veloppement durable.</p>
+    <div class="stat-card" data-target="50">
+        <h2>0</h2>
+        <p>Missions Drones</p>
     </div>
 
-    <div class="card apropos-card">
-      <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc" alt="PÃ©dagogie CENTEC" class="apropos-img">
-      <h3>Notre pÃ©dagogie</h3>
-      <p>Une pÃ©dagogie orientÃ©e vers la pratique, basÃ©e sur des Ã©tudes de cas rÃ©els, des travaux pratiques, des projets terrain et lâ€™usage dâ€™outils professionnels, afin de garantir des compÃ©tences directement opÃ©rationnelles.</p>
+    <div class="stat-card" data-target="10">
+        <h2>0</h2>
+        <p>Partenaires Publics</p>
     </div>
-  </div>
+
+</div>
+
+<section class="benefits" data-aos="fade-up">
+    <h2 class="section-title">Pourquoi nous choisir</h2>
+    <p class="section-subtitle">Une expertise géomatique complète, des formations pratiques et un accompagnement sur mesure pour vos projets territoriaux.</p>
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <h3>Expertise terrain</h3>
+            <p>Nos équipes maîtrisent le SIG, la photogrammétrie et la télédétection pour des livrables opérationnels.</p>
+        </div>
+        <div class="benefit-card">
+            <h3>Formation pratique</h3>
+            <p>Des programmes conçus pour donner aux stagiaires des compétences applicables immédiatement.</p>
+        </div>
+        <div class="benefit-card">
+            <h3>Partenariats locaux</h3>
+            <p>Nous collaborons avec les institutions et entreprises ivoiriennes pour des solutions adaptées.</p>
+        </div>
+        <div class="benefit-card">
+            <h3>Support continu</h3>
+            <p>Accompagnement après formation pour assurer la mise en œuvre réussie de vos projets.</p>
+        </div>
+    </div>
 </section>
 
-<section id="formations" style="background:#f5f7fa;">
-  <h2>Nos formations</h2>
-  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Formations pratiques et reconnues pour devenir expert en gÃ©omatique</p>
-  <div class="grid">
-    <div class="card formation-card">
-      <div class="formation-header">
-        <i class="fa-solid fa-map-location-dot icon" style="font-size: 1.8rem; color: var(--primary);"></i>
-        <h3>Initiation aux SIG</h3>
-      </div>
-      <span class="badge">DÃ©butant</span>
-      <p>DÃ©couvrez les fondamentaux des SystÃ¨mes d'Information GÃ©ographique (SIG) avec QGIS. Apprenez Ã  manipuler les donnÃ©es spatiales, crÃ©er des cartes professionnelles et explorer les bases de la cartographie numÃ©rique.</p>
-      <div class="formation-meta">
-        <div class="meta-item">
-          <i class="fa-solid fa-clock"></i>
-          <span>3 jours (21h)</span>
+<section id="propos">
+    <div class="content-box director-box" data-aos="fade-up">
+        <div style="text-align: center;">
+            <img src="wili 1 (2).png" alt="Président CENTEC GEO" class="director-photo" loading="lazy">
+            <div class="director-name">WILFRIED CODJO</div>
+            <div class="director-title">DIRECTEUR GENERAL- GÉOMATICIEN</div>
         </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-users"></i>
-          <span>5-12 pers.</span>
+        <div>
+            <h2 style="color: var(--secondary); margin-bottom: 25px;">Le Mot du Directeur</h2>
+            <p style="font-style: italic; font-size: 1.15rem; color: #fff; border-left: 4px solid var(--primary); padding-left: 25px; margin-bottom: 25px;">
+                "Transformer chaque donnée territoriale en une décision stratégique éclairée est au cœur de notre engagement."
+            </p>
+            <p style="color: #a0aec0;">Le <strong>CENTEC GEO</strong> est une institution de référence en Côte d'Ivoire. Nous formons les cadres de demain aux outils SIG et à la télédétection.</p>
         </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-calendar"></i>
-          <span>Mensuel</span>
-        </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-location-dot"></i>
-          <span>En prÃ©sentiel</span>
-        </div>
-      </div>
-      <div class="formation-price">650 000 FCFA</div>
-      <a href="formation-debutant.html" class="inscription-btn">S'inscrire</a>
+    
     </div>
+</section>
+<section class="propos-extra" data-aos="fade-up">
+    <div class="propos-header">
+        <h2 class="section-title">CENTEC GEO en action</h2>
+        <p class="section-subtitle">Deux blocs clairs pour présenter notre vision et notre mission, avec un style plus moderne et lisible.</p>
+    </div>
+    <div class="panels-grid">
+        <div class="intro-panel">
+            <span class="tag">Notre identité</span>
+            <img src="CENTEC GEO LOGO.png" alt="CENTEC GEO" loading="lazy">
+            <h2>CENTEC GEO</h2>
+            <p>Le CENTEC GEO (Centre National d’Étude en Territoire et Cartographie – Côte d’Ivoire) forme des experts en géomatique, SIG, télédétection et cartographie digitale.</p>
+            <p>Nous accompagnons les organisations publiques et privées avec des formations orientées vers l’opérationnel et les usages métiers.</p>
+        </div>
+        <div class="white-card">
+            <span class="eyebrow">Notre engagement</span>
+            <h3>Vision et mission</h3>
+            <p>Nous voulons faire de la géomatique un levier stratégique pour la gestion territoriale, en alliant innovation, pédagogie et accompagnement terrain.</p>
+            <ul>
+                <li>Formations pratiques basées sur des cas réels</li>
+                <li>Accompagnement personnalisé pour chaque projet</li>
+                <li>Solutions géospatiales adaptées aux besoins locaux</li>
+            </ul>
+            <p>Chaque action vise à renforcer les compétences et à faciliter la prise de décision pour les décideurs et les professionnels du territoire.</p>
+        </div>
+    </div>
+</section>
 
-    <div class="card formation-card">
-      <div class="formation-header">
-        <i class="fa-solid fa-chart-area icon" style="font-size: 1.8rem; color: #ffc107;"></i>
-        <h3>Cartographie statistique</h3>
-      </div>
-      <span class="badge intermediate">IntermÃ©diaire</span>
-      <p>MaÃ®trisez l'analyse spatiale et la reprÃ©sentation des donnÃ©es statistiques. Transformez les donnÃ©es socio-Ã©conomiques en cartes thÃ©matiques impactantes pour une prise de dÃ©cision Ã©clairÃ©e.</p>
-      <div class="formation-meta">
-        <div class="meta-item">
-          <i class="fa-solid fa-clock"></i>
-          <span>4 jours (28h)</span>
+<section id="formations">
+    <h2 class="section-title" data-aos="fade-up">Nos Formations</h2>
+    <div class="grid">
+        <a href="DIGIMAP.html" style="text-decoration: none; color: inherit;">
+            <div class="card" data-aos="fade-up">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>DIGI MAP</h3>
+                <ul>
+                    <li>Maîtrise de QGIS & ArcGIS Pro</li>
+                    <li>Conception cartographique</li>
+                    <li>Analyse spatiale complexe</li>
+                </ul>
+            </div>
+        </a>
+        <a href="telesence-pro.html" class="card-link">
+        <div class="card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-satellite"></i>
+            <h3>TeleSense Pro</h3>
+            <ul>
+                <li>Télédétection & Imagerie</li>
+                <li>Traitement spectral</li>
+                <li>Suivi environnemental</li>
+            </ul>
         </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-users"></i>
-          <span>5-10 pers.</span>
+        </a>
+        <a href="enqueteur.html" class="card-link">
+            <div class="card" data-aos="fade-up" data-aos-delay="400">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>E-Enquêteur</h3>
+                <ul>
+                    <li>Collecte mobile (Kobo/ODK)</li>
+                    <li>Gestion de bases de données</li>
+                    <li>Inventaires géolocalisés</li>
+                </ul>
+            </div>
+        </a>
+        <div class="card" data-aos="fade-up" data-aos-delay="600">
+            <i class="fas fa-mountain"></i>
+            <h3>GEOSKIL</h3>
+            <ul>
+                <li>Compétences SIG avancées</li>
+                <li>Analyse de terrain et cartographie</li>
+                <li>Solutions géospatiales innovantes</li>
+            </ul>
         </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-calendar"></i>
-          <span>Trimestriel</span>
-        </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-location-dot"></i>
-          <span>En prÃ©sentiel</span>
-        </div>
-      </div>
-      <div class="formation-price">850 000 FCFA</div>
-      <a href="#contact" class="inscription-btn">S'inscrire</a>
     </div>
-
-    <div class="card formation-card">
-      <div class="formation-header">
-        <i class="fa-solid fa-drone icon" style="font-size: 1.8rem; color: #dc3545;"></i>
-        <h3>TÃ©lÃ©dÃ©tection & Drones</h3>
-      </div>
-      <span class="badge advanced">AvancÃ©</span>
-      <p>Explorez les technologies de tÃ©lÃ©dÃ©tection par satellite et drone. Traitez les images aÃ©riennes et satellites pour l'analyse territoriale, la surveillance environnementale et les projets d'amÃ©nagement.</p>
-      <div class="formation-meta">
-        <div class="meta-item">
-          <i class="fa-solid fa-clock"></i>
-          <span>5 jours (35h)</span>
-        </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-users"></i>
-          <span>4-8 pers.</span>
-        </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-calendar"></i>
-          <span>Semestriel</span>
-        </div>
-        <div class="meta-item">
-          <i class="fa-solid fa-location-dot"></i>
-          <span>Terrain + labo</span>
-        </div>
-      </div>
-      <div class="formation-price">1 200 000 FCFA</div>
-      <a href="#contact" class="inscription-btn">S'inscrire</a>
-    </div>
-  </div>
 </section>
 
 <section id="services">
-  <h2>Services & Prestations</h2>
-  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Solutions gÃ©omatiques complÃ¨tes pour vos enjeux territoriaux</p>
-  <div class="grid">
-    <div class="card service-card">
-      <i class="fa-solid fa-city service-icon icon-blue"></i>
-      <h3>Bureau d'Ã©tudes</h3>
-      <p>Nos experts rÃ©alisent des Ã©tudes territoriales approfondies et des analyses spatiales pour soutenir vos projets d'amÃ©nagement, de dÃ©veloppement et de gouvernance.</p>
-      <ul class="service-list">
-        <li>Ã‰tudes de faisabilitÃ© spatiales</li>
-        <li>Analyses d'amÃ©nagement du territoire</li>
-        <li>ModÃ©lisation spatiale</li>
-        <li>Rapports cartographiques</li>
-        <li>Diagnostic territorial</li>
-      </ul>
-      <a href="#contact" class="contact-service-btn">Demander un devis</a>
+    <h2 class="section-title" data-aos="fade-up">Nos Services</h2>
+    <div class="grid">
+        <div class="card" data-aos="zoom-in">
+            <i class="fas fa-paper-plane"></i>
+            <h3>Photogrammétrie</h3>
+            <p>Modélisation 3D et relevés par drones haute résolution pour vos projets.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="200">
+            <i class="fas fa-draw-polygon"></i>
+            <h3>Solutions SIG</h3>
+            <p>Conception et implémentation de systèmes d'information sur mesure.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="400">
+            <i class="fas fa-server"></i>
+            <h3>Ingénierie DATA</h3>
+            <p>Administration de bases de données spatiales pour les collectivités.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="600">
+            <i class="fas fa-drone main-icon"></i>
+            <h3>Vente & Location de Drones <span class="small-drone" aria-hidden="true"><i class="fas fa-drone"></i></span></h3>
+            <p>Fourniture, vente et location de drones professionnels pour levés et missions de terrain.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="800">
+            <i class="fas fa-database"></i>
+            <h3>Collecte & Traitements de Données</h3>
+            <p>Collecte terrain, validation et traitement des données géospatiales pour produire des jeux de données fiables et exploitables.</p>
+        </div>
+        <div class="card" data-aos="zoom-in" data-aos-delay="1000">
+            <i class="fas fa-map"></i>
+            <h3>Édition de Cartes Thématiques</h3>
+            <p>Conception, stylisation et édition de cartes thématiques personnalisées pour l’aide à la décision.</p>
+        </div>
     </div>
-
-    <div class="card service-card">
-      <i class="fa-solid fa-database service-icon icon-green"></i>
-      <h3>Collecte de donnÃ©es</h3>
-      <p>Collectez et gÃ©rez vos donnÃ©es gÃ©ospatiales via des enquÃªtes terrain structurÃ©es, des applications mobiles et des outils professionnels Ã©prouvÃ©s.</p>
-      <ul class="service-list">
-        <li>EnquÃªtes terrain (GPS, GNSS)</li>
-        <li>Collecte mobile avec KoboToolbox</li>
-        <li>Traitement et nettoyage de donnÃ©es</li>
-        <li>Validation et analyse spatiale</li>
-        <li>Reporting et visualisation</li>
-      </ul>
-      <a href="#contact" class="contact-service-btn">Demander un devis</a>
-    </div>
-
-    <div class="card service-card">
-      <i class="fa-solid fa-globe service-icon icon-orange"></i>
-      <h3>Webmapping</h3>
-      <p>CrÃ©ez des portails cartographiques interactifs pour visualiser, explorer et partager vos donnÃ©es gÃ©ospatiales avec des outils web modernes et conviviaux.</p>
-      <ul class="service-list">
-        <li>Cartes interactives personnalisÃ©es</li>
-        <li>Tableaux de bord gÃ©ospatiales</li>
-        <li>Portails de donnÃ©es ouvertes</li>
-        <li>IntÃ©grations API et WMS</li>
-        <li>Formation aux outils</li>
-      </ul>
-      <a href="#contact" class="contact-service-btn">Demander un devis</a>
-    </div>
-  </div>
-</section>
-
-<section id="projets" style="background:#f5f7fa;">
-  <h2>RÃ©alisations</h2>
-  <p>Cartes thÃ©matiques, projets SIG, Ã©tudes territoriales et analyses spatiales rÃ©alisÃ©es par CENTEC.</p>
-  <div class="stats">
-    <div class="stat-item">
-      <h3>150+</h3>
-      <p>Professionnels formÃ©s</p>
-    </div>
-    <div class="stat-item">
-      <h3>25+</h3>
-      <p>Projets rÃ©alisÃ©s</p>
-    </div>
-    <div class="stat-item">
-      <h3>12</h3>
-      <p>Pays couverts</p>
-    </div>
-    <div class="stat-item">
-      <h3>8+</h3>
-      <p>AnnÃ©es d'expÃ©rience</p>
-    </div>
-  </div>
 </section>
 
 <section id="actualites">
-  <h2>ActualitÃ©s & Ã‰vÃ©nements</h2>
-  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Restez informÃ© de nos derniÃ¨res nouvelles, formations et appels Ã  projets</p>
-  <div class="grid">
-    <div class="card">
-      <span class="badge" style="background: #dc3545;">ðŸ”” Ã‰vÃ©nement</span>
-      <h3>Atelier SIG & Drones â€“ Mars 2026</h3>
-      <p>Rejoignez nos experts pour un atelier intensif de 2 jours sur les applications pratiques des drones en cartographie et surveillance territoriale.</p>
-      <p><small>ðŸ“… 15-16 mars 2026 | ðŸ“ Abidjan</small></p>
-      <a href="#contact" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">S'inscrire</a>
+    <h2 class="section-title" data-aos="fade-up">Actualités</h2>
+    <div class="grid">
+        <div class="news-card" data-aos="fade-up">
+            <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1473960104312-3c712850684b'); height: 230px; background-size: cover;"></div>
+            <div class="news-content">
+                <span class="news-date">30 Mai 2026</span>
+                <h4 style="color:white; margin:15px 0;">Cérémonie de graduation</h4>
+                <p style="font-size:0.9rem; color: #a0aec0;">Image à venir — je t'enverrai une image bientôt.</p>
+                <a href="#" style="color:var(--secondary); text-decoration:none; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
+            </div>
+        </div>
+        <div class="news-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="news-img" style="background-image: url('https://images.unsplash.com/photo-1508614589041-895b88991e3e'); height: 230px; background-size: cover;"></div>
+            <div class="news-content">
+                <span class="news-date">Mars 2026</span>
+                <h4 style="color:white; margin:15px 0;">Projet Cadastre</h4>
+                <p style="font-size:0.9rem; color: #a0aec0;">Signature d'une convention pour la numérisation foncière.</p>
+                <a href="#" style="color:var(--secondary); text-decoration:none; font-weight:bold; display:block; margin-top:15px;">LIRE PLUS →</a>
+            </div>
+        </div>
     </div>
-    <div class="card">
-      <span class="badge" style="background: #198754;">âœ“ Nouveau</span>
-      <h3>Formation en ligne : Webmapping avancÃ©</h3>
-      <p>DÃ©couvrez la crÃ©ation de portails cartographiques interactifs avec Leaflet et Mapbox. Formation 100% en ligne, flexible, adaptÃ©e aux professionnels.</p>
-      <p><small>ðŸ“… DÃ©marrage : 15 fÃ©vrier 2026</small></p>
-      <a href="#formations" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">DÃ©tails</a>
-    </div>
-    <div class="card">
-      <span class="badge" style="background: #ffc107;">ðŸŽ¯ Appel</span>
-      <h3>Appel Ã  projets : Cartographie participative</h3>
-      <p>CENTEC cherche des partenaires pour des projets de cartographie participative en Afrique de l'Ouest. Financements disponibles jusqu'au 28 fÃ©vrier.</p>
-      <p><small>ðŸ“… Deadline : 28 fÃ©vrier 2026</small></p>
-      <a href="#contact" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">Candidater</a>
-    </div>
-    <div class="card facebook-wrapper">
-      <div style="width: 100%; text-align: center;">
-        <span class="badge" style="background: #1877f2; margin-bottom: 1rem;">ðŸ“± Nos actualitÃ©s Facebook</span>
-        <h3 style="margin-top: 0; color: var(--primary);">Suivez-nous sur Facebook</h3>
-        <p style="color: #666; margin-bottom: 1.5rem;">DÃ©couvrez nos derniÃ¨res actualitÃ©s, Ã©vÃ©nements et success stories directement depuis notre page Facebook officielle. Rejoignez notre communautÃ©!</p>
-        <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02CQyeRdE9wbuEPWX8L9bPtDC5rNXjGcdH1GnZmUgfPpeS6RTkUq77nE4EbRmS17yql%26id%3D61566026256570&show_text=true&width=500" width="500" height="729" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-        <a href="https://www.facebook.com/share/1AFMBL3wkV/" target="_blank" rel="noopener" class="btn" style="background: #1877f2; font-size: 0.9rem; padding: 0.6rem 1.5rem; margin-top: 1.5rem; display: inline-block;">Consulter la page</a>
-      </div>
-    </div>
-  </div>
 </section>
 
-<section id="contact" style="background:#f5f7fa;">
-  <h2>Contact & Inscription</h2>
-  <div style="max-width: 600px; margin: 0 auto;">
-    <form onsubmit="return handleFormSubmit(event)">
-      <div class="form-group">
-        <label for="nom">Nom complet</label>
-        <input type="text" id="nom" name="nom" placeholder="Entrez votre nom" required>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="votre.email@exemple.com" required>
-      </div>
-      <div class="form-group">
-        <label for="sujet">Sujet</label>
-        <input type="text" id="sujet" name="sujet" placeholder="Ex: Formation en SIG" required>
-      </div>
-      <div class="form-group">
-        <label for="message">Votre message</label>
-        <textarea id="message" name="message" placeholder="DÃ©crivez votre demande..." rows="5" required></textarea>
-      </div>
-      <button class="btn" type="submit" style="width: 100%; text-align: center;">Envoyer ma demande</button>
-    </form>
-    <p style="text-align: center; margin-top: 1.5rem; color: #666;">âœ‰ï¸ Ou envoyez-nous un email directement Ã  <strong>centrecartographie@gmail.com</strong></p>
-  </div>
+<section id="equipe">
+    <h2 class="section-title" data-aos="fade-up">Notre Équipe</h2>
+    <p class="section-subtitle" data-aos="fade-up">Bienvenue dans notre section dédiée à l'équipe. Nous sommes passionnés par notre travail et heureux de vous présenter les membres qui composent notre équipe dynamique.</p>
+    
+    <div class="team-wrapper">
+        <div class="team-slider" id="slider">
+            <div class="team-member" data-aos="fade-up">
+                <img src="wili 1 (1).jpeg" alt="Wilfried Codjo" class="member-img" loading="lazy">
+                <div class="team-member-name">Wilfried Codjo</div>
+                <div class="team-member-job">Géomaticien</div>
+            </div>
+            <div class="team-member" data-aos="fade-up" data-aos-delay="100">
+                <img src="PHOTO 2.jpeg" alt="Hemane BONGA" class="member-img" loading="lazy">
+                <div class="team-member-name">Hemane BONGA</div>
+                <div class="team-member-job">Géomaticienne</div>
+            </div>
+            <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                <img src="ludo.jpg" alt="Ludovic" class="member-img" loading="lazy">
+                <div class="team-member-name">Ludovic AMIAN</div>
+                <div class="team-member-job">Cartographe Spécialiste </div>
+            </div>
+            <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                <img src="Elieze 1.jpg" alt="Eliezer" class="member-img" loading="lazy">
+                <div class="team-member-name">Eliezer KOUACOU</div>
+                <div class="team-member-job">Géomaticien Spécialiste SIG</div>
+            </div>
+            <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                <img src="Manuel.jpg" alt="Paul-Emmanuel" class="member-img" loading="lazy">
+                <div class="team-member-name">Paul-Emmanuel N'GUESSAN</div>
+                <div class="team-member-job">Développeur Web</div>
+            </div>
+            <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                <img src="kouame.jpg" alt="Kouame" class="member-img" loading="lazy">
+                <div class="team-member-name">Kouame</div>
+                <div class="team-member-job">Cartographe Senior</div>
+            </div>
+            <div class="team-member" data-aos="fade-up" data-aos-delay="200">
+                <img src="Marius.jpg" alt="Marius Kouame" class="member-img" loading="lazy">
+                <div class="team-member-name">Marius Kouame</div>
+                <div class="team-member-job">Technicien en Teledetection</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nav-arrows">
+        <button class="arrow" onclick="moveSlider(-1)"><i class="fas fa-chevron-left"></i></button>
+        <button class="arrow" onclick="moveSlider(1)"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <p style="text-align: center; margin-top: 50px; color: #a0aec0; font-style: italic;">
+        Nous espérons que vous apprécierez en apprendre d'avantage sur notre équipe et notre culture de collaboration et d'innovation.
+    </p>
 </section>
 
-<footer>
-  <div class="footer-content">
-    <div class="footer-section">
-      <h4>ðŸ“ Contact</h4>
-      <p><strong>Adresse :</strong><br>Abidjan, CÃ´te d'Ivoire</p>
-      <p><strong>Email :</strong><br><a href="mailto:centrecartographie@gmail.com">centrecartographie@gmail.com</a></p>
-      <p><strong>TÃ©lÃ©phone :</strong><br><a href="tel:+22512345678">+225 12 34 56 78</a></p>
+<footer id="contact">
+    <div class="footer-grid">
+        <div>
+            <h2 style="color: white; margin-bottom: 25px;">CENTEC GEO</h2>
+            <p style="color: #a0aec0; margin-bottom: 30px;">L’expertise géospatiale de référence en Côte d'Ivoire.</p>
+            <div style="display: flex; gap: 15px;">
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+            </div>
+            <div style="margin-top: 30px;">
+                <a href="mailto:centrecartographie@gmail.com" class="btn">Devenir partenaire</a>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Contact</h3>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> +225 0713177415</li>
+                <li><i class="fas fa-envelope"></i> centrecartographie@gmail.com</li>
+            </ul>
+        </div>
+        <div>
+            <h3 style="color: white; margin-bottom: 30px;">Écrivez-nous</h3>
+            <form class="contact-form" action="mailto:centrecartographie@gmail.com" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Votre nom" required>
+                <input type="email" name="email" placeholder="Votre email" required>
+                <textarea name="message" rows="4" placeholder="Votre message"></textarea>
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
     </div>
-    <div class="footer-section">
-      <h4>ðŸ”— Liens rapides</h4>
-      <div class="footer-links">
-        <a href="#formations">Nos formations</a>
-        <a href="#services">Nos services</a>
-        <a href="#actualites">ActualitÃ©s</a>
-        <a href="#contact">Nous contacter</a>
-      </div>
+    <div class="footer-bottom">
+        © 2026 CENTEC GEO – Expertise en Géomatique
     </div>
-    <div class="footer-section">
-      <h4>ðŸŒ Suivez-nous</h4>
-      <div class="social-links">
-        <a href="https://www.facebook.com/share/1AFMBL3wkV/" target="_blank" rel="noopener" aria-label="Facebook">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://www.twitter.com/centec" target="_blank" rel="noopener" aria-label="Twitter">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="https://www.linkedin.com/company/centec" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-        <a href="https://www.youtube.com/centec" target="_blank" rel="noopener" aria-label="YouTube">
-          <i class="fab fa-youtube"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>Â© 2026 CENTEC â€“ Tous droits rÃ©servÃ©s</p>
-    <p><a href="#">Mentions lÃ©gales</a> | <a href="#">Politique de confidentialitÃ©</a></p>
-  </div>
 </footer>
 
-</body>
-  <script>
-    // Menu hamburger
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('active');
-    });
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-    // Fermer le menu au clic sur un lien
-    const menuLinks = mobileMenu.querySelectorAll('a');
-    menuLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-      });
-    });
+    // ===== AOS =====
+    AOS.init({ duration: 1000, once: true });
 
-    // Formulaire avec FormSubmit.co
-    const form = document.querySelector('form');
-    form.action = 'https://formsubmit.co/centrecartographie@gmail.com';
-    form.method = 'POST';
+    // ===== MENU =====
+    function toggleMenu() {
+    document.getElementById('navOverlay').classList.toggle('active');
+}
+window.toggleMenu = toggleMenu;
 
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      const nom = document.getElementById('nom').value;
-      alert(`Merci ${nom}! Votre demande est en cours d'envoi.`);
-      // FormSubmit gÃ©rera l'envoi automatiquement
-      setTimeout(() => form.submit(), 1000);
+    // ===== SLIDER =====
+    let currentIndex = 0;
+    const slider = document.getElementById('slider');
+    function moveSlider(direction) {
+        const cards = document.querySelectorAll('.team-member');
+        const card = cards[0];
+
+        if (!card || !slider) return;
+
+        const visibleCards =
+            window.innerWidth <= 600 ? 1 :
+            window.innerWidth <= 992 ? 2 : 3;
+
+        const maxIndex = cards.length - visibleCards;
+
+        currentIndex += direction;
+
+        if (currentIndex > maxIndex) currentIndex = 0;
+        if (currentIndex < 0) currentIndex = maxIndex;
+
+        const cardWidth = card.offsetWidth + 25;
+
+        slider.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
     }
-  </script>
+
+    window.moveSlider = moveSlider;
+
+    setInterval(() => {
+        moveSlider(1);
+    }, 4500);
+
+    // ===== COUNTERS =====
+    
+    let started = false;
+
+    function animateCounters() {
+    const counters = document.querySelectorAll('.stat-card h2');
+
+    counters.forEach(counter => {
+        const parent = counter.parentElement;
+        const target = parseInt(parent.getAttribute('data-target')) || 0;
+
+        let count = 0;
+        const speed = Math.ceil(target / 60);
+
+        const update = () => {
+            count += speed;
+
+            if (count < target) {
+                counter.innerText = "+" + count;
+                requestAnimationFrame(update);
+            } else {
+                counter.innerText = "+" + target;
+            }
+        };
+
+        update();
+    });
+}
+
+    const statsSection = document.querySelector('.stats-container');
+    const header = document.querySelector('header');
+
+    function handleScroll() {
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.background = "rgba(7, 11, 20, 0.95)";
+                header.style.padding = "5px 5%";
+            } else {
+                header.style.background = "rgba(7, 11, 20, 0.85)";
+                header.style.padding = "10px 5%";
+            }
+        }
+
+        if (!statsSection || started) return;
+
+        const sectionTop = statsSection.offsetTop - window.innerHeight;
+        if (window.scrollY > sectionTop) {
+            animateCounters();
+            started = true;
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+
+    // ===== OUTSIDE CLICK MENU =====
+    document.addEventListener('click', (e) => {
+        const nav = document.getElementById('navOverlay');
+        const btn = document.querySelector('.menu-btn');
+
+        if (!nav || !btn) return;
+
+        if (!nav.contains(e.target) && !btn.contains(e.target)) {
+            nav.classList.remove('active');
+        }
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute('href'));
+            if (!target) return;
+
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+
+    // ===== CARD HOVER EFFECT =====
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.background = `
+                radial-gradient(circle at ${x}px ${y}px, rgba(0,198,255,0.15), rgba(255,255,255,0.02))
+            `;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.background = "rgba(255,255,255,0.02)";
+        });
+    });
+
+});
+</script>
+
+</body>
 </html>
