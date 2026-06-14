@@ -5,12 +5,13 @@
   <title>CENTEC â€“ Centre de Formation & GÃ©omatique</title>
   <meta name="description" content="CENTEC â€“ Centre National d'Etude en Territoire et Cartographie" />
 
+  <!-- IcÃ´nes Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
     :root {
-      --primary: #0b132b;    /* Modifié : Bleu Nuit */
-      --secondary: #ff5a00;  /* Modifié : Orange Électrique */
+      --primary: #0b5ed7;
+      --secondary: #198754;
       --dark: #111;
       --light: #f5f7fa;
       --text: #222;
@@ -27,13 +28,13 @@
     }
 
     header {
-      background: linear-gradient(135deg, #1f3160 0%, #0b132b 100%); /* Modifié : Gradient Bleu Nuit */
+      background: linear-gradient(135deg, #7ec8ff 0%, #2ea3ff 100%);
       color: #fff;
       padding: 1.5rem 2rem;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 6px 18px rgba(11,19,43,0.15);
+      box-shadow: 0 6px 18px rgba(46,163,255,0.12);
     }
 
     header h1 { margin: 0; font-size: 1.8rem; }
@@ -117,7 +118,7 @@
       top: 100px;
       left: 0;
       right: 0;
-      background: linear-gradient(135deg, #1f3160 0%, #0b132b 100%); /* Modifié : Gradient Bleu Nuit */
+      background: linear-gradient(135deg, #7ec8ff 0%, #2ea3ff 100%);
       flex-direction: column;
       padding: 1rem;
       gap: 0.5rem;
@@ -224,7 +225,7 @@
     form input:focus, form textarea:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 8px rgba(11, 19, 43, 0.2);
+      box-shadow: 0 0 8px rgba(11, 94, 215, 0.2);
     }
 
     form textarea { resize: vertical; }
@@ -429,9 +430,9 @@
     }
 
     .inscription-btn:hover {
-      background: #000814; /* Modifié pour correspondre au bleu nuit */
+      background: #0a4cc4;
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(11, 19, 43, 0.2);
+      box-shadow: 0 6px 15px rgba(11, 94, 215, 0.2);
     }
 
     .service-card {
@@ -487,9 +488,9 @@
     }
 
     .contact-service-btn:hover {
-      background: #cc4800; /* Modifié pour correspondre à l'orange */
+      background: #157347;
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(255, 90, 0, 0.2);
+      box-shadow: 0 6px 15px rgba(25, 135, 84, 0.2);
     }
 
     .facebook-wrapper {
@@ -563,6 +564,7 @@
     </div>
 
     <div style="display:flex; align-items:center; gap:1rem;">
+      <!-- Remplacez assets/header-photo.jpg par votre photo (bÃ¢timent, Ã©quipe...) -->
       <img src="assets/header-photo.jpg" alt="Photo CENTEC" class="header-photo" onerror="this.style.display='none'">
       <div class="header-decor" aria-hidden="true">
         <span class="decor-item"><i class="fa-solid fa-map-location-dot"></i> SIG</span>
@@ -605,7 +607,7 @@
 <section id="apropos">
   <h2>Qui sommes-nous ?</h2>
   <p><strong>CENTEC (Centre National d'Etude en Territoire et Cartographie)</strong> est une structure spÃ©cialisÃ©e dans la formation, la recherche appliquÃ©e et les prestations de services en gÃ©omatique. NÃ© du constat dâ€™un besoin croissant en compÃ©tences locales dans les domaines des SIG, de la cartographie, de la tÃ©lÃ©dÃ©tection et de lâ€™analyse spatiale, CENTEC Å“uvre pour le renforcement des capacitÃ©s techniques et professionnelles des Ã©tudiants, des institutions, des collectivitÃ©s et des entreprises en Afrique francophone.</p>
-  <p>Notre approche repose sur une combinaison Ã©quilibrÃ©e entre la thÃ©orie, la pratique terrain et lâ€™utilisation dâ€™outils professionnels reconnus (SIG, drones, images satellites, collecte mobile de donnÃ©es). CENTEC se positionne ainsi comme un actor clÃ© du dÃ©veloppement territorial et de la prise de dÃ©cision basÃ©e sur les donnÃ©es spatiales.</p>
+  <p>Notre approche repose sur une combinaison Ã©quilibrÃ©e entre la thÃ©orie, la pratique terrain et lâ€™utilisation dâ€™outils professionnels reconnus (SIG, drones, images satellites, collecte mobile de donnÃ©es). CENTEC se positionne ainsi comme un acteur clÃ© du dÃ©veloppement territorial et de la prise de dÃ©cision basÃ©e sur les donnÃ©es spatiales.</p>
 
   <div class="grid">
     <div class="card apropos-card">
@@ -667,7 +669,7 @@
         <h3>Cartographie statistique</h3>
       </div>
       <span class="badge intermediate">IntermÃ©diaire</span>
-      <p>MaÃ®trisez l'analyse spatiale et la reprÃ©sentation des donnÃ©es statistiques. Transformez les donnÃ©es socio-Ã©conomiques en cartes thÃ©matiques impactantes pour une prise de décision Ã©clairÃ©e.</p>
+      <p>MaÃ®trisez l'analyse spatiale et la reprÃ©sentation des donnÃ©es statistiques. Transformez les donnÃ©es socio-Ã©conomiques en cartes thÃ©matiques impactantes pour une prise de dÃ©cision Ã©clairÃ©e.</p>
       <div class="formation-meta">
         <div class="meta-item">
           <i class="fa-solid fa-clock"></i>
@@ -806,7 +808,7 @@
     <div class="card">
       <span class="badge" style="background: #198754;">âœ“ Nouveau</span>
       <h3>Formation en ligne : Webmapping avancÃ©</h3>
-      <p>DÃ©couvrez la crÃ©ation de portails cartographiques interactifs avec Leaflet and Mapbox. Formation 100% en ligne, flexible, adaptÃ©e aux professionnels.</p>
+      <p>DÃ©couvrez la crÃ©ation de portails cartographiques interactifs avec Leaflet et Mapbox. Formation 100% en ligne, flexible, adaptÃ©e aux professionnels.</p>
       <p><small>ðŸ“… DÃ©marrage : 15 fÃ©vrier 2026</small></p>
       <a href="#formations" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">DÃ©tails</a>
     </div>
