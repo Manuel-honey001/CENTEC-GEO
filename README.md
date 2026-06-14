@@ -2,20 +2,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CENTEC – Centre de Formation & Géomatique</title>
-  <meta name="description" content="CENTEC – Centre National d'Étude en Territoire et Cartographie" />
+  <title>CENTEC â€“ Centre de Formation & GÃ©omatique</title>
+  <meta name="description" content="CENTEC â€“ Centre National d'Etude en Territoire et Cartographie" />
 
-  <!-- Icônes Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
     :root {
-      --primary: #0B132B;       /* Bleu Nuit Spatial (Sérieux, Innovation) */
-      --secondary: #FF5A00;     /* Orange Électrique (Action, Impact visuel fort) */
-      --accent-green: #10B981;  /* Vert Émeraude (Territoires, SIG, Cartographie) */
-      --dark: #1E293B;          /* Bleu Ardoise (Fonds sombres, Structures) */
-      --light: #F4F6F9;         /* Gris clair moderne (Fonds alternés) */
-      --text: #0F172A;          /* Texte sombre haute lisibilité */
+      --primary: #0b132b;    /* Modifié : Bleu Nuit */
+      --secondary: #ff5a00;  /* Modifié : Orange Électrique */
+      --dark: #111;
+      --light: #f5f7fa;
+      --text: #222;
     }
 
     * { box-sizing: border-box; }
@@ -29,16 +27,16 @@
     }
 
     header {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      background: linear-gradient(135deg, #1f3160 0%, #0b132b 100%); /* Modifié : Gradient Bleu Nuit */
       color: #fff;
       padding: 1.5rem 2rem;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 6px 18px rgba(11, 19, 43, 0.15);
+      box-shadow: 0 6px 18px rgba(11,19,43,0.15);
     }
 
-    header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.5px; }
+    header h1 { margin: 0; font-size: 1.8rem; }
 
     .header-inner {
       display: flex;
@@ -64,14 +62,14 @@
       padding: 6px;
     }
 
-    .tagline { margin: 0; font-size: 0.95rem; opacity: 0.85; }
+    .tagline { margin: 0; font-size: 0.95rem; opacity: 0.95; }
 
     .header-photo {
       height: 56px;
       width: 56px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.15);
     }
 
     .header-decor {
@@ -119,7 +117,7 @@
       top: 100px;
       left: 0;
       right: 0;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      background: linear-gradient(135deg, #1f3160 0%, #0b132b 100%); /* Modifié : Gradient Bleu Nuit */
       flex-direction: column;
       padding: 1rem;
       gap: 0.5rem;
@@ -136,11 +134,10 @@
       margin-right: 1rem;
       text-decoration: none;
       font-weight: 600;
-      opacity: 0.85;
-      transition: opacity 0.2s ease, color 0.2s ease;
+      opacity: 0.9;
     }
 
-    nav a:hover { opacity: 1; color: var(--secondary); text-decoration: none; }
+    nav a:hover { opacity: 1; text-decoration: underline; }
 
     section {
       padding: 4rem 2rem;
@@ -149,7 +146,7 @@
     }
 
     .hero {
-      background: linear-gradient(rgba(11, 19, 43, 0.75), rgba(30, 41, 59, 0.75)), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d');
       background-size: cover;
       background-position: center;
       color: #fff;
@@ -157,10 +154,10 @@
       padding: 6rem 2rem;
     }
 
-    .hero h2 { font-size: 2.6rem; margin-bottom: 1rem; font-weight: 700; }
-    .hero p { max-width: 700px; margin: auto; font-size: 1.1rem; opacity: 0.9; }
+    .hero h2 { font-size: 2.6rem; margin-bottom: 1rem; }
+    .hero p { max-width: 700px; margin: auto; font-size: 1.1rem; }
 
-    h2 { font-size: 2.2rem; margin-bottom: 1.5rem; color: var(--primary); font-weight: 700; }
+    h2 { font-size: 2.2rem; margin-bottom: 1.5rem; color: var(--primary); }
 
     .btn {
       display: inline-block;
@@ -171,13 +168,12 @@
       text-decoration: none;
       font-weight: bold;
       margin-top: 1.5rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      background-color: #E04F00;
-      box-shadow: 0 8px 20px rgba(255, 90, 0, 0.3);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
     .grid {
@@ -187,7 +183,7 @@
     }
 
     .icon {
-      color: var(--secondary);
+      color: var(--primary);
       margin-right: 0.5rem;
     }
 
@@ -204,16 +200,16 @@
     }
 
     .card {
-      background: #fff;
+  background: #fff;
       border-radius: 12px;
       padding: 2rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(11, 19, 43, 0.12);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     }
 
     form input, form textarea {
@@ -227,8 +223,8 @@
 
     form input:focus, form textarea:focus {
       outline: none;
-      border-color: var(--secondary);
-      box-shadow: 0 0 8px rgba(255, 90, 0, 0.2);
+      border-color: var(--primary);
+      box-shadow: 0 0 8px rgba(11, 19, 43, 0.2);
     }
 
     form textarea { resize: vertical; }
@@ -243,14 +239,13 @@
     }
 
     footer {
-      background: var(--primary);
+      background: var(--dark);
       color: #fff;
       padding: 2.5rem 1rem;
-      border-top: 4px solid var(--secondary);
     }
 
-    footer a { color: #fff; opacity: 0.8; text-decoration: none; transition: color 0.2s ease; }
-    footer a:hover { opacity: 1; color: var(--secondary); text-decoration: underline; }
+    footer a { color: #fff; opacity: 0.8; text-decoration: none; }
+    footer a:hover { opacity: 1; text-decoration: underline; }
 
     .footer-content {
       max-width: 1200px;
@@ -266,10 +261,8 @@
       margin-top: 0;
       margin-bottom: 1rem;
       font-size: 1.1rem;
-      border-bottom: 2px solid var(--secondary);
+      border-bottom: 2px solid var(--primary);
       padding-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .footer-section p {
@@ -301,27 +294,26 @@
       justify-content: center;
       width: 40px;
       height: 40px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.1);
       border-radius: 50%;
       color: #fff;
       transition: all 0.3s ease;
     }
 
     .social-links a:hover {
-      background: var(--secondary);
+      background: var(--primary);
       transform: translateY(-3px);
     }
 
     .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 1px solid rgba(255,255,255,0.2);
       padding-top: 1.5rem;
       text-align: center;
       font-size: 0.9rem;
-      opacity: 0.8;
     }
 
     .testimonial {
-      border-left: 4px solid var(--secondary);
+      border-left: 4px solid var(--primary);
       padding-left: 1.5rem;
       font-style: italic;
       color: #666;
@@ -337,15 +329,13 @@
 
     .stat-item h3 {
       font-size: 2.5rem;
-      color: var(--secondary);
+      color: var(--primary);
       margin: 0.5rem 0;
-      font-weight: 700;
     }
 
     .stat-item p {
       color: #666;
       margin: 0;
-      font-weight: 500;
     }
 
     .formation-card {
@@ -390,7 +380,6 @@
 
     .badge.intermediate {
       background: #ffc107;
-      color: #000;
     }
 
     .badge.advanced {
@@ -416,7 +405,7 @@
     }
 
     .meta-item .fa {
-      color: var(--accent-green);
+      color: var(--primary);
       width: 16px;
     }
 
@@ -440,9 +429,9 @@
     }
 
     .inscription-btn:hover {
-      background: var(--secondary);
+      background: #000814; /* Modifié pour correspondre au bleu nuit */
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(255, 90, 0, 0.2);
+      box-shadow: 0 6px 15px rgba(11, 19, 43, 0.2);
     }
 
     .service-card {
@@ -458,8 +447,8 @@
     }
 
     .service-icon.icon-blue { color: var(--primary); }
-    .service-icon.icon-green { color: var(--accent-green); }
-    .service-icon.icon-orange { color: var(--secondary); }
+    .service-icon.icon-green { color: var(--secondary); }
+    .service-icon.icon-orange { color: #fd7e14; }
 
     .service-card h3 {
       color: var(--text);
@@ -476,19 +465,18 @@
     .service-list li {
       padding: 0.5rem 0;
       color: #666;
-      display: block; /* Correction syntaxique ici */
-    }
+      display
 
-    .service-list li::before {
-      content: '✓';
-      color: var(--accent-green);
+    .service-list li:before {
+      content: 'âœ“';
+      color: var(--secondary);
       font-weight: bold;
-      margin-right: 0.5rem;
+      margin-right: 0.3rem;
     }
 
     .contact-service-btn {
       display: inline-block;
-      background: var(--dark);
+      background: var(--secondary);
       color: #fff;
       padding: 0.6rem 1.2rem;
       border-radius: 6px;
@@ -499,7 +487,7 @@
     }
 
     .contact-service-btn:hover {
-      background: var(--secondary);
+      background: #cc4800; /* Modifié pour correspondre à l'orange */
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(255, 90, 0, 0.2);
     }
@@ -566,10 +554,11 @@
 <header>
   <div class="header-inner">
     <div class="brand">
+      
       <img src="assets/logo.jpg" alt="Logo CENTEC" class="logo" onerror="this.style.display='none'">
       <div>
         <h1>CENTEC</h1>
-        <p class="tagline">Centre National d'Étude en Territoire et Cartographie</p>
+        <p class="tagline">Centre National d'Etude en Territoire et Cartographie</p>
       </div>
     </div>
 
@@ -577,79 +566,79 @@
       <img src="assets/header-photo.jpg" alt="Photo CENTEC" class="header-photo" onerror="this.style.display='none'">
       <div class="header-decor" aria-hidden="true">
         <span class="decor-item"><i class="fa-solid fa-map-location-dot"></i> SIG</span>
-        <span class="decor-item"><i class="fa-solid fa-satellite-dish"></i> Drones</span>
+        <span class="decor-item">ðŸ“¡ Drones</span>
         <span class="decor-item"><i class="fa-solid fa-globe"></i> Web</span>
-        <span class="decor-item"><i class="fa-solid fa-satellite"></i></span>
+        <span class="decor-item">ðŸŒ¤ï¸</span>
       </div>
     </div>
   </div>
 
   <nav>
     <a href="#accueil">Accueil</a>
-    <a href="#apropos">À propos</a>
+    <a href="#apropos">Ã€ propos</a>
     <a href="#formations">Formations</a>
     <a href="#services">Services</a>
     <a href="#projets">Projets</a>
-    <a href="#actualites">Actualités</a>
+    <a href="#actualites">ActualitÃ©s</a>
     <a href="#contact">Contact</a>
   </nav>
 
   <nav class="mobile-menu" id="mobileMenu">
     <a href="#accueil">Accueil</a>
-    <a href="#apropos">À propos</a>
+    <a href="#apropos">Ã€ propos</a>
     <a href="#formations">Formations</a>
     <a href="#services">Services</a>
     <a href="#projets">Projets</a>
-    <a href="#actualites">Actualités</a>
+    <a href="#actualites">ActualitÃ©s</a>
     <a href="#contact">Contact</a>
   </nav>
 
-  <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">â˜°</button>
 </header>
 
 <section id="accueil" class="hero">
   <h2>Former, analyser et cartographier pour un meilleur territoire</h2>
-  <p>CENTEC est un centre spécialisé en SIG, cartographie, télédétection, drones et collecte de données en Afrique francophone.</p>
-  <a href="#formations" class="btn">Découvrir nos formations</a>
+  <p>CENTEC est un centre spÃ©cialisÃ© en SIG, cartographie, tÃ©lÃ©dÃ©tection, drones et collecte de donnÃ©es en Afrique francophone.</p>
+  <a href="#formations" class="btn">DÃ©couvrir nos formations</a>
 </section>
 
 <section id="apropos">
   <h2>Qui sommes-nous ?</h2>
-  <p><strong>CENTEC (Centre National d'Étude en Territoire et Cartographie)</strong> est une structure spécialisée dans la formation, la recherche appliquée et les prestations de services en géomatique. Né du constat d’un besoin croissant en compétences locales dans les domaines des SIG, de la cartographie, de la télédétection et de l’analyse spatiale, CENTEC œuvre pour le renforcement des capacités techniques et professionnelles des étudiants, des institutions, des collectivités et des entreprises en Afrique francophone.</p>
-  <p>Notre approche repose sur une combinaison équilibrée entre la théorie, la pratique terrain et l’utilisation d’outils professionnels reconnus (SIG, drones, images satellites, collecte mobile de données). CENTEC se positionne ainsi comme un acteur clé du développement territorial et de la prise de décision basée sur les données spatiales.</p>
+  <p><strong>CENTEC (Centre National d'Etude en Territoire et Cartographie)</strong> est une structure spÃ©cialisÃ©e dans la formation, la recherche appliquÃ©e et les prestations de services en gÃ©omatique. NÃ© du constat dâ€™un besoin croissant en compÃ©tences locales dans les domaines des SIG, de la cartographie, de la tÃ©lÃ©dÃ©tection et de lâ€™analyse spatiale, CENTEC Å“uvre pour le renforcement des capacitÃ©s techniques et professionnelles des Ã©tudiants, des institutions, des collectivitÃ©s et des entreprises en Afrique francophone.</p>
+  <p>Notre approche repose sur une combinaison Ã©quilibrÃ©e entre la thÃ©orie, la pratique terrain et lâ€™utilisation dâ€™outils professionnels reconnus (SIG, drones, images satellites, collecte mobile de donnÃ©es). CENTEC se positionne ainsi comme un actor clÃ© du dÃ©veloppement territorial et de la prise de dÃ©cision basÃ©e sur les donnÃ©es spatiales.</p>
 
   <div class="grid">
     <div class="card apropos-card">
       <img src="https://images.unsplash.com/photo-1526378722484-bd91ca387e72" alt="Mission CENTEC" class="apropos-img">
       <h3>Notre mission</h3>
-      <p>Former, accompagner et outiller des professionnels capables de collecter, analyser, interpréter et valoriser les données géospatiales afin de répondre efficacement aux enjeux de développement, d’aménagement du territoire et de gouvernance.</p>
+      <p>Former, accompagner et outiller des professionnels capables de collecter, analyser, interprÃ©ter et valoriser les donnÃ©es gÃ©ospatiales afin de rÃ©pondre efficacement aux enjeux de dÃ©veloppement, dâ€™amÃ©nagement du territoire et de gouvernance.</p>
     </div>
 
     <div class="card apropos-card">
       <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Vision CENTEC" class="apropos-img">
       <h3>Notre vision</h3>
-      <p>Devenir une référence régionale et africaine en matière de formation et d’expertise en géomatique, en mettant l’innovation, la qualité pédagogique et l’excellence technique au service du développement durable.</p>
+      <p>Devenir une rÃ©fÃ©rence rÃ©gionale et africaine en matiÃ¨re de formation et dâ€™expertise en gÃ©omatique, en mettant lâ€™innovation, la qualitÃ© pÃ©dagogique et lâ€™excellence technique au service du dÃ©veloppement durable.</p>
     </div>
 
     <div class="card apropos-card">
-      <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc" alt="Pédagogie CENTEC" class="apropos-img">
-      <h3>Notre pédagogie</h3>
-      <p>Une pédagogie orientée vers la pratique, basée sur des études de cas réels, des travaux pratiques, des projets terrain et l’usage d’outils professionnels, afin de garantir des compétences directement opérationnelles.</p>
+      <img src="https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc" alt="PÃ©dagogie CENTEC" class="apropos-img">
+      <h3>Notre pÃ©dagogie</h3>
+      <p>Une pÃ©dagogie orientÃ©e vers la pratique, basÃ©e sur des Ã©tudes de cas rÃ©els, des travaux pratiques, des projets terrain et lâ€™usage dâ€™outils professionnels, afin de garantir des compÃ©tences directement opÃ©rationnelles.</p>
     </div>
   </div>
 </section>
 
-<section id="formations" style="background: var(--light);">
+<section id="formations" style="background:#f5f7fa;">
   <h2>Nos formations</h2>
-  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Formations pratiques et reconnues pour devenir expert en géomatique</p>
+  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Formations pratiques et reconnues pour devenir expert en gÃ©omatique</p>
   <div class="grid">
     <div class="card formation-card">
       <div class="formation-header">
         <i class="fa-solid fa-map-location-dot icon" style="font-size: 1.8rem; color: var(--primary);"></i>
         <h3>Initiation aux SIG</h3>
       </div>
-      <span class="badge">Débutant</span>
-      <p>Découvrez les fondamentaux des Systèmes d'Information Géographique (SIG) avec QGIS. Apprenez à manipuler les données spatiales, créer des cartes professionnelles et explorer les bases de la cartographie numérique.</p>
+      <span class="badge">DÃ©butant</span>
+      <p>DÃ©couvrez les fondamentaux des SystÃ¨mes d'Information GÃ©ographique (SIG) avec QGIS. Apprenez Ã  manipuler les donnÃ©es spatiales, crÃ©er des cartes professionnelles et explorer les bases de la cartographie numÃ©rique.</p>
       <div class="formation-meta">
         <div class="meta-item">
           <i class="fa-solid fa-clock"></i>
@@ -665,7 +654,7 @@
         </div>
         <div class="meta-item">
           <i class="fa-solid fa-location-dot"></i>
-          <span>En présentiel</span>
+          <span>En prÃ©sentiel</span>
         </div>
       </div>
       <div class="formation-price">650 000 FCFA</div>
@@ -677,8 +666,8 @@
         <i class="fa-solid fa-chart-area icon" style="font-size: 1.8rem; color: #ffc107;"></i>
         <h3>Cartographie statistique</h3>
       </div>
-      <span class="badge intermediate">Intermédiaire</span>
-      <p>Maîtrisez l'analyse spatiale et la représentation des données statistiques. Transformez les données socio-économiques en cartes thématiques impactantes pour une prise de décision éclairée.</p>
+      <span class="badge intermediate">IntermÃ©diaire</span>
+      <p>MaÃ®trisez l'analyse spatiale et la reprÃ©sentation des donnÃ©es statistiques. Transformez les donnÃ©es socio-Ã©conomiques en cartes thÃ©matiques impactantes pour une prise de décision Ã©clairÃ©e.</p>
       <div class="formation-meta">
         <div class="meta-item">
           <i class="fa-solid fa-clock"></i>
@@ -694,7 +683,7 @@
         </div>
         <div class="meta-item">
           <i class="fa-solid fa-location-dot"></i>
-          <span>En présentiel</span>
+          <span>En prÃ©sentiel</span>
         </div>
       </div>
       <div class="formation-price">850 000 FCFA</div>
@@ -704,10 +693,10 @@
     <div class="card formation-card">
       <div class="formation-header">
         <i class="fa-solid fa-drone icon" style="font-size: 1.8rem; color: #dc3545;"></i>
-        <h3>Télédétection & Drones</h3>
+        <h3>TÃ©lÃ©dÃ©tection & Drones</h3>
       </div>
-      <span class="badge advanced">Avancé</span>
-      <p>Explorez les technologies de télédétection par satellite et drone. Traitez les images aériennes et satellites pour l'analyse territoriale, la surveillance environnementale et les projets d'aménagement.</p>
+      <span class="badge advanced">AvancÃ©</span>
+      <p>Explorez les technologies de tÃ©lÃ©dÃ©tection par satellite et drone. Traitez les images aÃ©riennes et satellites pour l'analyse territoriale, la surveillance environnementale et les projets d'amÃ©nagement.</p>
       <div class="formation-meta">
         <div class="meta-item">
           <i class="fa-solid fa-clock"></i>
@@ -734,16 +723,16 @@
 
 <section id="services">
   <h2>Services & Prestations</h2>
-  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Solutions géomatiques complètes pour vos enjeux territoriaux</p>
+  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Solutions gÃ©omatiques complÃ¨tes pour vos enjeux territoriaux</p>
   <div class="grid">
     <div class="card service-card">
       <i class="fa-solid fa-city service-icon icon-blue"></i>
-      <h3>Bureau d'études</h3>
-      <p>Nos experts réalisent des études territoriales approfondies et des analyses spatiales pour soutenir vos projets d'aménagement, de développement et de gouvernance.</p>
+      <h3>Bureau d'Ã©tudes</h3>
+      <p>Nos experts rÃ©alisent des Ã©tudes territoriales approfondies et des analyses spatiales pour soutenir vos projets d'amÃ©nagement, de dÃ©veloppement et de gouvernance.</p>
       <ul class="service-list">
-        <li>Études de faisabilité spatiales</li>
-        <li>Analyses d'aménagement du territoire</li>
-        <li>Modélisation spatiale</li>
+        <li>Ã‰tudes de faisabilitÃ© spatiales</li>
+        <li>Analyses d'amÃ©nagement du territoire</li>
+        <li>ModÃ©lisation spatiale</li>
         <li>Rapports cartographiques</li>
         <li>Diagnostic territorial</li>
       </ul>
@@ -752,12 +741,12 @@
 
     <div class="card service-card">
       <i class="fa-solid fa-database service-icon icon-green"></i>
-      <h3>Collecte de données</h3>
-      <p>Collectez et gérez vos données géospatiales via des enquêtes terrain structurées, des applications mobiles et des outils professionnels éprouvés.</p>
+      <h3>Collecte de donnÃ©es</h3>
+      <p>Collectez et gÃ©rez vos donnÃ©es gÃ©ospatiales via des enquÃªtes terrain structurÃ©es, des applications mobiles et des outils professionnels Ã©prouvÃ©s.</p>
       <ul class="service-list">
-        <li>Enquêtes terrain (GPS, GNSS)</li>
+        <li>EnquÃªtes terrain (GPS, GNSS)</li>
         <li>Collecte mobile avec KoboToolbox</li>
-        <li>Traitement et nettoyage de données</li>
+        <li>Traitement et nettoyage de donnÃ©es</li>
         <li>Validation et analyse spatiale</li>
         <li>Reporting et visualisation</li>
       </ul>
@@ -767,12 +756,12 @@
     <div class="card service-card">
       <i class="fa-solid fa-globe service-icon icon-orange"></i>
       <h3>Webmapping</h3>
-      <p>Créez des portails cartographiques interactifs pour visualiser, explorer et partager vos données géospatiales avec des outils web modernes et conviviaux.</p>
+      <p>CrÃ©ez des portails cartographiques interactifs pour visualiser, explorer et partager vos donnÃ©es gÃ©ospatiales avec des outils web modernes et conviviaux.</p>
       <ul class="service-list">
-        <li>Cartes interactives personnalisées</li>
-        <li>Tableaux de bord géospatiales</li>
-        <li>Portails de données ouvertes</li>
-        <li>Intégrations API et WMS</li>
+        <li>Cartes interactives personnalisÃ©es</li>
+        <li>Tableaux de bord gÃ©ospatiales</li>
+        <li>Portails de donnÃ©es ouvertes</li>
+        <li>IntÃ©grations API et WMS</li>
         <li>Formation aux outils</li>
       </ul>
       <a href="#contact" class="contact-service-btn">Demander un devis</a>
@@ -780,17 +769,17 @@
   </div>
 </section>
 
-<section id="projets" style="background: var(--light);">
-  <h2>Réalisations</h2>
-  <p>Cartes thématiques, projets SIG, études territoriales et analyses spatiales réalisées par CENTEC.</p>
+<section id="projets" style="background:#f5f7fa;">
+  <h2>RÃ©alisations</h2>
+  <p>Cartes thÃ©matiques, projets SIG, Ã©tudes territoriales et analyses spatiales rÃ©alisÃ©es par CENTEC.</p>
   <div class="stats">
     <div class="stat-item">
       <h3>150+</h3>
-      <p>Professionnels formés</p>
+      <p>Professionnels formÃ©s</p>
     </div>
     <div class="stat-item">
       <h3>25+</h3>
-      <p>Projets réalisés</p>
+      <p>Projets rÃ©alisÃ©s</p>
     </div>
     <div class="stat-item">
       <h3>12</h3>
@@ -798,41 +787,41 @@
     </div>
     <div class="stat-item">
       <h3>8+</h3>
-      <p>Années d'expérience</p>
+      <p>AnnÃ©es d'expÃ©rience</p>
     </div>
   </div>
 </section>
 
 <section id="actualites">
-  <h2>Actualités & Événements</h2>
-  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Restez informé de nos dernières nouvelles, formations et appels à projets</p>
+  <h2>ActualitÃ©s & Ã‰vÃ©nements</h2>
+  <p style="text-align: center; color: #666; margin-bottom: 2rem;">Restez informÃ© de nos derniÃ¨res nouvelles, formations et appels Ã  projets</p>
   <div class="grid">
     <div class="card">
-      <span class="badge" style="background: #dc3545;">🔔 Événement</span>
-      <h3>Atelier SIG & Drones – Mars 2026</h3>
+      <span class="badge" style="background: #dc3545;">ðŸ”” Ã‰vÃ©nement</span>
+      <h3>Atelier SIG & Drones â€“ Mars 2026</h3>
       <p>Rejoignez nos experts pour un atelier intensif de 2 jours sur les applications pratiques des drones en cartographie et surveillance territoriale.</p>
-      <p><small>📅 15-16 mars 2026 | 📍 Abidjan</small></p>
+      <p><small>ðŸ“… 15-16 mars 2026 | ðŸ“ Abidjan</small></p>
       <a href="#contact" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">S'inscrire</a>
     </div>
     <div class="card">
-      <span class="badge" style="background: #198754;">✓ Nouveau</span>
-      <h3>Formation en ligne : Webmapping avancé</h3>
-      <p>Découvrez la création de portails cartographiques interactifs avec Leaflet et Mapbox. Formation 100% en ligne, flexible, adaptée aux professionnels.</p>
-      <p><small>📅 Démarrage : 15 février 2026</small></p>
-      <a href="#formations" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">Détails</a>
+      <span class="badge" style="background: #198754;">âœ“ Nouveau</span>
+      <h3>Formation en ligne : Webmapping avancÃ©</h3>
+      <p>DÃ©couvrez la crÃ©ation de portails cartographiques interactifs avec Leaflet and Mapbox. Formation 100% en ligne, flexible, adaptÃ©e aux professionnels.</p>
+      <p><small>ðŸ“… DÃ©marrage : 15 fÃ©vrier 2026</small></p>
+      <a href="#formations" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">DÃ©tails</a>
     </div>
     <div class="card">
-      <span class="badge" style="background: #ffc107; color: #000;">🎯 Appel</span>
-      <h3>Appel à projets : Cartographie participative</h3>
-      <p>CENTEC cherche des partenaires pour des projets de cartographie participative en Afrique de l'Ouest. Financements disponibles jusqu'au 28 février.</p>
-      <p><small>📅 Deadline : 28 février 2026</small></p>
+      <span class="badge" style="background: #ffc107;">ðŸŽ¯ Appel</span>
+      <h3>Appel Ã  projets : Cartographie participative</h3>
+      <p>CENTEC cherche des partenaires pour des projets de cartographie participative en Afrique de l'Ouest. Financements disponibles jusqu'au 28 fÃ©vrier.</p>
+      <p><small>ðŸ“… Deadline : 28 fÃ©vrier 2026</small></p>
       <a href="#contact" class="btn" style="background: var(--primary); font-size: 0.9rem; padding: 0.5rem 1rem; margin-top: 0.5rem;">Candidater</a>
     </div>
     <div class="card facebook-wrapper">
       <div style="width: 100%; text-align: center;">
-        <span class="badge" style="background: #1877f2; margin-bottom: 1rem;">📱 Nos actualités Facebook</span>
+        <span class="badge" style="background: #1877f2; margin-bottom: 1rem;">ðŸ“± Nos actualitÃ©s Facebook</span>
         <h3 style="margin-top: 0; color: var(--primary);">Suivez-nous sur Facebook</h3>
-        <p style="color: #666; margin-bottom: 1.5rem;">Découvrez nos dernières actualités, événements et success stories directement depuis notre page officielle. Rejoignez notre communauté !</p>
+        <p style="color: #666; margin-bottom: 1.5rem;">DÃ©couvrez nos derniÃ¨res actualitÃ©s, Ã©vÃ©nements et success stories directement depuis notre page Facebook officielle. Rejoignez notre communautÃ©!</p>
         <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fweb.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02CQyeRdE9wbuEPWX8L9bPtDC5rNXjGcdH1GnZmUgfPpeS6RTkUq77nE4EbRmS17yql%26id%3D61566026256570&show_text=true&width=500" width="500" height="729" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         <a href="https://www.facebook.com/share/1AFMBL3wkV/" target="_blank" rel="noopener" class="btn" style="background: #1877f2; font-size: 0.9rem; padding: 0.6rem 1.5rem; margin-top: 1.5rem; display: inline-block;">Consulter la page</a>
       </div>
@@ -840,7 +829,7 @@
   </div>
 </section>
 
-<section id="contact" style="background: var(--light);">
+<section id="contact" style="background:#f5f7fa;">
   <h2>Contact & Inscription</h2>
   <div style="max-width: 600px; margin: 0 auto;">
     <form onsubmit="return handleFormSubmit(event)">
@@ -858,33 +847,33 @@
       </div>
       <div class="form-group">
         <label for="message">Votre message</label>
-        <textarea id="message" name="message" placeholder="Décrivez votre demande..." rows="5" required></textarea>
+        <textarea id="message" name="message" placeholder="DÃ©crivez votre demande..." rows="5" required></textarea>
       </div>
       <button class="btn" type="submit" style="width: 100%; text-align: center;">Envoyer ma demande</button>
     </form>
-    <p style="text-align: center; margin-top: 1.5rem; color: #666;">✉️ Ou envoyez-nous un email directement à <strong>centrecartographie@gmail.com</strong></p>
+    <p style="text-align: center; margin-top: 1.5rem; color: #666;">âœ‰ï¸ Ou envoyez-nous un email directement Ã  <strong>centrecartographie@gmail.com</strong></p>
   </div>
 </section>
 
 <footer>
   <div class="footer-content">
     <div class="footer-section">
-      <h4>📍 Contact</h4>
-      <p><strong>Adresse :</strong><br>Abidjan, Côte d'Ivoire</p>
+      <h4>ðŸ“ Contact</h4>
+      <p><strong>Adresse :</strong><br>Abidjan, CÃ´te d'Ivoire</p>
       <p><strong>Email :</strong><br><a href="mailto:centrecartographie@gmail.com">centrecartographie@gmail.com</a></p>
-      <p><strong>Téléphone :</strong><br><a href="tel:+22512345678">+225 12 34 56 78</a></p>
+      <p><strong>TÃ©lÃ©phone :</strong><br><a href="tel:+22512345678">+225 12 34 56 78</a></p>
     </div>
     <div class="footer-section">
-      <h4>🔗 Liens rapides</h4>
+      <h4>ðŸ”— Liens rapides</h4>
       <div class="footer-links">
         <a href="#formations">Nos formations</a>
         <a href="#services">Nos services</a>
-        <a href="#actualites">Actualités</a>
+        <a href="#actualites">ActualitÃ©s</a>
         <a href="#contact">Nous contacter</a>
       </div>
     </div>
     <div class="footer-section">
-      <h4>🌐 Suivez-nous</h4>
+      <h4>ðŸŒ Suivez-nous</h4>
       <div class="social-links">
         <a href="https://www.facebook.com/share/1AFMBL3wkV/" target="_blank" rel="noopener" aria-label="Facebook">
           <i class="fab fa-facebook-f"></i>
@@ -902,39 +891,40 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 CENTEC – Tous droits réservés</p>
-    <p><a href="#">Mentions légales</a> | <a href="#">Politique de confidentialité</a></p>
+    <p>Â© 2026 CENTEC â€“ Tous droits rÃ©servÃ©s</p>
+    <p><a href="#">Mentions lÃ©gales</a> | <a href="#">Politique de confidentialitÃ©</a></p>
   </div>
 </footer>
 
-<script>
-  // Menu hamburger
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-  });
-
-  // Fermer le menu au clic sur un lien
-  const menuLinks = mobileMenu.querySelectorAll('a');
-  menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-    });
-  });
-
-  // Formulaire avec FormSubmit.co
-  const form = document.querySelector('form');
-  form.action = 'https://formsubmit.co/centrecartographie@gmail.com';
-  form.method = 'POST';
-
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    const nom = document.getElementById('nom').value;
-    alert(`Merci ${nom}! Votre demande est en cours d'envoi.`);
-    setTimeout(() => form.submit(), 1000);
-  }
-</script>
 </body>
+  <script>
+    // Menu hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Fermer le menu au clic sur un lien
+    const menuLinks = mobileMenu.querySelectorAll('a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    // Formulaire avec FormSubmit.co
+    const form = document.querySelector('form');
+    form.action = 'https://formsubmit.co/centrecartographie@gmail.com';
+    form.method = 'POST';
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const nom = document.getElementById('nom').value;
+      alert(`Merci ${nom}! Votre demande est en cours d'envoi.`);
+      // FormSubmit gÃ©rera l'envoi automatiquement
+      setTimeout(() => form.submit(), 1000);
+    }
+  </script>
 </html>
