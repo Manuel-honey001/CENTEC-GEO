@@ -490,19 +490,6 @@
     <a href="certification.html" onclick="toggleMenu()">Certification</a>
     <a href="https://manuel-honey001.github.io/CENTEC-GEO/#contact" onclick="toggleMenu()">Contact</a>
 </nav>
-<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
-    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
-        <i class="fas fa-times"></i>
-    </button>
-    <a href="#accueil" onclick="toggleMenu()">Accueil</a>
-    <a href="#propos" onclick="toggleMenu()">À Propos</a>
-    <a href="#formations" onclick="toggleMenu()">Formations</a>
-    <a href="#services" onclick="toggleMenu()">Services</a>
-    <a href="#actualites" onclick="toggleMenu()">Actualités</a>
-    <a href="#equipe" onclick="toggleMenu()">Équipe</a>
-    <a href="certification.html" onclick="toggleMenu()">Certification</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
-</nav>
 
 <section class="hero" id="accueil">
     <h1 data-aos="fade-down" data-aos-duration="1200">CENTEC GEO</h1>
