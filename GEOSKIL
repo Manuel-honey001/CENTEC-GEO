@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOSKILL - Programme Professionnel en Géomatique Appliquée</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #003366; /* Bleu CENTEC */
+            --accent: #f59e0b;  /* Orange/Jaune Affiche */
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text-gray: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #fff;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* --- EN-TÊTE (HEADER) --- */
+        header {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-container img {
+            height: 60px; /* Ajuste selon la taille de ton logo */
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                        url('https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2000') no-repeat center/cover;
+            color: #fff;
+            padding: 100px 5% 60px;
+            text-align: center;
+        }
+
+        .edition-badge {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .hero p.subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        /* --- INFOS CLÉS (Date/Lieu) --- */
+        .info-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            background: var(--light);
+            padding: 20px;
+            margin-top: -40px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .info-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .info-item i {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .info-item span {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* --- MODULES --- */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 0 5%;
+        }
+
+        .module-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        .module-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .module-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* --- AVANTAGES & SECTEURS --- */
+        .details-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 60px 5%;
+            background: var(--dark);
+            color: #fff;
+            margin-top: 60px;
+        }
+
+        .details-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .details-box h2 {
+            color: var(--accent);
+            margin-bottom: 25px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .list-item i {
+            color: var(--accent);
+        }
+
+        /* --- LOGOS OUTILS --- */
+        .tools-section {
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .tools-flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .tools-flex img {
+            height: 60px;
+            filter: grayscale(1);
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+
+        .tools-flex img:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        /* --- CONTACT & CTA --- */
+        .cta-section {
+            padding: 80px 5%;
+            text-align: center;
+            background: var(--light);
+        }
+
+        .btn-register {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 20px 50px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn-register:hover {
+            transform: scale(1.05);
+            background: #f59e0b;
+        }
+
+        .contact-footer {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        footer {
+            background: var(--primary);
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .info-bar { flex-direction: column; width: 90%; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="CENTEC-GEO Logo">
+            <span style="font-weight: 800; color: var(--primary); font-size: 1.2rem;">CENTEC-GEO</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="#programme">Programme</a>
+            <a href="#inscription">Inscription</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="edition-badge">2ème ÉDITION</div>
+        <h1>GEOSKILL</h1>
+        <p class="subtitle">Programme Professionnel en Géomatique Appliquée</p>
+        <p style="margin-top: 20px; font-style: italic; opacity: 0.9;">"Développez des compétences géospatiales pour piloter vos projets"</p>
+    </section>
+
+    <div class="info-bar">
+        <div class="info-item">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>DU 06 JUIN AU 25 JUILLET 2026</span>
+        </div>
+        <div class="info-item">
+            <i class="fa-solid fa-clock"></i>
+            <span>2 MOIS DE FORMATION INTENSIVE</span>
+        </div>
+        <div class="info-item">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>ABIDJAN, COCODY 2 PLATEAUX</span>
+        </div>
+    </div>
+
+    <section id="programme">
+        <div class="section-title">
+            <h2>Modules de Formation</h2>
+        </div>
+        <div class="modules-grid">
+            <div class="module-card">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3>Cartographie</h3>
+                <p>Conception de cartes professionnelles et thématiques.</p>
+            </div>
+            <div class="module-card">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h3>Analyse Géospatiale</h3>
+                <p>Traitement et analyse de données spatiales complexes.</p>
+            </div>
+            <div class="module-card">
+                <i class="fa-solid fa-helicopter"></i>
+                <h3>Pilotage de Drone</h3>
+                <p>Techniques de vol et acquisition d'images aériennes.</p>
+            </div>
+            <div class="module-card">
+                <i class="fa-solid fa-database"></i>
+                <h3>Collecte de Données</h3>
+                <p>Méthodologies de collecte numérique sur le terrain.</p>
+            </div>
+            <div class="module-card">
+                <i class="fa-solid fa-satellite"></i>
+                <h3>Télédétection</h3>
+                <p>Interprétation d'images satellites et de données capteurs.</p>
+            </div>
+            <div class="module-card">
+                <i class="fa-solid fa-file-lines"></i>
+                <h3>Reporting de Projet</h3>
+                <p>Rédaction de rapports techniques et cartographiques.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="details-container">
+        <div class="details-box">
+            <h2>Secteurs d'Application</h2>
+            <div class="list-item"><i class="fa-solid fa-city"></i> BTP & Aménagement du territoire</div>
+            <div class="list-item"><i class="fa-solid fa-seedling"></i> Environnement & Agriculture</div>
+            <div class="list-item"><i class="fa-solid fa-users"></i> Collectivités & ONG</div>
+            <div class="list-item"><i class="fa-solid fa-bolt"></i> Énergie & Réseaux</div>
+        </div>
+        <div class="details-box">
+            <h2>Vos Avantages</h2>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Projets multi-sectoriels</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Encadrement par des experts</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Formation orientée terrain</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Projet final d'application</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Guide pratique délivré</div>
+        </div>
+    </section>
+
+    <section class="tools-section">
+        <h3>Logiciels Utilisés</h3>
+        <div class="tools-flex">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/QGIS_logo_new.svg" alt="QGIS">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/ArcGIS_logo.png" alt="ArcGIS">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Earth">
+            <span style="font-weight: bold; color: var(--text-gray);">AGISOFT METASHAPE</span>
+            <span style="font-weight: bold; color: var(--text-gray);">GLOBAL MAPPER</span>
+        </div>
+    </section>
+
+    <section id="inscription" class="cta-section">
+        <h2>Prêt à booster votre carrière ?</h2>
+        <p style="margin-bottom: 30px; font-size: 1.2rem;">Rejoignez la nouvelle élite de la géomatique en Côte d'Ivoire.</p>
+        
+        <a href="mailto:centrecartographie@gmail.com?subject=Inscription%20GEOSKILL" class="btn-register">S'inscrire Maintenant</a>
+
+        <div class="contact-footer">
+            <a href="mailto:centrecartographie@gmail.com" class="contact-link">
+                <i class="fa-solid fa-envelope"></i> centrecartographie@gmail.com
+            </a>
+            <span class="contact-link">
+                <i class="fa-solid fa-phone"></i> +225 07 13 17 74 15 / 01 72 85 84 08
+            </span>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 CENTEC-GEO - Centre National d'Étude en Territoire et Cartographie. Tous droits réservés.</p>
+    </footer>
+
+</body>
+</html>
