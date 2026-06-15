@@ -622,6 +622,7 @@
                 </ul>
             </div>
         </a>
+        <a href="GEOSKIL.html" class="card-link">
         <div class="card" data-aos="fade-up" data-aos-delay="600">
             <i class="fas fa-mountain"></i>
             <h3>GEOSKIL</h3>
@@ -631,6 +632,7 @@
                 <li>Solutions géospatiales innovantes</li>
             </ul>
         </div>
+        </a>
     </div>
 </section>
 
