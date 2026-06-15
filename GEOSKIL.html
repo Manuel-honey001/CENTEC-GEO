@@ -3,433 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEOSKILL - Programme Professionnel en Géomatique Appliquée</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>GEOSKILL | Programme Professionnel en Géomatique Appliquée</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
         :root {
-            --primary: #003366; /* Bleu CENTEC */
-            --accent: #f59e0b;  /* Orange/Jaune Affiche */
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --text-gray: #64748b;
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --accent: #fbbf24; /* Couleur Or pour mettre en valeur GEOSKILL */
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
-            font-family: 'Lato', sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: #fff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,198,255,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* --- EN-TÊTE (HEADER) --- */
+        /* --- EN-TÊTE COMPLÈTE COMPATIBLE --- */
         header {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 10px 5%;
-            position: sticky;
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
+            padding: 12px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0,198,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
         .logo-container img {
-            height: 60px; /* Ajuste selon la taille de ton logo */
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 6px 15px rgba(0,198,255,0.5));
+            transition: transform 0.3s ease, filter 0.3s ease;
         }
+        .logo-container:hover img { transform: scale(1.05) rotate(-1deg); }
+        .logo-text { border-left: 2px solid rgba(0,198,255,0.6); padding-left: 15px; }
+        .logo-text h2 { color: white; font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .logo-text span { color: var(--secondary); font-size: 0.7rem; font-weight: 600; opacity: 0.9; }
+        .menu-btn { background: var(--primary); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; transition: 0.3s; border: none; }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            margin-left: 20px;
-            transition: 0.3s;
+        /* --- MENU OVERLAY RESPONSIVE --- */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,198,255,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
         }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; text-shadow: 0 0 10px rgba(0,198,255,0.8); }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.4rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; padding: 0; }
+        .nav-overlay .close-menu:hover { color: var(--secondary); }
 
         /* --- HERO SECTION --- */
         .hero {
-            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
-                        url('https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2000') no-repeat center/cover;
-            color: #fff;
-            padding: 100px 5% 60px;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.75), rgba(10, 15, 26, 0.95)), url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
         }
-
-        .edition-badge {
-            background: var(--accent);
-            color: var(--primary);
-            padding: 5px 20px;
-            border-radius: 50px;
-            font-weight: 800;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .hero p.subtitle {
-            font-size: 1.5rem;
-            color: var(--accent);
-            font-weight: 300;
-            letter-spacing: 3px;
-        }
-
-        /* --- INFOS CLÉS (Date/Lieu) --- */
+        .edition-badge { background: var(--accent); color: var(--darker); padding: 6px 20px; border-radius: 30px; font-weight: 900; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(251, 191, 38, 0.4); }
+        .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); color: white; margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 400; margin-bottom: 32px; max-width: 900px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* --- INFO BARRE DE DESCRIPTION --- */
         .info-bar {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            background: var(--light);
-            padding: 20px;
-            margin-top: -40px;
-            width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .info-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .info-item i {
-            color: var(--accent);
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-        }
-
-        .info-item span {
-            display: block;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        /* --- MODULES --- */
-        .section-title {
-            text-align: center;
-            margin: 60px 0 40px;
-        }
-
-        .section-title h2 {
-            font-size: 2rem;
-            color: var(--primary);
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .section-title h2::after {
-            content: '';
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
-            padding: 0 5%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 198, 255, 0.2);
+            padding: 35px;
+            border-radius: 25px;
+            width: 84%;
+            margin: -60px auto 40px auto;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 10;
         }
+        .info-bar-item { text-align: center; }
+        .info-bar-item i { font-size: 2.2rem; color: var(--accent); margin-bottom: 12px; }
+        .info-bar-item h4 { color: white; font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; }
+        .info-bar-item p { color: #a0aec0; font-size: 0.95rem; }
 
-        .module-card {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            transition: 0.3s;
-        }
+        /* --- SECTIONS --- */
+        section { padding: 80px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
+        .section-subtitle { text-align: center; color: #a0aec0; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
 
-        .module-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
+        /* --- GRILLE DES MODULES --- */
+        .modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .module-card { background: rgba(255,255,255,0.02); padding: 45px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); text-align: center; }
+        .module-card:hover { transform: translateY(-12px); border-color: var(--secondary); background: rgba(255,255,255,0.04); box-shadow: 0 15px 30px rgba(0,198,255,0.1); }
+        .level { display: inline-block; background: var(--primary); color: white; padding: 8px 18px; border-radius: 30px; font-size: 14px; margin-bottom: 20px; font-weight: bold; }
+        .module-card h3 { color: white; font-size: 1.4rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .module-card p { color: #a0aec0; line-height: 1.7; margin-bottom: 25px; font-size: 0.95rem; }
+        .module-card ul { text-align: left; margin-bottom: 10px; padding-left: 5px; }
+        .module-card ul li { margin-bottom: 12px; color: #cbd5e1; padding-left: 30px; position: relative; list-style: none; font-size: 0.95rem; }
+        .module-card ul li::before { content: '\f058'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--secondary); }
 
-        .module-card i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
+        /* --- STRUCTURES ANNEXES (WHY & CONTENT BOX) --- */
+        .why { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); margin-top: 60px; }
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; margin-top: 30px; }
+        .why-box { background: rgba(255,255,255,0.02); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.06); transition: var(--transition); text-align: center; }
+        .why-box:hover { transform: translateY(-8px); border-color: var(--accent); background: rgba(255,255,255,0.04); }
+        .why-box i { font-size: 2.8rem; color: var(--accent); margin-bottom: 20px; display: block; }
+        .why-box h3 { color: white; font-size: 1.2rem; margin-bottom: 15px; }
+        .why-box p { color: #a0aec0; font-size: 0.95rem; }
 
-        .module-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+        .content-box { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); margin-top: 60px; }
+        .btn-primary { color: white; padding: 16px 40px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 700; text-transform: uppercase; transition: transform 0.3s ease, box-shadow 0.3s ease; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; cursor: pointer; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0, 198, 255, 0.3); }
+        
+        /* --- SECTION LOGICIELS --- */
+        .software-section { text-align: center; margin-top: 60px; }
+        .software-grid { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 40px; margin-top: 30px; }
+        .software-item { background: rgba(255, 255, 255, 0.03); padding: 15px 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); font-weight: bold; color: white; display: flex; align-items: center; gap: 10px; }
+        .software-item img { height: 30px; width: auto; }
 
-        /* --- AVANTAGES & SECTEURS --- */
-        .details-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            padding: 60px 5%;
-            background: var(--dark);
-            color: #fff;
-            margin-top: 60px;
-        }
+        /* --- INSCRIPTION / CTA FINAL --- */
+        .cta-final { text-align: center; background: radial-gradient(circle at center, #1e293b 0%, var(--darker) 100%); padding: 80px 5%; border-radius: 30px; border: 1px solid rgba(0,198,255,0.2); margin: 60px auto 20px auto; }
+        .btn-huge { background: linear-gradient(135deg, var(--accent) 0%, #f59e0b 100%); color: var(--darker); padding: 20px 50px; border-radius: 50px; text-decoration: none; display: inline-block; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 15px 30px rgba(251,191,36,0.3); transition: var(--transition); }
+        .btn-huge:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(251,191,36,0.5); }
 
-        .details-box {
-            flex: 1;
-            min-width: 300px;
-        }
+        /* --- PIED DE PAGE COMPLET COMPATIBLE --- */
+        footer { background: var(--darker); padding: 100px 8% 40px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 100px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; }
+        .footer-grid h2 { color: white; margin-bottom: 25px; }
+        .footer-grid p { color: #a0aec0; margin-bottom: 30px; }
+        .contact-list li { margin-bottom: 25px; display: flex; align-items: center; gap: 20px; color: #a0aec0; list-style: none; }
+        .contact-list i { color: var(--secondary); font-size: 1.2rem; background: rgba(0,198,255,0.1); padding: 12px; border-radius: 12px; }
+        .contact-form input, .contact-form textarea { width: 100%; padding: 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; margin-bottom: 15px; font-family: inherit; }
+        .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--secondary); }
+        .footer-bottom { text-align: center; margin-top: 50px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
 
-        .details-box h2 {
-            color: var(--accent);
-            margin-bottom: 25px;
-        }
-
-        .list-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-
-        .list-item i {
-            color: var(--accent);
-        }
-
-        /* --- LOGOS OUTILS --- */
-        .tools-section {
-            padding: 60px 5%;
-            text-align: center;
-        }
-
-        .tools-flex {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin-top: 30px;
-        }
-
-        .tools-flex img {
-            height: 60px;
-            filter: grayscale(1);
-            transition: 0.3s;
-            opacity: 0.7;
-        }
-
-        .tools-flex img:hover {
-            filter: grayscale(0);
-            opacity: 1;
-        }
-
-        /* --- CONTACT & CTA --- */
-        .cta-section {
-            padding: 80px 5%;
-            text-align: center;
-            background: var(--light);
-        }
-
-        .btn-register {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--primary);
-            padding: 20px 50px;
-            border-radius: 50px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            text-decoration: none;
-            text-transform: uppercase;
-            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
-            transition: 0.3s;
-        }
-
-        .btn-register:hover {
-            transform: scale(1.05);
-            background: #f59e0b;
-        }
-
-        .contact-footer {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .contact-link {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        footer {
-            background: var(--primary);
-            color: #fff;
-            padding: 30px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .info-bar { flex-direction: column; width: 90%; }
-            .nav-links { display: none; }
-        }
+        @media (max-width: 992px) { .module-card { padding: 35px; } }
+        @media (max-width: 768px) { header { padding: 12px 4%; } .info-bar { grid-template-columns: 1fr; width: 90%; margin-top: -30px; } }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <img src="logo.png" alt="CENTEC-GEO Logo">
-            <span style="font-weight: 800; color: var(--primary); font-size: 1.2rem;">CENTEC-GEO</span>
+<header>
+    <a href="CENTEC GEO.html" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
         </div>
-        <nav class="nav-links">
-            <a href="index.html">Accueil</a>
-            <a href="#programme">Programme</a>
-            <a href="#inscription">Inscription</a>
-        </nav>
-    </header>
+    </a>
+    <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+</header>
 
-    <section class="hero">
-        <div class="edition-badge">2ème ÉDITION</div>
-        <h1>GEOSKILL</h1>
-        <p class="subtitle">Programme Professionnel en Géomatique Appliquée</p>
-        <p style="margin-top: 20px; font-style: italic; opacity: 0.9;">"Développez des compétences géospatiales pour piloter vos projets"</p>
-    </section>
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#formations" onclick="toggleMenu()">Formations</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#services" onclick="toggleMenu()">Services</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/#contact" onclick="toggleMenu()">Contact</a>
+</nav>
 
-    <div class="info-bar">
-        <div class="info-item">
-            <i class="fa-solid fa-calendar-days"></i>
-            <span>DU 06 JUIN AU 25 JUILLET 2026</span>
-        </div>
-        <div class="info-item">
-            <i class="fa-solid fa-clock"></i>
-            <span>2 MOIS DE FORMATION INTENSIVE</span>
-        </div>
-        <div class="info-item">
-            <i class="fa-solid fa-location-dot"></i>
-            <span>ABIDJAN, COCODY 2 PLATEAUX</span>
-        </div>
+<section class="hero" id="accueil">
+    <div class="edition-badge" data-aos="fade-down" data-aos-duration="1000">2ème ÉDITION</div>
+    <h1 data-aos="fade-down" data-aos-duration="1200">GEOSKILL</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Programme Professionnel en Géomatique Appliquée</p>
+    <p style="font-size: 1.1rem; color: #a0aec0; text-transform: none; max-width: 700px; font-style: italic; margin-bottom: 0;" data-aos="fade-up" data-aos-delay="500">
+        "Développez des compétences géospatiales de pointe pour piloter efficacement vos projets."
+    </p>
+</section>
+
+<div class="info-bar" data-aos="zoom-in" data-aos-delay="600">
+    <div class="info-bar-item">
+        <i class="fa-solid fa-calendar-days"></i>
+        <h4>Période</h4>
+        <p>Du 06 Juin au 25 Juillet 2026</p>
     </div>
-
-    <section id="programme">
-        <div class="section-title">
-            <h2>Modules de Formation</h2>
-        </div>
-        <div class="modules-grid">
-            <div class="module-card">
-                <i class="fa-solid fa-map-location-dot"></i>
-                <h3>Cartographie</h3>
-                <p>Conception de cartes professionnelles et thématiques.</p>
-            </div>
-            <div class="module-card">
-                <i class="fa-solid fa-chart-pie"></i>
-                <h3>Analyse Géospatiale</h3>
-                <p>Traitement et analyse de données spatiales complexes.</p>
-            </div>
-            <div class="module-card">
-                <i class="fa-solid fa-helicopter"></i>
-                <h3>Pilotage de Drone</h3>
-                <p>Techniques de vol et acquisition d'images aériennes.</p>
-            </div>
-            <div class="module-card">
-                <i class="fa-solid fa-database"></i>
-                <h3>Collecte de Données</h3>
-                <p>Méthodologies de collecte numérique sur le terrain.</p>
-            </div>
-            <div class="module-card">
-                <i class="fa-solid fa-satellite"></i>
-                <h3>Télédétection</h3>
-                <p>Interprétation d'images satellites et de données capteurs.</p>
-            </div>
-            <div class="module-card">
-                <i class="fa-solid fa-file-lines"></i>
-                <h3>Reporting de Projet</h3>
-                <p>Rédaction de rapports techniques et cartographiques.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="details-container">
-        <div class="details-box">
-            <h2>Secteurs d'Application</h2>
-            <div class="list-item"><i class="fa-solid fa-city"></i> BTP & Aménagement du territoire</div>
-            <div class="list-item"><i class="fa-solid fa-seedling"></i> Environnement & Agriculture</div>
-            <div class="list-item"><i class="fa-solid fa-users"></i> Collectivités & ONG</div>
-            <div class="list-item"><i class="fa-solid fa-bolt"></i> Énergie & Réseaux</div>
-        </div>
-        <div class="details-box">
-            <h2>Vos Avantages</h2>
-            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Projets multi-sectoriels</div>
-            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Encadrement par des experts</div>
-            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Formation orientée terrain</div>
-            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Projet final d'application</div>
-            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Guide pratique délivré</div>
-        </div>
-    </section>
-
-    <section class="tools-section">
-        <h3>Logiciels Utilisés</h3>
-        <div class="tools-flex">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/QGIS_logo_new.svg" alt="QGIS">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/ArcGIS_logo.png" alt="ArcGIS">
-            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Earth">
-            <span style="font-weight: bold; color: var(--text-gray);">AGISOFT METASHAPE</span>
-            <span style="font-weight: bold; color: var(--text-gray);">GLOBAL MAPPER</span>
-        </div>
-    </section>
-
-    <section id="inscription" class="cta-section">
-        <h2>Prêt à booster votre carrière ?</h2>
-        <p style="margin-bottom: 30px; font-size: 1.2rem;">Rejoignez la nouvelle élite de la géomatique en Côte d'Ivoire.</p>
-        
-        <a href="mailto:centrecartographie@gmail.com?subject=Inscription%20GEOSKILL" class="btn-register">S'inscrire Maintenant</a>
-
-        <div class="contact-footer">
-            <a href="mailto:centrecartographie@gmail.com" class="contact-link">
-                <i class="fa-solid fa-envelope"></i> centrecartographie@gmail.com
-            </a>
-            <span class="contact-link">
-                <i class="fa-solid fa-phone"></i> +225 07 13 17 74 15 / 01 72 85 84 08
-            </span>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 CENTEC-GEO - Centre National d'Étude en Territoire et Cartographie. Tous droits réservés.</p>
-    </footer>
-
-</body>
-</html>
+    <div class="info-bar-item">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <h4>Durée</h4>
+        <p>2 mois de formation intensive</p>
+    </div>
+    <div class="info-bar-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <h4>Lieu</h4>
+        <p>Abidjan, Cocody 2 Plateaux</p>
+    </div>
