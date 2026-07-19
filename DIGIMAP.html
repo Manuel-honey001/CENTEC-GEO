@@ -260,6 +260,7 @@
         .module-card i { font-size: 2.2rem; color: var(--secondary); margin-bottom: 20px; display: block; }
         .module-card h3 { color: white; font-size: 1.35rem; margin-bottom: 15px; font-weight: 700; }
         .module-card p { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; margin-bottom: 20px; }
+        
         .module-features {
             list-style: none;
             text-align: left;
@@ -279,6 +280,30 @@
             font-size: 0.95rem;
             color: var(--primary);
             margin: 3px 0 0 0;
+        }
+
+        /* --- BOUTONS DES CARTES DE NIVEAU --- */
+        .btn-card {
+            display: block;
+            text-align: center;
+            background: rgba(11, 94, 215, 0.08);
+            color: #ffffff;
+            border: 1px solid rgba(11, 94, 215, 0.3);
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-top: 25px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+        .module-card:hover .btn-card {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(11, 94, 215, 0.4);
+            transform: translateY(-2px);
         }
 
         /* --- ALIGNEMENT DES RÉSULTATS VISÉS --- */
@@ -441,7 +466,9 @@
                 <li><i class="fa-solid fa-circle-check"></i> Structuration des couches de données</li>
                 <li><i class="fa-solid fa-circle-check"></i> Principes de sémiologie graphique</li>
             </ul>
+            <a href="#" class="btn-card">S'inscrire au Niveau 1</a>
         </div>
+
         <!-- NIVEAU 2 -->
         <div class="module-card">
             <span class="level-indicator">Palier 2</span>
@@ -453,7 +480,9 @@
                 <li><i class="fa-solid fa-circle-check"></i> Modélisation de données thématiques</li>
                 <li><i class="fa-solid fa-circle-check"></i> Conception d'aide à la décision</li>
             </ul>
+            <a href="#" class="btn-card">S'inscrire au Niveau 2</a>
         </div>
+
         <!-- NIVEAU 3 -->
         <div class="module-card">
             <span class="level-indicator">Palier 3</span>
@@ -465,6 +494,7 @@
                 <li><i class="fa-solid fa-circle-check"></i> Analyse matricielle et traitement raster</li>
                 <li><i class="fa-solid fa-circle-check"></i> Projet réel de fin de certification</li>
             </ul>
+            <a href="#" class="btn-card">S'inscrire au Niveau 3</a>
         </div>
     </div>
 </section>
