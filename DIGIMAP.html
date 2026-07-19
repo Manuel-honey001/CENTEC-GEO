@@ -3,725 +3,564 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIGIMAP | Certification Cartographie & SIG</title>
-    
-    <!-- CDN Polices & Icônes -->
+    <title>DIGIMAP | Programme de Certification en Cartographie Numérique & SIG</title>
+
+    <!-- CDN Icônes, Animations & Polices -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
-            --bg-main: #060b16;
-            --bg-card: #0d1527;
-            --border-glow: #1e293b;
-            --text-main: #e2e8f0;
+            --primary: #0b5ed7;
+            --secondary: #00cc66; /* Vert du logo DIGIMAP */
+            --accent: #ff6a00;    /* Orange dynamique d'action */
+            --dark: #0a0f1a;
+            --darker: #070b14;
             --text-muted: #94a3b8;
-            
-            /* Couleurs extraites de la charte du logo */
-            --logo-blue: #0066ff;
-            --logo-green: #00cc66;
-            --logo-orange: #ff6a00;
-            
-            --gradient-primary: linear-gradient(135deg, var(--logo-blue) 0%, #0044cc 100%);
-            --gradient-text: linear-gradient(135deg, #ffffff 30%, var(--logo-green) 100%);
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border-glow: rgba(11, 94, 215, 0.15);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            scroll-behavior: smooth; 
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-main);
-            background-image: 
-                radial-gradient(circle at 80% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 20% 80%, rgba(0, 204, 102, 0.1) 0%, transparent 50%);
-            color: var(--text-main);
-            line-height: 1.6;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 60%);
+            color: #e0e6ed;
+            line-height: 1.7;
             overflow-x: hidden;
         }
 
-        /* --- NAVIGATION --- */
+        /* --- EN-TÊTE BLANCHE MODERNISÉE --- */
         header {
             position: fixed;
-            top: 0;
             width: 100%;
+            top: 0;
             z-index: 1000;
-            padding: 1.25rem 5%;
+            padding: 14px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(6, 11, 22, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: #ffffff;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
         }
-
-        .brand-container {
-            display: flex;
-            flex-direction: column;
+        
+        .logo-container { 
+            display: flex; 
+            align-items: center; 
+            text-decoration: none; 
+            gap: 15px; 
         }
-
-        .brand-name {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        
+        .logo-container img {
+            height: 52px;
+            width: auto;
+            transition: transform 0.3s ease;
         }
-
-        .brand-name span {
-            color: var(--logo-green);
+        
+        .logo-container:hover img { 
+            transform: scale(1.05); 
         }
-
-        .brand-sub {
-            font-size: 0.65rem;
+        
+        .logo-text { 
+            border-left: 2px solid var(--primary); 
+            padding-left: 15px; 
+        }
+        
+        .logo-text h2 { 
+            color: var(--dark); 
+            font-size: 1.25rem; 
+            font-weight: 800; 
+            letter-spacing: 0.5px; 
+            margin: 0; 
+        }
+        
+        .logo-text span { 
+            color: var(--primary); 
+            font-size: 0.68rem; 
+            font-weight: 600; 
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: block; 
             margin-top: 2px;
         }
-
-        nav {
+        
+        /* Navigation Bureau dans l'en-tête blanche */
+        .desktop-nav {
             display: flex;
             gap: 2rem;
             align-items: center;
         }
 
-        nav a {
-            color: var(--text-muted);
+        .desktop-nav a {
+            color: #475569;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             font-weight: 600;
             transition: var(--transition);
         }
 
-        nav a:hover {
-            color: #ffffff;
+        .desktop-nav a:hover {
+            color: var(--primary);
         }
 
-        .cta-nav {
-            background: rgba(255, 255, 255, 0.05);
+        .desktop-nav .cta-header {
+            background: var(--primary);
+            color: #ffffff;
             padding: 0.6rem 1.2rem;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(11, 94, 215, 0.25);
         }
 
-        .cta-nav:hover {
-            background: var(--logo-blue);
-            border-color: var(--logo-blue);
-            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
+        .desktop-nav .cta-header:hover {
+            background: #0052cc;
+            color: #ffffff;
+            transform: translateY(-1px);
         }
+
+        .menu-btn { 
+            display: none;
+            background: var(--dark); 
+            color: white; 
+            width: 42px; 
+            height: 42px; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            border: none; 
+        }
+
+        /* --- MENU OVERLAY RESPONSIVE --- */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 100px 40px;
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 1px solid var(--border-glow);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.6rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; }
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 90vh;
+            min-height: 80vh;
             display: flex;
-            align-items: center;
-            padding: 8rem 5% 4rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 102, 255, 0.1);
-            border: 1px solid rgba(0, 102, 255, 0.2);
-            color: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-tag i {
-            color: var(--logo-orange);
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -1px;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-text);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 650px;
-            line-height: 1.7;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn-main {
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-filled {
-            background: var(--gradient-primary);
-            color: #ffffff;
-            box-shadow: 0 4px 25px rgba(0, 102, 255, 0.4);
-        }
-
-        .btn-filled:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(0, 102, 255, 0.6);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid var(--border-glow);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .hero-graphic {
-            position: relative;
-            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-
-        .logo-wrapper {
-            background: radial-gradient(circle, rgba(13, 21, 39, 0.8) 0%, rgba(6, 11, 22, 0.5) 100%);
-            padding: 3rem;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-
-        .logo-wrapper img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .glow-sphere {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: var(--logo-blue);
-            filter: blur(130px);
-            opacity: 0.3;
-            z-index: -1;
-        }
-
-        /* --- OVERVIEW & STATS SECTION --- */
-        .overview {
-            padding: 6rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .overview-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 24px;
-            padding: 4rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .overview-text h2 {
-            font-size: 2rem;
-            color: #ffffff;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-
-        .overview-text p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .features-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .feature-item {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-start;
-        }
-
-        .feature-item i {
-            color: var(--logo-green);
-            font-size: 1.25rem;
-            margin-top: 3px;
-        }
-
-        .feature-item div h4 {
-            color: #ffffff;
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .feature-item div p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        /* --- LEVELS SECTION --- */
-        .levels-section {
-            padding: 6rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.85), rgba(10, 15, 26, 0.98)), 
+                        url('https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            padding-top: 160px;
         }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #ffffff;
-            font-weight: 800;
-            margin-bottom: 1rem;
+        .edition-badge { 
+            background: linear-gradient(135deg, var(--primary) 0%, #00c6ff 100%); 
+            color: white; 
+            padding: 6px 22px; 
+            border-radius: 30px; 
+            font-weight: 700; 
+            font-size: 13px; 
+            margin-bottom: 25px; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            box-shadow: 0 4px 15px rgba(11, 94, 215, 0.3); 
         }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .levels-grid {
+        .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); color: white; margin-bottom: 15px; font-weight: 800; letter-spacing: -1px; }
+        .hero h1 span { color: var(--secondary); }
+        .hero p { font-size: 1.25rem; color: #cbd5e1; font-weight: 400; margin-bottom: 35px; max-width: 850px; line-height: 1.7; }
+        
+        /* --- BARRE D'INFORMATION FLOTTANTE --- */
+        .info-bar {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .level-card {
-            background: var(--bg-card);
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            background: rgba(13, 21, 39, 0.6);
             border: 1px solid var(--border-glow);
+            padding: 30px;
             border-radius: 20px;
-            padding: 3rem 2.25rem;
+            width: 85%;
+            margin: -50px auto 40px auto;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 10;
+        }
+        .info-bar-item { text-align: center; }
+        .info-bar-item i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+        .info-bar-item h4 { color: white; font-size: 1.05rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .info-bar-item p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- SECTIONS GLOBALES --- */
+        section { padding: 90px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 50px; text-align: center; font-weight: 800; letter-spacing: -0.5px; }
+        .section-title span { color: var(--primary); }
+
+        /* --- PARCOURS EN 3 NIVEAUX --- */
+        .modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .module-card { 
+            background: var(--card-bg); 
+            padding: 40px 30px; 
+            border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            transition: var(--transition); 
+            position: relative;
             display: flex;
             flex-direction: column;
-            position: relative;
-            transition: var(--transition);
         }
-
-        .level-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 102, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.1);
+        .module-card:hover { 
+            transform: translateY(-10px); 
+            border-color: var(--primary); 
+            background: rgba(255,255,255,0.04); 
+            box-shadow: 0 20px 40px rgba(11, 94, 215, 0.15); 
         }
-
-        .level-badge {
+        .level-indicator {
             position: absolute;
-            top: 2rem;
-            right: 2.25rem;
+            top: 25px;
+            right: 25px;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-        }
-
-        .badge-1 { background: rgba(0, 102, 255, 0.15); color: #3b82f6; }
-        .badge-2 { background: rgba(0, 204, 102, 0.15); color: #10b981; }
-        .badge-3 { background: rgba(255, 106, 0, 0.15); color: #f97316; }
-
-        .level-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            color: #ffffff;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .level-card h3 {
-            font-size: 1.4rem;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .level-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .level-link {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-            margin-top: auto;
-        }
-
-        .level-link i {
-            font-size: 0.8rem;
-            transition: var(--transition);
-        }
-
-        .level-card:hover .level-link {
-            color: var(--logo-green);
-        }
-
-        .level-card:hover .level-link i {
-            transform: translateX(4px);
-        }
-
-        /* --- OUTCOMES SECTION --- */
-        .outcomes {
-            padding: 6rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-            background: radial-gradient(rgba(0, 204, 102, 0.03) 0%, transparent 70%);
+            padding: 4px 12px;
             border-radius: 30px;
-        }
-
-        .outcomes-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .outcome-box {
-            background: rgba(13, 21, 39, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-            transition: var(--transition);
-        }
-
-        .outcome-box:hover {
-            background: rgba(13, 21, 39, 0.8);
-            border-color: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .outcome-box i {
-            color: var(--logo-green);
-            font-size: 1.5rem;
-            margin-bottom: 1.25rem;
-            display: block;
-        }
-
-        .outcome-box p {
-            color: #ffffff;
-            font-weight: 600;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #03060d;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 5rem 5% 2rem 5%;
-            margin-top: 6rem;
-        }
-
-        .footer-main {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 4rem;
-            padding-bottom: 4rem;
-        }
-
-        .footer-info p {
+            background: rgba(255, 255, 255, 0.05);
             color: var(--text-muted);
-            margin-top: 1rem;
-            max-width: 450px;
-            font-size: 0.95rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .footer-contact h4 {
-            color: #ffffff;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        .module-card:hover .level-indicator {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
-
-        .contact-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-
-        .contact-link-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-
-        .contact-link-item:hover {
-            color: #ffffff;
-        }
-
-        .contact-link-item i {
-            color: var(--logo-blue);
-            font-size: 1.1rem;
-            width: 24px;
-        }
-
-        .footer-bottom {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-top: 2rem;
+        .module-card i { font-size: 2.2rem; color: var(--secondary); margin-bottom: 20px; display: block; }
+        .module-card h3 { color: white; font-size: 1.35rem; margin-bottom: 15px; font-weight: 700; }
+        .module-card p { color: var(--text-muted); line-height: 1.6; font-size: 0.95rem; margin-bottom: 20px; }
+        .module-features {
+            list-style: none;
+            text-align: left;
+            margin-top: auto;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+        .module-features li {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.3);
-            font-size: 0.85rem;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .module-features li i {
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin: 3px 0 0 0;
         }
 
-        /* --- RESPONSIVE DEVISE --- */
+        /* --- ALIGNEMENT DES RÉSULTATS VISÉS --- */
+        .outcomes-container {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 50px;
+            margin-top: 40px;
+        }
+        .outcomes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .outcome-box { background: rgba(255,255,255,0.01); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); }
+        .outcome-box h4 { color: white; font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; }
+        .outcome-box h4 i { color: var(--secondary); font-size: 1.2rem; }
+        .outcome-box p { color: var(--text-muted); font-size: 0.92rem; }
+
+        /* --- SECTION OUTILS & LOGICIELS --- */
+        .software-section { text-align: center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 80px; }
+        .software-grid { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 25px; margin-top: 40px; }
+        .software-item { 
+            background: rgba(255, 255, 255, 0.02); 
+            padding: 14px 28px; 
+            border-radius: 14px; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            font-weight: 600; 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            transition: 0.3s ease; 
+        }
+        .software-item img { height: 28px; width: auto; }
+        .software-item:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--primary); transform: translateY(-2px); }
+
+        /* --- ACTION INTERNATIONALE / INSCRIPTION --- */
+        .cta-final { 
+            text-align: center; 
+            background: radial-gradient(circle at center, #131c31 0%, var(--darker) 100%); 
+            padding: 80px 5%; 
+            border-radius: 24px; 
+            border: 1px solid var(--border-glow); 
+            margin: 60px auto 20px auto; 
+        }
+        .cta-final h2 { font-size: 2.4rem; color: white; margin-bottom: 15px; font-weight: 800; }
+        .btn-huge { 
+            background: linear-gradient(135deg, var(--primary) 0%, #00c6ff 100%); 
+            color: white; 
+            padding: 18px 45px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            display: inline-block; 
+            font-size: 1.2rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            box-shadow: 0 10px 25px rgba(11, 94, 215, 0.35); 
+            transition: var(--transition); 
+            margin-bottom: 45px; 
+        }
+        .btn-huge:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(11, 94, 215, 0.5); }
+        
+        .contact-footer { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .contact-link { text-decoration: none; color: var(--text-muted); font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .contact-link i { color: var(--primary); }
+        .contact-link:hover { color: white; }
+
+        /* --- PIED DE PAGE --- */
+        footer { background: var(--darker); padding: 40px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; margin-top: 80px; color: rgba(255, 255, 255, 0.3); font-size: 0.88rem; }
+
+        /* --- RESPONSIVE DESIGN --- */
         @media (max-width: 1024px) {
-            .hero-grid, .overview-box, .levels-grid, .outcomes-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero { text-align: center; padding-top: 7rem; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { margin: 0 auto 2.5rem auto; }
-            .btn-group { justify-content: center; }
-            .hero-graphic { order: -1; }
-            .logo-wrapper { max-width: 320px; margin: 0 auto; }
-            .footer-main { grid-template-columns: 1fr; gap: 2.5rem; }
-            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .desktop-nav { display: none; }
+            .menu-btn { display: flex; }
+        }
+        @media (max-width: 768px) { 
+            header { padding: 14px 5%; } 
+            .info-bar { grid-template-columns: 1fr; width: 90%; margin-top: -30px; padding: 20px; } 
+            .outcomes-container { padding: 30px; }
+            .contact-footer { flex-direction: column; gap: 15px; align-items: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- BARRE DE NAVIGATION -->
-    <header>
-        <div class="brand-container">
-            <div class="brand-name">CENTEC<span>-GEO</span></div>
-            <div class="brand-sub">Centre National d'Étude en Territoire et Cartographie CI</div>
+<!-- EN-TÊTE BLANCHE POUR HAUT STANDING -->
+<header>
+    <a href="#" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
         </div>
-        <nav>
-            <a href="#accueil">Accueil</a>
-            <a href="#programme">Niveaux</a>
-            <a href="#competences">Compétences</a>
-            <a href="#contact" class="cta-nav">Nous contacter</a>
-        </nav>
-    </header>
+    </a>
+    
+    <!-- Liens visibles sur ordinateur -->
+    <nav class="desktop-nav">
+        <a href="#accueil">Accueil</a>
+        <a href="#programme">Niveaux</a>
+        <a href="#objectifs">Objectifs</a>
+        <a href="#logiciels">Outils</a>
+        <a href="#inscription" class="cta-header">S'inscrire</a>
+    </nav>
 
-    <!-- ACCUEIL / HERO SECTION -->
-    <section class="hero" id="accueil">
-        <div class="hero-grid">
-            <div class="hero-content">
-                <div class="hero-tag">
-                    <i class="fas fa-certificate"></i> Formation Certifiante Professionnelle
-                </div>
-                <h1>Programme de Certification DIGI MAP</h1>
-                <p>Développez des compétences de pointe en cartographie numérique, analyse spatiale et gestion des données géographiques pour répondre aux exigences stratégiques des organisations modernes.</p>
-                <div class="btn-group">
-                    <a href="#programme" class="btn-main btn-filled">Découvrir le Cursus <i class="fas fa-arrow-right"></i></a>
-                    <a href="#contact" class="btn-main btn-outline">S'inscrire</a>
-                </div>
-            </div>
-            <div class="hero-graphic">
-                <div class="glow-sphere"></div>
-                <div class="logo-wrapper">
-                    <!-- Intégration transparente du logo DIGIMAP transmis -->
-                    <img src="1000250796.jpg" alt="Logo Officiel DIGI MAP">
-                </div>
-            </div>
+    <!-- Bouton menu pour mobile -->
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+</header>
+
+<!-- NAVIGATION RESPONSIVE LATÉRALE (MOBILE) -->
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="#programme" onclick="toggleMenu()">Les 3 Niveaux</a>
+    <a href="#objectifs" onclick="toggleMenu()">Objectifs Visés</a>
+    <a href="#logiciels" onclick="toggleMenu()">Logiciels</a>
+    <a href="#inscription" onclick="toggleMenu()">Inscription</a>
+</nav>
+
+<!-- HERO SECTION INTRODUISANT LE LOGO TRANSPARENT -->
+<section class="hero" id="accueil">
+    <div class="edition-badge" data-aos="fade-down" data-aos-duration="1000">Formation Professionnelle Certifiante</div>
+    <h1 data-aos="fade-down" data-aos-duration="1200">PROGRAMME <span>DIGI MAP</span></h1>
+    <p data-aos="fade-up" data-aos-delay="400">Une architecture complète conçue pour développer des compétences professionnelles opérationnelles en cartographie numérique, analyse spatiale et gestion globale des données géographiques.</p>
+</section>
+
+<!-- BARRE D'INFORMATIONS DU PROGRAMME -->
+<div class="info-bar" data-aos="zoom-in" data-aos-delay="600">
+    <div class="info-bar-item">
+        <i class="fa-solid fa-graduation-cap"></i>
+        <h4>Cursus</h4>
+        <p>3 Niveaux Progressifs & Indépendants</p>
+    </div>
+    <div class="info-bar-item">
+        <i class="fa-solid fa-cubes"></i>
+        <h4>Méthode</h4>
+        <p>100% Pratique & Axée Projets Réels</p>
+    </div>
+    <div class="info-bar-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <h4>Lieu d'étude</h4>
+        <p>Abidjan, Cocody, Côte d'Ivoire</p>
+    </div>
+</div>
+
+<!-- SECTION DES 3 NIVEAUX DU PROGRAMME DIGIMAP -->
+<section id="programme" data-aos="fade-up">
+    <div class="section-title">
+        <h2>Les Niveaux du Parcours <span>DIGI MAP</span></h2>
+    </div>
+    <div class="modules">
+        <!-- NIVEAU 1 -->
+        <div class="module-card">
+            <span class="level-indicator">Palier 1</span>
+            <i class="fa-solid fa-map-location-dot"></i>
+            <h3>Niveau 1 : Fondamentaux</h3>
+            <p>Acquisition structurée des bases fondamentales de la cartographie classique et des architectures clés des Systèmes d'Information Géographique (SIG).</p>
+            <ul class="module-features">
+                <li><i class="fa-solid fa-circle-check"></i> Prise en main des environnements SIG</li>
+                <li><i class="fa-solid fa-circle-check"></i> Structuration des couches de données</li>
+                <li><i class="fa-solid fa-circle-check"></i> Principes de sémiologie graphique</li>
+            </ul>
         </div>
-    </section>
-
-    <!-- PRÉSENTATION & METHODOLOGIE -->
-    <section class="overview">
-        <div class="overview-box">
-            <div class="overview-text">
-                <h2>Le levier stratégique de la géomatique</h2>
-                <p>Dans un contexte où les organisations s’appuient de plus en plus sur les données pour orienter leurs décisions, la maîtrise des outils géomatiques constitue un atout majeur.</p>
-                <p>DIGI MAP répond précisément à ce besoin en formant des profils hautement qualifiés, capables de produire, analyser et exploiter l’information géographique au sein de cas d'application concrets.</p>
-            </div>
-            <div class="features-list">
-                <div class="feature-item">
-                    <i class="fas fa-layer-group"></i>
-                    <div>
-                        <h4>Approche Pédagogique Pratique</h4>
-                        <p>Les participants manipulent des données réelles et conçoivent des livrables professionnels directement exploitables.</p>
-                    </div>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-award"></i>
-                    <div>
-                        <h4>Reconnaissance Technique</h4>
-                        <p>Chaque niveau du parcours fait l'objet d'une évaluation rigoureuse menant à une certification professionnelle.</p>
-                    </div>
-                </div>
-            </div>
+        <!-- NIVEAU 2 -->
+        <div class="module-card">
+            <span class="level-indicator">Palier 2</span>
+            <i class="fa-solid fa-chart-pie"></i>
+            <h3>Niveau 2 : Analyse Spatiale</h3>
+            <p>Application concrète des outils d'analyse géospatiale avancés et production autonome de cartes thématiques complexes adaptées aux problématiques du territoire.</p>
+            <ul class="module-features">
+                <li><i class="fa-solid fa-circle-check"></i> Géotraitements et requêtes spatiales</li>
+                <li><i class="fa-solid fa-circle-check"></i> Modélisation de données thématiques</li>
+                <li><i class="fa-solid fa-circle-check"></i> Conception d'aide à la décision</li>
+            </ul>
         </div>
-    </section>
-
-    <!-- LES 3 NIVEAUX DE FORMATION -->
-    <section class="levels-section" id="programme">
-        <div class="section-header">
-            <h2>Structure du Cursus Progressif</h2>
-            <p>Un parcours structuré en trois paliers indépendants et complémentaires pour assurer une montée en compétence totale.</p>
+        <!-- NIVEAU 3 -->
+        <div class="module-card">
+            <span class="level-indicator">Palier 3</span>
+            <i class="fa-solid fa-shield-halved"></i>
+            <h3>Niveau 3 : Expertise</h3>
+            <p>Conception et architecture d'analyses géospatiales poussées, automatisation des processus et réalisation complète de projets complexes à forte valeur ajoutée.</p>
+            <ul class="module-features">
+                <li><i class="fa-solid fa-circle-check"></i> Gestion des bases de données spatiales</li>
+                <li><i class="fa-solid fa-circle-check"></i> Analyse matricielle et traitement raster</li>
+                <li><i class="fa-solid fa-circle-check"></i> Projet réel de fin de certification</li>
+            </ul>
         </div>
-        
-        <div class="levels-grid">
-            <!-- NIVEAU 1 -->
-            <div class="level-card">
-                <span class="level-badge badge-1">Niveau 1</span>
-                <div class="level-icon"><i class="fas fa-map"></i></div>
-                <h3>Fondamentaux</h3>
-                <p>Acquisition rigoureuse des bases fondamentales de la cartographie et maîtrise initiale des systèmes d'information géographique (SIG).</p>
-                <a href="#contact" class="level-link">Rejoindre ce niveau <i class="fas fa-chevron-right"></i></a>
-            </div>
+    </div>
+</section>
 
-            <!-- NIVEAU 2 -->
-            <div class="level-card">
-                <span class="level-badge badge-2">Niveau 2</span>
-                <div class="level-icon"><i class="fas fa-chart-pie"></i></div>
-                <h3>Analyse Spatiale</h3>
-                <p>Application approfondie des outils d’analyse avancés et production de cartes thématiques complexes adaptées aux problématiques territoriales contemporaines.</p>
-                <a href="#contact" class="level-link">Rejoindre ce niveau <i class="fas fa-chevron-right"></i></a>
-            </div>
-
-            <!-- NIVEAU 3 -->
-            <div class="level-card">
-                <span class="level-badge badge-3">Niveau 3</span>
-                <div class="level-icon"><i class="fas fa-brain"></i></div>
-                <h3>Expertise</h3>
-                <p>Conception d’analyses géospatiales avancées à forte valeur ajoutée et pilotage complet de projets géomatiques complexes de fin de cycle.</p>
-                <a href="#contact" class="level-link">Rejoindre ce niveau <i class="fas fa-chevron-right"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- COMPÉTENCES VISÉES -->
-    <section class="outcomes" id="competences">
-        <div class="section-header">
-            <h2>Objectifs & Métiers</h2>
-            <p>À l'issue de la formation, les certifiés possèdent des compétences directement transposables en entreprise :</p>
-        </div>
-        
+<!-- OBJECTIFS PÉDAGOGIQUES ET RÉSULTATS VISÉS -->
+<section id="objectifs" data-aos="fade-up">
+    <div class="section-title">
+        <h2>Compétences Métiers Directes</h2>
+    </div>
+    <div class="outcomes-container">
+        <p style="color: var(--text-muted); margin-bottom: 35px; text-align: center; font-size: 1.1rem;">Chaque niveau de la formation DIGI MAP est rigoureusement validé par une certification attestant que vous êtes capable de :</p>
         <div class="outcomes-grid">
             <div class="outcome-box">
-                <i class="fas fa-search-location"></i>
-                <p>Analyser avec précision les données géographiques</p>
+                <h4><i class="fa-solid fa-circle-nodes"></i> Analyser</h4>
+                <p>Traiter, structurer et interpréter les bases de données géographiques avec rigueur analytique.</p>
             </div>
             <div class="outcome-box">
-                <i class="fas fa-map-marked-alt"></i>
-                <p>Produire des cartes professionnelles et normées</p>
+                <h4><i class="fa-solid fa-compass-drafting"></i> Produire</h4>
+                <p>Éditer des cartes professionnelles, claires et parfaitement normées pour les entreprises et institutions.</p>
             </div>
             <div class="outcome-box">
-                <i class="fas fa-globe-africa"></i>
-                <p>Réaliser des analyses spatiales complexes et multicritères</p>
+                <h4><i class="fa-solid fa-layer-group"></i> Modéliser</h4>
+                <p>Mener des analyses spatiales complexes et transversales répondant à des enjeux multi-sectoriels.</p>
             </div>
             <div class="outcome-box">
-                <i class="fas fa-project-diagram"></i>
-                <p>Utiliser les SIG comme un véritable outil d'aide à la décision</p>
+                <h4><i class="fa-solid fa-chart-line"></i> Décider</h4>
+                <p>Exploiter la puissance des logiciels SIG comme un outil puissant d'orientation stratégique.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- PIED DE PAGE & CONTACT -->
-    <footer id="contact">
-        <div class="footer-main">
-            <div class="footer-info">
-                <div class="brand-name">CENTEC<span>-GEO</span></div>
-                <div class="brand-sub">Centre National d'Étude en Territoire et Cartographie CI</div>
-                <p>Pôle d'excellence en géomatique, analyse spatiale et ingénierie du territoire. Notre programme DIGI MAP forme les professionnels et entreprises aux outils cartographiques de référence.</p>
-            </div>
-            <div class="footer-contact">
-                <h4>Informations & Inscriptions</h4>
-                <div class="contact-grid">
-                    <a href="mailto:centrecartographie@gmail.com" class="contact-link-item">
-                        <i class="fas fa-envelope"></i> centrecartographie@gmail.com
-                    </a>
-                    <a href="tel:+2250713177415" class="contact-link-item">
-                        <i class="fas fa-phone-alt"></i> +225 07 13 17 74 15
-                    </a>
-                    <div class="contact-link-item">
-                        <i class="fas fa-map-marker-alt"></i> Abidjan, Côte d'Ivoire
-                    </div>
-                </div>
-            </div>
+<!-- SECTION OUTILS & LOGICIELS MAÎTRISÉS -->
+<section id="logiciels" class="software-section" data-aos="fade-up">
+    <div class="section-title">
+        <h2>Logiciels & Écosystème Géospatial</h2>
+    </div>
+    <div class="software-grid">
+        <div class="software-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/QGIS_logo_new.svg" alt="QGIS">
+            <span>QGIS</span>
         </div>
-        <div class="footer-bottom">
-            <div>&copy; 2026 CENTRE NATIONAL D'ÉTUDE EN TERRITOIRE ET CARTOGRAPHIE CI. Tous droits réservés.</div>
-            <div>Programme Officiel DIGI MAP</div>
+        <div class="software-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/ArcGIS_logo.png" alt="ArcGIS">
+            <span>ArcGIS Pro</span>
         </div>
-    </footer>
+        <div class="software-item">
+            <i class="fa-solid fa-database" style="color: #336791;"></i>
+            <span>PostgreSQL / PostGIS</span>
+        </div>
+        <div class="software-item">
+            <i class="fa-solid fa-mobile-screen-button" style="color: var(--secondary);"></i>
+            <span>KoboToolbox</span>
+        </div>
+        <div class="software-item">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Earth" style="height:18px;">
+            <span>Google Earth Pro</span>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION INSCRIPTION FINALE -->
+<section id="inscription" class="cta-final" data-aos="zoom-in">
+    <h2>Rejoignez le programme DIGI MAP</h2>
+    <p style="margin-bottom: 35px; font-size: 1.2rem; color: #a0aec0; max-width: 650px; margin-left: auto; margin-right: auto;">Intégrez la nouvelle élite de la géomatique en Côte d'Ivoire et valorisez votre parcours professionnel.</p>
+    
+    <a href="mailto:centrecartographie@gmail.com?subject=Inscription%20Programme%20DIGIMAP" class="btn-huge">Débuter mon Inscription</a>
+
+    <div class="contact-footer">
+        <a href="mailto:centrecartographie@gmail.com" class="contact-link">
+            <i class="fa-solid fa-envelope"></i> centrecartographie@gmail.com
+        </a>
+        <a href="tel:+2250713177415" class="contact-link">
+            <i class="fa-solid fa-phone"></i> +225 07 13 17 74 15
+        </a>
+    </div>
+</section>
+
+<!-- PIED DE PAGE STRICT -->
+<footer>
+    <p>&copy; 2026 CENTRE NATIONAL D'ÉTUDE EN TERRITOIRE ET CARTOGRAPHIE CI. Tous droits réservés.</p>
+</footer>
+
+<!-- SCRIPTS D'ANIMATION ET LOGIQUE DU MENU -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 900,
+        once: true
+    });
+
+    function toggleMenu() {
+        const menu = document.getElementById('navOverlay');
+        menu.classList.toggle('active');
+    }
+</script>
 
 </body>
 </html>
