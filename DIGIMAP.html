@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIGIMAP | Formation Cartographie & SIG</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1d4ed8;
+            --secondary: #ff6b00;
+            --bg-main: #f5f1e8;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-dark: #1e3a5f;
+            --border: rgba(30, 58, 95, 0.12);
+            --shadow-soft: 0 15px 35px rgba(30, 41, 59, 0.04);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: radial-gradient(circle at 50% 0%, rgba(29, 78, 216, 0.04) 0%, var(--bg-main) 75%);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(243, 244, 238, 0.82);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 107, 0, 0.18);
+            box-shadow: 0 4px 30px rgba(30, 41, 59, 0.04);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 4px 10px rgba(255, 107, 0, 0.2));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .logo-container:hover img {
+            transform: scale(1.08) rotate(-1deg);
+        }
+        .logo-text {
+            border-left: 2px solid rgb(5, 83, 252);
+            padding-left: 15px;
+        }
+        .logo-text h2 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        .logo-text span {
+            color: var(--secondary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        .menu-btn {
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        /* NAV OVERLAY */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(243, 244, 238, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(255, 107, 0, 0.18);
+            box-shadow: -10px 0 40px rgba(30, 41, 59, 0.05);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .nav-overlay a:hover {
+            color: var(--secondary);
+            padding-left: 12px;
+        }
+        .nav-overlay .close-menu {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            align-self: flex-end;
+            margin-bottom: 35px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .nav-overlay .close-menu:hover {
+            color: var(--secondary);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(243, 244, 238, 0.84), rgba(243, 244, 238, 0.96)), url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
+        }
+        .hero h1 {
+            display: none;
+        }
+        .hero-logo {
+            max-width: 340px;
+            width: 100%;
+            margin-bottom: 35px;
+            filter: drop-shadow(0 12px 30px rgba(30, 58, 95, 0.12));
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 24px;
+            border: 1px solid rgba(30, 58, 95, 0.08);
+        }
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 32px;
+            max-width: 1000px;
+        }
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+        .hero-badges span {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(30, 58, 95, 0.08);
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .hero .hero-actions {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 0, 0.2);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text-dark);
+            padding: 16px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(30, 58, 95, 0.12);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- MODULES --- */
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+        .module-card {
+            background: var(--bg-card);
+            padding: 45px 36px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .module-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 45px rgba(29, 78, 216, 0.06);
+        }
+        .level {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .module-card h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .module-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .module-card ul {
+            text-align: left;
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+        .module-card ul li {
+            margin-bottom: 12px;
+            color: var(--text-main);
+            padding-left: 30px;
+            position: relative;
+            list-style: none;
+        }
+        .module-card ul li::before {
+            content: '\f058';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        .btn-inscription {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 260px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.14);
+        }
+        .btn-inscription:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 35px rgba(255, 107, 0, 0.2);
+        }
+
+        /* --- WHY --- */
+        .why {
+            background: rgba(255, 255, 255, 0.45);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            margin-top: 80px;
+        }
+        .why h2 {
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        .why-box {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .why-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+        }
+        .why-box i {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: block;
+        }
+        .why-box h3 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .why-box p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .session-history {
+            margin-top: 30px;
+        }
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .session-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+        .session-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+        }
+        .session-photo {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .session-content {
+            padding: 24px 22px 28px;
+        }
+        .session-date {
+            display: inline-block;
+            background: rgba(29, 78, 216, 0.08);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .session-content h3 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .session-content p {
+            color: var(--text-muted);
+        }
+
+        .gallery-strip {
+            display: flex;
+            gap: 18px;
+            margin-top: 20px;
+            overflow-x: auto;
+            padding: 6px 0 12px;
+            scroll-snap-type: x proximity;
+        }
+        .gallery-strip::-webkit-scrollbar {
+            height: 9px;
+        }
+        .gallery-strip::-webkit-scrollbar-thumb {
+            background: rgba(29, 78, 216, 0.35);
+            border-radius: 999px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            min-width: 260px;
+            width: 260px;
+            height: 210px;
+            flex: 0 0 260px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            background: #dfe7f2;
+            scroll-snap-align: start;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(15,23,42,0), rgba(15,23,42,0.8));
+            color: white;
+            padding: 18px 16px 14px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #e6e8df;
+            padding: 100px 8% 40px;
+            border-top: 1px solid rgba(71, 85, 105, 0.1);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+        .footer-grid h2 {
+            color: white;
+            margin-bottom: 25px;
+        }
+        .footer-grid p {
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+        .contact-list li {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #a0aec0;
+            list-style: none;
+        }
+        .contact-list i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            background: rgba(0,198,255,0.1);
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            color: #4a5568;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .director-box { grid-template-columns: 1fr; text-align: center; }
+            .team-member { flex: 0 0 calc(50% - 13px); }
+        }
+        @media (max-width: 600px) {
+            .team-member { flex: 0 0 100%; }
+        }
+        .desktop-nav {
+            display: flex; align-items: center; gap: 0.25rem; margin-left: auto; margin-right: 0.6rem;
+            padding: 4px 8px; background: rgba(15, 23, 42, 0.04); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 40px;
+        }
+        .desktop-nav a {
+            padding: 0.5rem 0.8rem; border-radius: 20px; color: #1e293b; font-size: 0.78rem; font-weight: 700;
+            text-decoration: none; transition: background 0.2s ease, color 0.2s ease;
+        }
+        .desktop-nav a:hover { color: #0b5ed7; background: rgba(29, 78, 216, 0.08); }
+        .menu-btn { flex: 0 0 46px; background: #e2e8f0; color: #0b5ed7; border: 1px solid #cbd5e1; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .menu-btn:hover { background: #dbeafe; border-color: #2563eb; }
+        .nav-overlay {
+            inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; width: min(280px, calc(100vw - 32px));
+            height: auto; max-height: calc(100dvh - 108px); overflow-y: auto; padding: 16px;
+            border: 1px solid rgba(0, 102, 255, 0.35); border-radius: 16px; visibility: hidden; opacity: 0;
+            pointer-events: none; transform: translateY(-8px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+        .nav-overlay.active {
+            inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; visibility: visible; opacity: 1;
+            pointer-events: auto; transform: translateY(0);
+        }
+        .nav-overlay a { margin: 0; padding: 0.65rem 0.8rem; border-radius: 10px; font-size: 1rem; }
+        .nav-overlay .close-menu { margin: 0 0 8px; }
+        @media (max-width: 1120px) {
+            header { flex-wrap: wrap; }
+            .desktop-nav { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; margin: 4px 0 8px; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 130px; }
+        }
+        @media (max-width: 600px) {
+            .desktop-nav a { padding: 0.4rem 0.55rem; font-size: 0.68rem; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 116px; }
+        }
+
+        /* DIGIMAP learning-path redesign */
+        :root {
+            --primary: #155eef;
+            --secondary: #f07832;
+            --bg-main: #f5f7fb;
+            --bg-card: #ffffff;
+            --text-main: #243247;
+            --text-muted: #64748b;
+            --text-dark: #102a43;
+            --border: #e2e8f0;
+            --shadow-soft: 0 18px 48px rgba(16, 42, 67, 0.08);
+        }
+        body {
+            background: #f5f7fb;
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+        header {
+            min-height: 82px;
+            padding: 8px max(5%, calc((100vw - 1280px) / 2));
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom-color: #e2e8f0;
+            box-shadow: 0 8px 28px rgba(16, 42, 67, 0.07);
+        }
+        .logo-container img { height: 58px; }
+        .logo-text { border-color: var(--primary); }
+        .logo-text h2 { color: var(--text-dark); font-size: 1.2rem; }
+        .logo-text span { color: #64748b; }
+        .desktop-nav {
+            margin-left: auto;
+            margin-right: 0.6rem;
+            padding: 4px 8px;
+            gap: 0.25rem;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+        }
+        .desktop-nav a { color: #334155; font-size: 0.76rem; }
+        .desktop-nav a:hover { color: var(--primary); background: #e2e8f0; }
+        .menu-btn {
+            flex: 0 0 46px;
+            background: #e2e8f0;
+            color: var(--primary);
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+        }
+        .menu-btn:hover { background: #dbeafe; border-color: #93c5fd; }
+        .hero {
+            position: relative;
+            min-height: 590px;
+            height: auto;
+            margin-top: 82px;
+            padding: 82px 7% 90px;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 82% 10%, rgba(21, 94, 239, 0.24), transparent 36%),
+                linear-gradient(135deg, #0b1d35 0%, #102a43 60%, #173b60 100%);
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: auto -10% -65% 45%;
+            height: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 0 0 45px rgba(255,255,255,0.025), 0 0 0 90px rgba(255,255,255,0.02);
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero h1 {
+            display: block;
+            margin: 0 0 12px;
+            color: #fff;
+            font-size: clamp(3rem, 8vw, 5.8rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.04em;
+        }
+        .hero .hero-intro {
+            max-width: 760px;
+            margin: 0 auto 26px;
+            color: #d8e4f3;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 400;
+        }
+        .hero-badges { gap: 9px; margin: 0 0 18px; }
+        .hero-badges span {
+            padding: 7px 13px;
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.16);
+            color: #e8f0fb;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+        }
+        .hero .hero-actions { gap: 12px; }
+        .hero .btn-primary, .hero .btn-secondary {
+            padding: 13px 22px;
+            font-size: 0.84rem;
+            letter-spacing: 0.04em;
+        }
+        .hero .btn-primary { background: var(--secondary); box-shadow: 0 10px 25px rgba(240,120,50,0.22); }
+        .hero .btn-primary:hover { background: #e76820; }
+        .hero .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.22); }
+        .program-poster-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: #d8e4f3;
+            font-size: 0.88rem;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .program-poster-link:hover { color: #fff; }
+        .section { padding: 88px 7%; scroll-margin-top: 90px; }
+        .section-title {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-size: clamp(1.8rem, 4vw, 2.55rem);
+            letter-spacing: -0.025em;
+            text-transform: none;
+        }
+        .section-title::after { margin: 15px auto 18px; background: var(--secondary); }
+        .section-subtitle { margin-bottom: 38px; color: var(--text-muted); }
+        .modules {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 22px;
+        }
+        .module-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 30px 26px 26px;
+            border-radius: 20px;
+            text-align: left;
+            box-shadow: 0 12px 32px rgba(16, 42, 67, 0.06);
+        }
+        .module-card:hover { transform: translateY(-6px); border-color: #bfdbfe; }
+        .module-card:nth-child(2) { border-top: 4px solid var(--primary); }
+        .module-card:nth-child(3) { border-top: 4px solid var(--secondary); }
+        .module-card .level {
+            margin-bottom: 18px;
+            padding: 6px 12px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .module-card h3 { margin-bottom: 10px; color: var(--text-dark); font-size: 1.38rem; }
+        .module-card p { margin-bottom: 16px; font-size: 0.92rem; }
+        .module-card ul { flex: 1; width: 100%; margin-bottom: 22px; padding: 0; }
+        .module-card ul li { margin-bottom: 9px; padding-left: 26px; font-size: 0.88rem; }
+        .module-card ul li::before { color: #16a34a; }
+        .module-card .btn-inscription {
+            max-width: none;
+            padding: 12px 16px;
+            background: #eff6ff;
+            color: var(--primary);
+            box-shadow: none;
+            font-size: 0.78rem;
+        }
+        .module-card .btn-inscription:hover { background: var(--primary); color: #fff; box-shadow: 0 10px 22px rgba(21,94,239,0.18); }
+        .why {
+            margin-top: 50px;
+            padding: 38px;
+            background: #edf3fa;
+            border: 0;
+            box-shadow: none;
+        }
+        .why h2 { color: var(--text-dark); font-size: 1.55rem; }
+        .why-box { padding: 24px 20px; border-radius: 18px; }
+        .why-box i { color: var(--primary); font-size: 2rem; }
+        .why-box h3 { font-size: 1.05rem; }
+        .why-box p { font-size: 0.9rem; }
+        #objectifs .content-box {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+        #objectifs .content-box li { color: var(--text-main); }
+        .session-history { margin-top: 0; }
+        .timeline-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+        .session-card { border-radius: 18px; }
+        .session-photo { height: 190px; }
+        .session-content { padding: 20px; }
+        .gallery-item { border-radius: 16px; }
+        footer { padding: 55px 7% 28px; background: #0b1d35; border-top: 0; }
+        .footer-grid { max-width: 1180px; margin: 0 auto; gap: 35px; }
+        .footer-grid h2, .footer-grid h3 { color: #fff !important; margin-bottom: 14px !important; }
+        .footer-grid p, .contact-list li { color: #bdcde0 !important; }
+        .contact-list li { gap: 14px; margin-bottom: 15px; }
+        .contact-list i { color: #bfdbfe; background: rgba(255,255,255,0.1); }
+        .footer-bottom { margin-top: 35px; border-color: rgba(255,255,255,0.14); color: #bdcde0; }
+        @media (max-width: 900px) {
+            header { flex-wrap: wrap; }
+            .desktop-nav { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; margin: 4px 0 8px; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 140px; }
+            .hero { margin-top: 140px; min-height: 510px; }
+            .section { padding: 70px 6%; scroll-margin-top: 130px; }
+            .modules, .timeline-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .modules > :last-child:nth-child(odd), .timeline-grid > :last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+                width: min(100%, 520px);
+                justify-self: center;
+            }
+        }
+        @media (max-width: 600px) {
+            header { padding: 8px 4%; }
+            .logo-container { flex: 1 1 auto; min-width: 0; gap: 10px; }
+            .logo-container img { height: 42px; }
+            .logo-text { min-width: 0; padding-left: 9px; }
+            .logo-text h2 { font-size: 1rem; }
+            .logo-text span { max-width: 145px; font-size: 0.55rem; line-height: 1.25; }
+            .menu-btn { margin-left: auto; }
+            .desktop-nav { gap: 2px; padding: 3px; }
+            .desktop-nav a { padding: 0.38rem 0.48rem; font-size: 0.63rem; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 126px; }
+            .hero { margin-top: 125px; min-height: 490px; padding: 55px 6% 70px; }
+            .hero .hero-actions { width: 100%; }
+            .hero .btn-primary, .hero .btn-secondary { width: 100%; }
+            .program-poster-link { margin-top: 18px; }
+            .section { padding: 58px 5%; }
+            .modules, .timeline-grid { grid-template-columns: 1fr; }
+            .module-card { padding: 26px 22px; }
+            .why { padding: 25px 18px; }
+            #objectifs .content-box { padding: 22px 18px; }
+            footer { padding: 45px 6% 24px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <nav class="desktop-nav" aria-label="Menu principal">
+        <a href="#accueil">Accueil</a>
+        <a href="#modules">Parcours</a>
+        <a href="#objectifs">Compétences</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu" aria-controls="navOverlay" aria-expanded="false"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#modules" onclick="toggleMenu()">Les 3 niveaux</a>
+    <a href="#objectifs" onclick="toggleMenu()">Compétences visées</a>
+    <a href="#historique" onclick="toggleMenu()">Sessions précédentes</a>
+    <a href="#contact" onclick="toggleMenu()">Contacter CENTEC GEO</a>
+    <a href="index.html#formations" onclick="toggleMenu()">Toutes les formations</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <div class="hero-badges" data-aos="fade-down" data-aos-delay="100">
+        <span>Formation professionnelle</span>
+        <span>Du débutant à l’expert</span>
+        <span>Cartographie & SIG</span>
+    </div>
+    <h1 data-aos="fade-down">DIGIMAP</h1>
+    <p class="hero-intro" data-aos="fade-up" data-aos-delay="400">Un parcours progressif en cartographie numérique : apprenez les bases, développez votre maîtrise des SIG et réalisez des projets géospatiaux de niveau expert.</p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="700">
+        <a href="#modules" class="btn-primary">Découvrir le parcours</a>
+        <a href="#contact" class="btn-secondary">Demander des informations</a>
+    </div>
+    <a href="Images/DIGIMAP PROGRAME.jpg" class="program-poster-link" target="_blank" rel="noopener">
+        <i class="fas fa-file-image" aria-hidden="true"></i>
+        Consulter l’affiche détaillée du programme
+    </a>
+</section>
+
+<section class="section" id="modules">
+    <h2 class="section-title" data-aos="fade-up">Votre parcours, étape par étape</h2>
+    <p class="section-subtitle" data-aos="fade-up">Trois niveaux complémentaires pour passer des premières cartes à la conduite autonome de projets SIG.</p>
+
+    <div class="modules">
+        <!-- MODULE 1 -->
+        <div class="module-card" data-aos="fade-up">
+            <span class="level">01 · Débutant</span>
+            <h3>Poser les bases des SIG</h3>
+            <p>Découvrez les données géographiques et apprenez à créer vos premières cartes avec QGIS.</p>
+            <ul>
+                <li>Introduction aux SIG</li>
+                <li>Prise en main de QGIS</li>
+                <li>Création de cartes simples</li>
+                <li>Gestion des couches</li>
+                <li>Mise en page cartographique</li>
+            </ul>
+            <a href="teste/inscription-module1.html" class="btn-inscription">Choisir le niveau débutant</a>
+        </div>
+
+        <!-- MODULE 2 -->
+        <div class="module-card" data-aos="fade-up" data-aos-delay="200">
+            <span class="level">02 · Intermédiaire</span>
+            <h3>Analyser et cartographier</h3>
+            <p>Approfondissez vos compétences avec des analyses spatiales avancées et la cartographie thématique.</p>
+            <ul>
+                <li>Analyse de données spatiales</li>
+                <li>Cartographie thématique</li>
+                <li>Géotraitement</li>
+                <li>Spatialisation des données</li>
+                <li>Production de cartes professionnelles</li>
+            </ul>
+            <a href="teste/inscription-module2.html" class="btn-inscription">Choisir le niveau intermédiaire</a>
+        </div>
+
+        <!-- MODULE 3 -->
+        <div class="module-card" data-aos="fade-up" data-aos-delay="400">
+            <span class="level">03 · Avancé / Expert</span>
+            <h3>Concevoir des projets SIG</h3>
+            <p>Automatisez vos traitements et mobilisez des méthodes avancées sur des projets professionnels.</p>
+            <ul>
+                <li>Automatisation avec Python</li>
+                <li>Webmapping</li>
+                <li>Analyse avancée</li>
+                <li>Gestion de projets SIG</li>
+                <li>Projet professionnel final</li>
+            </ul>
+            <a href="teste/inscription-module3.html" class="btn-inscription">Choisir le niveau expert</a>
+        </div>
+    </div>
+
+    <!-- POURQUOI CHOISIR -->
+    <div class="why" data-aos="fade-up">
+        <h2>Pourquoi choisir DIGIMAP ?</h2>
+        <div class="why-grid">
+            <div class="why-box">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Formation pratique</h3>
+                <p>Travail sur des cas réels et données géographiques concrètes.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-certificate"></i>
+                <h3>Certification</h3>
+                <p>Obtenez une certification professionnelle reconnue.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-laptop-code"></i>
+                <h3>Outils modernes</h3>
+                <p>Maîtrisez les logiciels SIG et outils géomatiques actuels.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-earth-africa"></i>
+                <h3>Opportunités</h3>
+                <p>Développez des compétences recherchées dans plusieurs secteurs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="objectifs">
+    <h2 class="section-title" data-aos="fade-up">Objectifs pédagogiques</h2>
+    <p class="section-subtitle" data-aos="fade-up">À l'issue de la formation DIGIMAP, vous serez capable de :</p>
+    <div class="content-box" data-aos="fade-up">
+        <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                <i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i>
+                Maîtriser les concepts fondamentaux de la cartographie numérique et des SIG
+            </li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                <i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i>
+                Produire des cartes thématiques et analytiques de qualité professionnelle
+            </li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                <i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i>
+                Réaliser des analyses spatiales complexes pour la prise de décision
+            </li>
+            <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                <i class="fas fa-check-circle" style="color: var(--secondary); position: absolute; left: 0; top: 5px;"></i>
+                Intégrer les données géographiques dans des projets multi-sectoriels
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="section session-history" id="historique">
+    <h2 class="section-title" data-aos="fade-up">Historique de nos formations</h2>
+    <p class="section-subtitle" data-aos="fade-up">Des sessions pratiques, des apprenants engagés et des résultats concrets sur le terrain.</p>
+
+    <div class="timeline-grid">
+        <article class="session-card" data-aos="fade-up">
+            <img class="session-photo" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" alt="Session DIGIMAP 2024">
+            <div class="session-content">
+                <span class="session-date">Janvier 2024</span>
+                <h3>Session 2024 - Module 1</h3>
+                <p>Première cohorte de stagiaires sensibilisés aux fondamentaux du SIG, du QGIS et de la cartographie numérique.</p>
+            </div>
+        </article>
+
+        <article class="session-card" data-aos="fade-up" data-aos-delay="150">
+            <img class="session-photo" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" alt="Session DIGIMAP 2025">
+            <div class="session-content">
+                <span class="session-date">Juin 2025</span>
+                <h3>Session 2025 - Analyse spatiale</h3>
+                <p>Ateliers sur les géotraitements, la production de cartes thématiques et l’exploitation de données territoriales.</p>
+            </div>
+        </article>
+
+        <article class="session-card" data-aos="fade-up" data-aos-delay="300">
+            <img class="session-photo" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200" alt="Session DIGIMAP 2026">
+            <div class="session-content">
+                <span class="session-date">Septembre 2026</span>
+                <h3>Session 2026 - Expertise</h3>
+                <p>Approfondissement des compétences en cartographie avancée, webmapping et gestion de projets géomatiques.</p>
+            </div>
+        </article>
+    </div>
+
+    <div class="gallery-strip" style="margin-top: 35px;" data-aos="fade-up">
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200" alt="Formation DIGIMAP 1">
+            <div class="gallery-caption">Atelier SIG</div>
+        </div>
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200" alt="Formation DIGIMAP 2">
+            <div class="gallery-caption">Cartographie</div>
+        </div>
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200" alt="Formation DIGIMAP 3">
+            <div class="gallery-caption">Analyse territoriale</div>
+        </div>
+        <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200" alt="Formation DIGIMAP 4">
+            <div class="gallery-caption">Projet final</div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <div class="footer-grid">
+        <div>
+            <h2>CENTEC GEO</h2>
+            <p>L’expertise géospatiale de référence en Côte d'Ivoire.</p>
+            <div style="margin-top: 30px;">
+                <a href="mailto:centrecartographie@gmail.com" class="btn-primary">Devenir partenaire</a>
+            </div>
+        </div>
+        <div>
+            <h3 style="color: var(--text-dark); margin-bottom: 30px;">Contact</h3>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> +225 0713177415</li>
+                <li><i class="fas fa-envelope"></i> centrecartographie@gmail.com</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 CENTEC-GEO — CENTRE NATIONAL D'ÉTUDE EN TERRITOIRE ET CARTOGRAPHIE CI. Tous droits réservés.
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    AOS.init({ duration: 1000, once: true });
+
+    function toggleMenu() {
+        const nav = document.getElementById('navOverlay');
+        const button = document.querySelector('.menu-btn');
+        if (!nav || !button) return;
+        const isOpen = nav.classList.toggle('active');
+        button.setAttribute('aria-expanded', String(isOpen));
+        button.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    }
+    window.toggleMenu = toggleMenu;
+
+    // ===== OUTSIDE CLICK MENU =====
+    document.addEventListener('click', (e) => {
+        const nav = document.getElementById('navOverlay');
+        const btn = document.querySelector('.menu-btn');
+        if (!nav || !btn) return;
+        if (!nav.contains(e.target) && !btn.contains(e.target)) {
+            nav.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Ouvrir le menu');
+        }
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            const nav = document.getElementById('navOverlay');
+            if (nav && nav.classList.contains('active')) toggleMenu();
+        }
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (!target) return;
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+});
+</script>
+
+</body>
+</html>

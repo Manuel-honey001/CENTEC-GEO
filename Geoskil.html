@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOSKILL | Programme Professionnel en Géomatique Appliquée</title>
+
+    <!-- Icônes et Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --accent: #fbbf24; /* Couleur Or */
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,198,255,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- EN-TÊTE BLANCHE --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            border-bottom: 1px solid rgba(11, 94, 215, 0.1);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        .logo-container:hover img { transform: scale(1.05) rotate(-1deg); }
+        .logo-text { border-left: 2px solid var(--primary); padding-left: 15px; }
+        .logo-text h2 { color: var(--dark); font-size: 1.3rem; font-weight: 900; letter-spacing: 1px; margin: 0; }
+        .logo-text span { color: var(--primary); font-size: 0.7rem; font-weight: 600; opacity: 0.9; display: block; }
+        
+        .menu-btn { background: var(--primary); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; transition: 0.3s; border: none; }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        /* --- MENU OVERLAY RESPONSIVE --- */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.95);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,198,255,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; text-shadow: 0 0 10px rgba(0,198,255,0.8); }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.4rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; padding: 0; }
+        .nav-overlay .close-menu:hover { color: var(--secondary); }
+
+        /* --- HERO SECTION (IMAGE D'ORIGINE RESTAURÉE) --- */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.8), rgba(10, 15, 26, 0.95)), 
+                        url('https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            padding-top: 140px;
+        }
+        .edition-badge { background: var(--accent); color: var(--darker); padding: 6px 20px; border-radius: 30px; font-weight: 900; font-size: 14px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 15px rgba(251, 191, 38, 0.4); }
+        .hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); color: white; margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 400; margin-bottom: 32px; max-width: 900px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* --- INFO BARRE --- */
+        .info-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 198, 255, 0.2);
+            padding: 35px;
+            border-radius: 25px;
+            width: 84%;
+            margin: -60px auto 40px auto;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 10;
+        }
+        .info-bar-item { text-align: center; }
+        .info-bar-item i { font-size: 2.2rem; color: var(--accent); margin-bottom: 12px; }
+        .info-bar-item h4 { color: white; font-size: 1.1rem; margin-bottom: 5px; text-transform: uppercase; }
+        .info-bar-item p { color: #a0aec0; font-size: 0.95rem; }
+
+        /* --- SECTIONS --- */
+        section { padding: 80px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
+
+        /* --- GRILLE DES MODULES --- */
+        .modules { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .module-card { background: rgba(255,255,255,0.02); padding: 45px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.05); transition: var(--transition); text-align: center; }
+        .module-card:hover { transform: translateY(-12px); border-color: var(--secondary); background: rgba(255,255,255,0.04); box-shadow: 0 15px 30px rgba(0,198,255,0.1); }
+        .module-card i { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; display: block; }
+        .module-card h3 { color: white; font-size: 1.4rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .module-card p { color: #a0aec0; line-height: 1.7; font-size: 0.95rem; }
+
+        /* --- SECTEURS & AVANTAGES --- */
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px; }
+        .why-box { background: rgba(255,255,255,0.02); padding: 30px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.06); transition: var(--transition); text-align: left; }
+        .why-box:hover { transform: translateY(-8px); border-color: var(--accent); background: rgba(255,255,255,0.04); }
+        .why-box i { font-size: 1.8rem; color: var(--accent); margin-bottom: 15px; display: inline-block; margin-right: 10px; vertical-align: middle; }
+        .why-box h3 { color: white; font-size: 1.2rem; margin-bottom: 15px; display: inline-block; vertical-align: middle; }
+        .why-box .list-item { color: #cbd5e1; margin-bottom: 12px; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
+        .why-box .list-item i { font-size: 1.1rem; color: var(--secondary); margin: 0; }
+
+        /* --- SECTION LOGICIELS --- */
+        .software-section { text-align: center; margin-top: 60px; padding: 60px 5%; }
+        .software-section h3 { font-size: 1.8rem; color: white; text-transform: uppercase; margin-bottom: 30px; }
+        .software-grid { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 35px; }
+        .software-item { background: rgba(255, 255, 255, 0.03); padding: 15px 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); font-weight: bold; color: white; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+        .software-item img { height: 35px; width: auto; }
+        .software-item:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--secondary); }
+
+        /* --- INSCRIPTION --- */
+        .cta-final { text-align: center; background: radial-gradient(circle at center, #1e293b 0%, var(--darker) 100%); padding: 80px 5%; border-radius: 30px; border: 1px solid rgba(0,198,255,0.2); margin: 60px auto 20px auto; }
+        .cta-final h2 { font-size: 2.2rem; color: white; margin-bottom: 15px; }
+        .btn-huge { background: linear-gradient(135deg, var(--accent) 0%, #f59e0b 100%); color: var(--darker); padding: 20px 50px; border-radius: 50px; text-decoration: none; display: inline-block; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 15px 30px rgba(251,191,36,0.3); transition: var(--transition); margin-bottom: 40px; }
+        .btn-huge:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 40px rgba(251,191,36,0.5); }
+        
+        .contact-footer { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .contact-link { text-decoration: none; color: #a0aec0; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .contact-link i { color: var(--secondary); }
+        .contact-link:hover { color: white; }
+
+        /* --- PIED DE PAGE --- */
+        footer { background: var(--darker); padding: 40px 5%; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; margin-top: 100px; color: #4a5568; font-size: 0.9rem; }
+
+        @media (max-width: 768px) { 
+            header { padding: 12px 4%; } 
+            .info-bar { grid-template-columns: 1fr; width: 90%; margin-top: -30px; } 
+            .contact-footer { flex-direction: column; gap: 15px; align-items: center; }
+        }
+        .desktop-nav.header-nav {
+            display: flex; align-items: center; gap: 0.25rem; margin-left: auto; margin-right: 0.6rem;
+            padding: 4px 8px; background: rgba(15, 23, 42, 0.04); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 40px;
+        }
+        .desktop-nav.header-nav a {
+            padding: 0.5rem 0.8rem; border-radius: 20px; color: #1e293b; font-size: 0.78rem; font-weight: 700;
+            text-decoration: none; transition: background 0.2s ease, color 0.2s ease;
+        }
+        .desktop-nav.header-nav a:hover { color: #0b5ed7; background: rgba(29, 78, 216, 0.08); }
+        .menu-btn { flex: 0 0 46px; background: #e2e8f0; color: #0b5ed7; border: 1px solid #cbd5e1; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .menu-btn:hover { background: #dbeafe; border-color: #2563eb; }
+        .nav-overlay {
+            inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; width: min(280px, calc(100vw - 32px));
+            height: auto; max-height: calc(100dvh - 108px); overflow-y: auto; padding: 16px;
+            border: 1px solid rgba(0, 102, 255, 0.35); border-radius: 16px; visibility: hidden; opacity: 0;
+            pointer-events: none; transform: translateY(-8px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+        .nav-overlay.active {
+            inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; visibility: visible; opacity: 1;
+            pointer-events: auto; transform: translateY(0);
+        }
+        .nav-overlay a { margin: 0; padding: 0.65rem 0.8rem; border-radius: 10px; font-size: 1rem; }
+        .nav-overlay .close-menu { margin: 0 0 8px; }
+        @media (max-width: 1120px) {
+            header { flex-wrap: wrap; }
+            .desktop-nav.header-nav { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; margin: 4px 0 8px; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 130px; }
+        }
+        @media (max-width: 600px) {
+            .desktop-nav.header-nav a { padding: 0.4rem 0.55rem; font-size: 0.68rem; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 116px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <nav class="desktop-nav header-nav" aria-label="Menu principal">
+        <a href="#accueil">Accueil</a>
+        <a href="#programme">Programme</a>
+        <a href="#secteurs">Secteurs</a>
+        <a href="#logiciels">Logiciels</a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu"><i class="fas fa-bars"></i></button>
+</header>
+
+<!-- MENU DROITE RESPONSIVE -->
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="#programme" onclick="toggleMenu()">Programme</a>
+    <a href="#secteurs" onclick="toggleMenu()">Secteurs & Avantages</a>
+    <a href="#logiciels" onclick="toggleMenu()">Logiciels</a>
+    <a href="#inscription" onclick="toggleMenu()">Inscription</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <div class="edition-badge" data-aos="fade-down" data-aos-duration="1000">2ème ÉDITION</div>
+    <h1 data-aos="fade-down" data-aos-duration="1200">GEOSKILL</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Programme Professionnel en Géomatique Appliquée</p>
+    <p style="font-size: 1.1rem; color: #a0aec0; text-transform: none; max-width: 700px; font-style: italic; margin-bottom: 0;" data-aos="fade-up" data-aos-delay="500">
+        "Développez des compétences géospatiales de pointe pour piloter efficacement vos projets."
+    </p>
+</section>
+
+<div class="info-bar" data-aos="zoom-in" data-aos-delay="600">
+    <div class="info-bar-item">
+        <i class="fa-solid fa-calendar-days"></i>
+        <h4>Période</h4>
+        <p>Du 06 Juin au 25 Juillet 2026</p>
+    </div>
+    <div class="info-bar-item">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <h4>Durée</h4>
+        <p>2 mois de formation intensive</p>
+    </div>
+    <div class="info-bar-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <h4>Lieu</h4>
+        <p>Abidjan, Cocody 2 Plateaux</p>
+    </div>
+</div>
+
+<!-- SECTION MODULES -->
+<section id="programme" data-aos="fade-up">
+    <div class="section-title">
+        <h2>Modules de Formation</h2>
+    </div>
+    <div class="modules">
+        <div class="module-card">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <h3>Cartographie</h3>
+            <p>Conception de cartes professionnelles et thématiques avancées.</p>
+        </div>
+        <div class="module-card">
+            <i class="fa-solid fa-chart-pie"></i>
+            <h3>Analyse Géospatiale</h3>
+            <p>Traitement et modélisation de données spatiales complexes.</p>
+        </div>
+        <div class="module-card">
+            <i class="fa-solid fa-helicopter"></i>
+            <h3>Pilotage de Drone</h3>
+            <p>Techniques de vol professionnelles et acquisition d'images de terrain.</p>
+        </div>
+        <div class="module-card">
+            <i class="fa-solid fa-database"></i>
+            <h3>Collecte de Données</h3>
+            <p>Méthodologies de collecte numérique et d'enquêtes sur le terrain.</p>
+        </div>
+        <div class="module-card">
+            <i class="fa-solid fa-satellite"></i>
+            <h3>Télédétection</h3>
+            <p>Interprétation d'images satellites et traitement multi-spectral.</p>
+        </div>
+        <div class="module-card">
+            <i class="fa-solid fa-file-lines"></i>
+            <h3>Reporting de Projet</h3>
+            <p>Rédaction efficace de rapports techniques et livrables cartographiques.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION SECTEURS & AVANTAGES -->
+<section id="secteurs" data-aos="fade-up">
+    <div class="why-grid">
+        <div class="why-box">
+            <div>
+                <i class="fa-solid fa-city"></i>
+                <h3>Secteurs d'Application</h3>
+            </div>
+            <div class="list-item"><i class="fa-solid fa-chevron-right"></i> BTP & Aménagement du territoire</div>
+            <div class="list-item"><i class="fa-solid fa-chevron-right"></i> Environnement & Agriculture de précision</div>
+            <div class="list-item"><i class="fa-solid fa-chevron-right"></i> Collectivités territoriales & ONG</div>
+            <div class="list-item"><i class="fa-solid fa-chevron-right"></i> Énergie & Gestion des réseaux</div>
+        </div>
+        <div class="why-box">
+            <div>
+                <i class="fa-solid fa-star"></i>
+                <h3>Vos Avantages</h3>
+            </div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Projets pratiques multi-sectoriels</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Encadrement par des experts certifiés</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Formation 100% orientée terrain</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Projet final d'application réelle</div>
+            <div class="list-item"><i class="fa-solid fa-circle-check"></i> Guide pratique complet délivré</div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION LOGICIELS -->
+<section id="logiciels" class="software-section" data-aos="fade-up">
+    <h3>Logiciels & Outils Maîtrisés</h3>
+    <div class="software-grid">
+        <div class="software-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/QGIS_logo_new.svg" alt="QGIS">
+            <span>QGIS</span>
+        </div>
+        <div class="software-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/ArcGIS_logo.png" alt="ArcGIS">
+            <span>ArcGIS</span>
+        </div>
+        <div class="software-item">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google Earth" style="height:20px;">
+            <span>Google Earth Pro</span>
+        </div>
+        <div class="software-item">
+            <i class="fa-solid fa-cube" style="color: var(--accent);"></i>
+            <span>AGISOFT METASHAPE</span>
+        </div>
+        <div class="software-item">
+            <i class="fa-solid fa-layer-group" style="color: var(--secondary);"></i>
+            <span>GLOBAL MAPPER</span>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION INSCRIPTION -->
+<section id="inscription" class="cta-final" data-aos="zoom-in">
+    <h2>Prêt à booster votre carrière ?</h2>
+    <p style="margin-bottom: 30px; font-size: 1.2rem; color: #a0aec0;">Rejoignez la nouvelle élite de la géomatique en Côte d'Ivoire.</p>
+    
+    <a href="mailto:centrecartographie@gmail.com?subject=Inscription%20GEOSKILL" class="btn-huge">S'inscrire Maintenant</a>
+
+    <div class="contact-footer">
+        <a href="mailto:centrecartographie@gmail.com" class="contact-link">
+            <i class="fa-solid fa-envelope"></i> centrecartographie@gmail.com
+        </a>
+        <span class="contact-link">
+            <i class="fa-solid fa-phone"></i> +225 07 13 17 74 15 / 01 72 85 84 08
+        </span>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 CENTEC-GEO - CENTRE NATIONAL D'ÉTUDE EN TERRITOIRE ET CARTOGRAPHIE CI. Tous droits réservés.</p>
+    <nav class="desktop-nav" aria-label="Menu principal">
+        <a href="#accueil">Accueil</a>
+        <a href="#programme">Programme</a>
+        <a href="#secteurs">Secteurs</a>
+        <a href="#logiciels">Logiciels</a>
+        <a href="#inscription">Inscription</a>
+    </nav></p>
+</footer>
+
+<!-- SCRIPTS JAVASCRIPT -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+
+    function toggleMenu() {
+        const menu = document.getElementById('navOverlay');
+        menu.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>

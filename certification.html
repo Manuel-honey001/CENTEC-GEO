@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification de Certification | CENTEC GEO</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0b5ed7;
+            --secondary: #00c6ff;
+            --dark: #0a0f1a;
+            --darker: #070b14;
+            --glass: rgba(255, 255, 255, 0.03);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--dark);
+            background-image: radial-gradient(circle at 50% 0%, #162035 0%, var(--dark) 50%), linear-gradient(135deg, rgba(0,198,255,0.1) 0%, rgba(11,94,215,0.1) 100%);
+            color: #e0e6ed;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.75);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(0,198,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img { height: 80px; width: auto; filter: drop-shadow(0 6px 15px rgba(0,198,255,0.5)); transition: transform 0.3s ease, filter 0.3s ease; }
+        .logo-container:hover img { transform: scale(1.05) rotate(-1deg); }
+        .logo-text { border-left: 2px solid rgba(0,198,255,0.6); padding-left: 15px; }
+        .logo-text h2 { color: white; font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+        .logo-text span { color: var(--secondary); font-size: 0.7rem; font-weight: 600; opacity: 0.9; }
+        .menu-btn { background: var(--primary); color: white; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px; cursor: pointer; transition: 0.3s; border: none; }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(0,198,255,0.3);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.4);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a { color: white; text-decoration: none; font-size: 1.1rem; margin-bottom: 25px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; transition: 0.3s; }
+        .nav-overlay a:hover { color: var(--secondary); padding-left: 12px; text-shadow: 0 0 10px rgba(0,198,255,0.8); }
+        .nav-overlay .close-menu { background: none; border: none; color: white; font-size: 1.4rem; align-self: flex-end; margin-bottom: 35px; cursor: pointer; padding: 0; }
+        .nav-overlay .close-menu:hover { color: var(--secondary); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(10, 15, 26, 0.6), rgba(10, 15, 26, 0.9)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
+        }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: white; margin-bottom: 15px; }
+        .hero p { font-size: 1.4rem; color: var(--secondary); font-weight: 300; margin-bottom: 32px; max-width: 900px; }
+
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
+        .section-title { font-size: 2.2rem; color: white; margin-bottom: 20px; text-align: center; text-transform: uppercase; letter-spacing: 3px; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--primary); margin: 20px auto; border-radius: 2px; }
+        .section-subtitle { text-align: center; color: #a0aec0; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .cert-form { background: var(--glass); padding: 50px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05); max-width: 600px; margin: auto; }
+        .cert-form h2 { color: white; margin-bottom: 30px; text-align: center; }
+        .form-group { margin-bottom: 25px; }
+        .form-group label { display: block; color: #e0e6ed; margin-bottom: 8px; font-weight: 600; }
+        .form-group select, .form-group input { width: 100%; padding: 16px 18px; border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; background: rgba(255,255,255,0.05); color: #e0e6ed; font-size: 1rem; }
+        .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--secondary); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 16px 36px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 700; text-transform: uppercase; transition: transform 0.3s ease, box-shadow 0.3s ease; border: none; cursor: pointer; width: 100%; text-align: center; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0, 198, 255, 0.25); }
+
+        footer { background: var(--darker); padding: 100px 8% 40px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 60px; }
+        .footer-grid h2 { color: white; margin-bottom: 25px; }
+        .footer-grid p { color: #a0aec0; margin-bottom: 30px; }
+        .contact-list li { margin-bottom: 25px; display: flex; align-items: center; gap: 20px; color: #a0aec0; list-style: none; }
+        .contact-list i { color: var(--secondary); font-size: 1.2rem; background: rgba(0,198,255,0.1); padding: 12px; border-radius: 12px; }
+        .footer-bottom { text-align: center; margin-top: 50px; color: #4a5568; font-size: 0.8rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; }
+
+        @media (max-width: 768px) { header { padding: 12px 4%; } .cert-form { padding: 30px; } }
+        .desktop-nav { display: flex; align-items: center; gap: 0.25rem; margin-left: auto; margin-right: 0.6rem; padding: 4px 8px; background: rgba(148, 163, 184, 0.12); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 40px; }
+        .desktop-nav a { padding: 0.5rem 0.8rem; border-radius: 20px; color: #e2e8f0; font-size: 0.78rem; font-weight: 700; text-decoration: none; }
+        .desktop-nav a:hover { color: #fff; background: rgba(29, 78, 216, 0.3); }
+        .menu-btn { flex: 0 0 46px; background: #e2e8f0; color: #0b5ed7; border: 1px solid #cbd5e1; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2); }
+        .menu-btn:hover { background: #dbeafe; border-color: #2563eb; }
+        .nav-overlay { inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; width: min(280px, calc(100vw - 32px)); height: auto; max-height: calc(100dvh - 108px); overflow-y: auto; padding: 16px; border: 1px solid rgba(0, 102, 255, 0.35); border-radius: 16px; visibility: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease; }
+        .nav-overlay.active { inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; visibility: visible; opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .nav-overlay a { margin: 0; padding: 0.65rem 0.8rem; border-radius: 10px; font-size: 1rem; }
+        .nav-overlay .close-menu { margin: 0 0 8px; }
+        @media (max-width: 1120px) { header { flex-wrap: wrap; } .desktop-nav { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; margin: 4px 0 8px; } .nav-overlay, .nav-overlay.active { inset-block-start: 130px; } }
+        @media (max-width: 600px) { .desktop-nav a { padding: 0.4rem 0.55rem; font-size: 0.68rem; } .nav-overlay, .nav-overlay.active { inset-block-start: 116px; } }
+
+        /* Certification page refresh */
+        :root {
+            --primary: #155eef;
+            --secondary: #0b76d1;
+            --dark: #f4f7fb;
+            --darker: #0b1d35;
+            --glass: #ffffff;
+        }
+        body {
+            background: #f4f7fb;
+            color: #26364a;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.08);
+        }
+        .logo-container img { filter: drop-shadow(0 3px 8px rgba(15, 23, 42, 0.12)); }
+        .logo-text { border-left-color: #155eef; }
+        .logo-text h2 { color: #102a43; }
+        .logo-text span { color: #64748b; }
+        .desktop-nav {
+            background: #f1f5f9;
+            border-color: #e2e8f0;
+        }
+        .desktop-nav a { color: #334155; }
+        .desktop-nav a:hover { color: #155eef; background: #e2e8f0; }
+        .menu-btn {
+            background: #e2e8f0;
+            color: #155eef;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+        }
+        .menu-btn:hover { background: #dbeafe; border-color: #2563eb; }
+        .nav-overlay {
+            background: rgba(255, 255, 255, 0.98);
+            border-color: #bfdbfe;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.16);
+        }
+        .nav-overlay a, .nav-overlay .close-menu { color: #1e293b; }
+        .nav-overlay a:hover, .nav-overlay .close-menu:hover { color: #155eef; text-shadow: none; }
+        .nav-overlay, .nav-overlay.active { inset-block-start: 106px; }
+        .hero {
+            max-width: none;
+            min-height: 480px;
+            margin-top: 106px;
+            padding: 76px 8%;
+            background:
+                radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.28), transparent 38%),
+                linear-gradient(130deg, #0b1d35, #123d6a);
+        }
+        .hero h1 { max-width: 900px; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.08; }
+        .hero p { color: #d8e7f8; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 400; }
+        body > section:not(.hero) {
+            max-width: 1120px;
+            padding: 76px 5%;
+        }
+        .section-title {
+            color: #102a43;
+            font-size: clamp(1.6rem, 4vw, 2.15rem);
+            letter-spacing: -0.02em;
+            text-transform: none;
+        }
+        .section-title::after { background: #f07832; }
+        .section-subtitle { color: #64748b; margin-bottom: 38px; }
+        .cert-form {
+            max-width: 760px;
+            padding: clamp(24px, 5vw, 44px);
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 22px;
+            box-shadow: 0 18px 48px rgba(15, 42, 67, 0.09);
+        }
+        .cert-form h2 { color: #102a43; margin-bottom: 26px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { color: #334155; }
+        .form-group select, .form-group input {
+            min-height: 52px;
+            padding: 13px 15px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            color: #1e293b;
+        }
+        .form-group select option { color: #1e293b; background: #fff; }
+        .form-group select:focus, .form-group input:focus {
+            border-color: #155eef;
+            box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.12);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #155eef, #0b76d1);
+            text-transform: none;
+            letter-spacing: 0.01em;
+        }
+        .btn-primary:hover { box-shadow: 0 12px 26px rgba(21, 94, 239, 0.22); }
+        #verification-result { max-width: 900px; margin: 0 auto; }
+        #verification-result > div {
+            color: #334155;
+            background: #fff !important;
+            border-color: #bbf7d0 !important;
+            border-radius: 20px !important;
+            box-shadow: 0 16px 42px rgba(15, 42, 67, 0.1);
+        }
+        #verification-result > div > div:first-child h3 { color: #102a43 !important; }
+        #verification-result > div > div:first-child p,
+        #verification-result > div > div:nth-child(2) p,
+        #verification-result > div > p { color: #475569 !important; }
+        #verification-result > div > div:nth-child(2) > div:first-child {
+            background: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+        #verification-result > div > div:nth-child(2) > div:first-child p { overflow-wrap: anywhere; }
+        #verification-result > div > div:nth-child(2) > div:first-child p strong { color: #102a43; }
+        #verification-result > div > div:nth-child(2) > div:nth-child(2) img {
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12) !important;
+        }
+        #verification-result > div[style*="rgba(255,0,0"] {
+            background: #fff !important;
+            border-color: #fecaca !important;
+        }
+        #verification-result > div[style*="rgba(255,0,0"] h3 { color: #991b1b !important; }
+        .certificate-preview {
+            display: block;
+            width: 100%;
+            padding: 0;
+            overflow: hidden;
+            background: transparent;
+            border: 0;
+            border-radius: 20px;
+            cursor: zoom-in;
+        }
+        .certificate-preview:focus-visible {
+            outline: 3px solid #155eef;
+            outline-offset: 4px;
+        }
+        .certificate-lightbox[hidden] { display: none !important; }
+        .certificate-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: grid;
+            place-items: center;
+            padding: 5vh 5vw;
+            background: rgba(5, 12, 24, 0.92);
+        }
+        .certificate-lightbox img {
+            display: block;
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.5);
+        }
+        .certificate-lightbox-close {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            width: 46px;
+            height: 46px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            background: #fff;
+            color: #102a43;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        footer {
+            padding: 68px max(6%, calc((100% - 1180px) / 2)) 24px;
+            background: #0b1d35;
+            border-top: 4px solid #155eef;
+        }
+        .footer-grid {
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) minmax(260px, 1fr);
+            gap: clamp(28px, 5vw, 60px);
+            max-width: 1180px;
+            margin: 0 auto;
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .footer-brand img {
+            width: 58px;
+            height: 58px;
+            padding: 5px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 12px;
+        }
+        .footer-brand h2 { margin: 0; color: #fff; font-size: 1.25rem; }
+        .footer-brand span { display: block; margin-top: 3px; color: #bdcde0; font-size: 0.75rem; line-height: 1.4; }
+        .footer-grid p { color: #bdcde0; }
+        .footer-grid h3 { margin-bottom: 20px !important; color: #fff !important; font-size: 1.1rem; }
+        .footer-description { max-width: 330px; margin-bottom: 22px !important; }
+        .footer-contact-list { padding: 0; }
+        .footer-contact-list li { align-items: flex-start; gap: 12px; margin-bottom: 16px; color: #bdcde0; }
+        .footer-contact-list i {
+            flex: 0 0 38px;
+            padding: 10px;
+            color: #bfdbfe;
+            background: rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        .footer-contact-list a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+        .footer-contact-list a:hover { color: #bfdbfe; text-decoration: underline; }
+        .footer-contact-note { margin-top: 18px; color: #bdcde0; font-size: 0.88rem; }
+        .footer-contact-note a { color: #bfdbfe; text-decoration: none; }
+        .footer-contact-note a:hover { text-decoration: underline; }
+        .footer-form { display: grid; gap: 12px; }
+        .footer-form input, .footer-form textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font: inherit;
+        }
+        .footer-form input::placeholder, .footer-form textarea::placeholder { color: #bdcde0; }
+        .footer-form input:focus, .footer-form textarea:focus { outline: 2px solid #60a5fa; outline-offset: 2px; }
+        .footer-form button {
+            padding: 12px 18px;
+            border: 0;
+            border-radius: 10px;
+            background: #155eef;
+            color: #fff;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .footer-form button:hover { background: #0b76d1; }
+        .footer-bottom {
+            max-width: 1180px;
+            margin: 42px auto 0;
+            padding-top: 20px;
+            color: #bdcde0;
+            border-color: rgba(255, 255, 255, 0.14);
+            line-height: 1.6;
+        }
+        @media (max-width: 1120px) {
+            .nav-overlay, .nav-overlay.active { inset-block-start: 166px; }
+            .hero { margin-top: 165px; }
+            .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .footer-message { grid-column: 1 / -1; }
+        }
+        @media (max-width: 600px) {
+            .logo-container { min-width: 0; gap: 10px; }
+            .logo-container img { height: 48px; }
+            .logo-text { min-width: 0; padding-left: 9px; }
+            .logo-text h2 { font-size: 1rem; }
+            .logo-text span { max-width: 155px; font-size: 0.56rem; line-height: 1.25; }
+            .menu-btn { flex: 0 0 46px; margin-left: auto; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 135px; }
+            .hero { min-height: 420px; margin-top: 134px; padding: 58px 6%; }
+            body > section:not(.hero) { padding: 58px 5%; }
+            #verification-result > div > div:nth-child(2) { grid-template-columns: 1fr !important; }
+            footer { padding: 48px 6% 22px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-message { grid-column: auto; }
+            .footer-bottom { margin-top: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="CENTEC GEO.html" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <nav class="desktop-nav" aria-label="Menu principal">
+        <a href="index.html#accueil">Accueil</a>
+        <a href="index.html#propos">À propos</a>
+        <a href="index.html#formations">Formations</a>
+        <a href="index.html#actualites">Actualités</a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu" aria-controls="navOverlay" aria-expanded="false"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="index.html#accueil" onclick="toggleMenu()">Accueil</a>
+    <a href="index.html#propos" onclick="toggleMenu()">À Propos</a>
+    <a href="index.html#formations" onclick="toggleMenu()">Formations</a>
+    <a href="index.html#services" onclick="toggleMenu()">Services</a>
+    <a href="index.html#actualites" onclick="toggleMenu()">Actualités</a>
+    <a href="index.html#equipe" onclick="toggleMenu()">Équipe</a>
+    <a href="certification.html" onclick="toggleMenu()">Certification</a>
+    <a href="index.html#contact" onclick="toggleMenu()">Contact</a>
+</nav>
+
+<section class="hero" id="accueil">
+    <h1 data-aos="fade-down" data-aos-duration="1200">Vérification de Certification</h1>
+    <p data-aos="fade-up" data-aos-delay="400">Vérifiez votre statut de certification CENTEC GEO en renseignant vos informations.</p>
+</section>
+
+<section>
+    <h2 class="section-title" data-aos="fade-up">Vérification de Certification</h2>
+    <p class="section-subtitle" data-aos="fade-up">Renseignez vos informations pour vérifier votre certification dans notre base de données.</p>
+
+    <div class="cert-form" data-aos="fade-up">
+        <h2>Informations du Candidat</h2>
+        <form id="certForm">
+            <div class="form-group">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" placeholder="Votre nom">
+            </div>
+            <div class="form-group">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" placeholder="Votre prénom">
+            </div>
+            <div class="form-group">
+                <label for="formation">Formation suivie</label>
+                <select id="formation" name="formation" required>
+                    <option value="">Sélectionnez une formation</option>
+                    <option value="CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO">CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO</option>
+                    <option value="COLLECTE DE DONNEES">COLLECTE DE DONNEES</option>
+                    <option value="DIGIMAP">DIGIMAP</option>
+                    <option value="SF CARTO STATISTIQUE">SF CARTO STATISTIQUE</option>
+                    <option value="TELESENSE PRO">TELESENSE PRO</option>
+                    <option value="DRONE ET PHOTOGRAMMETRIE">DRONE ET PHOTOGRAMMETRIE</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="niveau">Niveau de formation</label>
+                <select id="niveau" name="niveau" required>
+                    <option value="">Sélectionnez le niveau</option>
+                    <option value="Débutant">Débutant</option>
+                    <option value="Intermédiaire">Intermédiaire</option>
+                    <option value="Expert">Expert</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="annee">Année de formation</label>
+                <input type="number" id="annee" name="annee" placeholder="Ex: 2026" min="2020" max="2030" required>
+            </div>
+            <div class="form-group">
+                <label for="id">ID de participant</label>
+                <input type="text" id="id" name="id" placeholder="Votre ID de participant" required>
+            </div>
+            <button type="submit" class="btn-primary">Vérifier la Certification</button>
+        </form>
+    </div>
+
+    <div id="verification-result" style="display: none;"></div>
+</section>
+
+<div class="certificate-lightbox" id="certificateLightbox" role="dialog" aria-modal="true" aria-label="Certificat agrandi" hidden>
+    <button class="certificate-lightbox-close" type="button" aria-label="Fermer l’image agrandie">
+        <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+    <img src="" alt="">
+</div>
+
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">
+                <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+                <div>
+                    <h2>CENTEC GEO</h2>
+                    <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+                </div>
+            </div>
+            <p class="footer-description">L’expertise géospatiale de référence en Côte d'Ivoire.</p>
+            <a href="mailto:centrecartographie@gmail.com" class="btn-primary">Nous contacter</a>
+        </div>
+        <div>
+            <h3>Nos coordonnées</h3>
+            <ul class="contact-list footer-contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> <a href="tel:+2250713177415">+225 07 13 17 74 15</a></li>
+                <li><i class="fas fa-envelope"></i> <a href="mailto:centrecartographie@gmail.com">centrecartographie@gmail.com</a></li>
+            </ul>
+            <p class="footer-contact-note">Une question sur votre certificat ? <a href="mailto:centrecartographie@gmail.com?subject=Question%20sur%20une%20certification">Écrivez-nous</a>.</p>
+        </div>
+        <div class="footer-message">
+            <h3>Écrivez-nous</h3>
+            <form class="footer-form" action="mailto:centrecartographie@gmail.com" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Votre nom" autocomplete="name" required>
+                <input type="email" name="email" placeholder="Votre adresse e-mail" autocomplete="email" required>
+                <textarea name="message" rows="3" placeholder="Votre message" required></textarea>
+                <button type="submit">Envoyer un message</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">© 2026 CENTEC GEO — CENTRE NATIONAL D'ÉTUDE EN TERRITOIRE ET CARTOGRAPHIE CI. Tous droits réservés.</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+    function toggleMenu() {
+        const nav = document.getElementById('navOverlay');
+        const button = document.querySelector('.menu-btn');
+        const isOpen = nav.classList.toggle('active');
+        button.setAttribute('aria-expanded', String(isOpen));
+        button.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    }
+    document.addEventListener('keydown', event => {
+        const nav = document.getElementById('navOverlay');
+        if (event.key === 'Escape' && nav.classList.contains('active')) toggleMenu();
+    });
+    const certificateLightbox = document.getElementById('certificateLightbox');
+    const lightboxImage = certificateLightbox.querySelector('img');
+    const closeLightboxButton = certificateLightbox.querySelector('.certificate-lightbox-close');
+    let certificatePreviewButton;
+    function closeCertificateLightbox() {
+        certificateLightbox.hidden = true;
+        document.body.style.overflow = '';
+        if (certificatePreviewButton) certificatePreviewButton.focus();
+    }
+    document.getElementById('verification-result').addEventListener('click', event => {
+        const previewButton = event.target.closest('.certificate-preview');
+        if (!previewButton) return;
+        const image = previewButton.querySelector('img');
+        certificatePreviewButton = previewButton;
+        lightboxImage.src = image.src;
+        lightboxImage.alt = image.alt;
+        certificateLightbox.hidden = false;
+        document.body.style.overflow = 'hidden';
+        closeLightboxButton.focus();
+    });
+    closeLightboxButton.addEventListener('click', closeCertificateLightbox);
+    certificateLightbox.addEventListener('click', event => {
+        if (event.target === certificateLightbox) closeCertificateLightbox();
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && !certificateLightbox.hidden) closeCertificateLightbox();
+    });
+
+    // Afficher/masquer le champ `niveau` selon la formation sélectionnée
+    (function setupNiveauToggle() {
+        const formationSelect = document.getElementById('formation');
+        const niveauSelect = document.getElementById('niveau');
+        const niveauGroup = niveauSelect && niveauSelect.closest('.form-group');
+        function toggleNiveau() {
+            const val = (formationSelect.value || '').toLowerCase();
+            if (val.includes('digi map') || val.includes('digimap') || val.includes('telesense')) {
+                if (niveauGroup) niveauGroup.style.display = '';
+                if (niveauSelect) niveauSelect.required = true;
+            } else {
+                if (niveauGroup) niveauGroup.style.display = 'none';
+                if (niveauSelect) { niveauSelect.required = false; niveauSelect.value = ''; }
+            }
+        }
+        formationSelect.addEventListener('change', toggleNiveau);
+        // initial
+        toggleNiveau();
+    })();
+
+    document.getElementById('certForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const nom = formData.get('nom').trim();
+        const prenom = formData.get('prenom').trim();
+        const formation = formData.get('formation');
+        const niveau = formData.get('niveau');
+        const annee = formData.get('annee');
+        const id = formData.get('id').trim();
+        
+        // Au moins nom ou prénom doit être renseigné
+        const resultDiv = document.getElementById('verification-result');
+        if (!nom && !prenom) {
+            resultDiv.innerHTML = `
+                <div style="background: rgba(255,165,0,0.08); border: 1px solid #ffb84d; border-radius: 20px; padding: 20px; text-align: center;">
+                    <i class="fas fa-exclamation-triangle" style="color: #ffb84d; font-size: 2rem; display: block; margin-bottom: 10px;"></i>
+                    <strong style="color: white;">Veuillez saisir au moins le nom ou le prénom.</strong>
+                </div>`;
+            resultDiv.style.display = 'block';
+            return;
+        }
+
+        // Liste des participants certifiés importée depuis LISTE DE CERTIFICATION.xlsx
+        const participants = [
+            { nom: 'TRAORE', prenom: 'SIAKA', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-007', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Traore.PNG' },
+            { nom: 'COULIBALY', prenom: 'YIREKINNI SALI', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-008', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Sali.PNG' },
+            { nom: 'GOURIZAN', prenom: 'YOBOUE NATE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '', id: 'CENTEC-GEO-CTD-2026-008', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Nate08.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-001', photo: 'CERTIFICATS/DIGIMAP/N1/jeremie1.png' },
+            { nom: 'ACKA', prenom: 'AFFOUE GRACE FALONE ANDREA', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-002', photo: 'CERTIFICATS/DIGIMAP/N1/andrea1.png' },
+            { nom: 'AMADOU', prenom: 'DIOP', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-003', photo: 'CERTIFICATS/DIGIMAP/N1/diop1.png' },
+            { nom: 'AMADOU', prenom: 'DIOP', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-001', photo: 'CERTIFICATS/DIGIMAP/N2/diop2.png' },
+            { nom: 'GOLI', prenom: 'MIEN-YO JERIEL KADMIEL', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-003', photo: 'CERTIFICATS/DIGIMAP/N3/GOLI3.PNG' },
+            { nom: "N'GUESSAN", prenom: 'KOFFI LAURENT GBACALO', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-004', photo: 'CERTIFICATS/DIGIMAP/N3/Koffi3.PNG' },
+            { nom: 'BROU', prenom: 'KOUAKOU RODRIGUE', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-005', photo: 'CERTIFICATS/DIGIMAP/N3/Brou3.PNG' },
+            { nom: 'YEO', prenom: 'PETHANHANGUI ARNAUD', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-006', photo: 'CERTIFICATS/DIGIMAP/N3/Yeo3.PNG' },
+            { nom: 'YAO', prenom: 'KOFFI FELIX', formation: 'SF CARTO STATISTIQUE', niveau: '', annee: '2026', id: 'CENTEC-GEO-SFCS-2026-002', photo: 'CERTIFICATS/SF CARTOGRAPHIE STATISTIQUE/felix02.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-001', photo: 'CERTIFICATS/TELESENSE PRO/N1/jeremie1.PNG' },
+            { nom: 'KOUADIO', prenom: 'CHI KOUASSI MARIE CHARLENE', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-002', photo: 'CERTIFICATS/TELESENSE PRO/N1/charlene1.PNG' },
+            { nom: 'JEAN', prenom: 'CARLO DIEGDIAM DIOUF', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-003', photo: 'CERTIFICATS/TELESENSE PRO/N1/Kouadio1.PNG' },
+            { nom: 'OUATTARA', prenom: 'KATIENTIMPI SANKON', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-004', photo: 'CERTIFICATS/TELESENSE PRO/N1/ouattara1.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-001', photo: 'CERTIFICATS/TELESENSE PRO/N2/Jeremie2.PNG' },
+            { nom: 'OUATTARA', prenom: 'BALA MAMADOU', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-002', photo: 'CERTIFICATS/TELESENSE PRO/N2/Bala2.PNG' },
+            { nom: 'KOUASSI', prenom: 'BREDOU', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-003', photo: 'CERTIFICATS/TELESENSE PRO/N2/Bredou2.PNG' },
+            { nom: 'MELEDJE', prenom: 'RAMEAU', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-001', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Meledje.PNG' },
+            { nom: 'COULIBALY', prenom: 'GBAMBELE ADAMA', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-002', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Adama.PNG' },
+            { nom: 'DJEZOU', prenom: 'BERTRAND', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-003', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Djezou.PNG' },
+            { nom: 'KONAN', prenom: 'SERGE WILLIAMS', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-004', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Serge.PNG' },
+            { nom: 'KOUADIO', prenom: 'KOFFI HANS', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-005', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Koffi.PNG' },
+            { nom: 'AMARI', prenom: 'ISAAC', formation: 'CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTIS-2026-006', photo: 'CERTIFICATS/CARTOGRAPHIE ET TRAITEMENT ARCGIS PRO/Amari.PNG' },
+            { nom: 'SANGARE', prenom: 'ABDOULAYE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-001', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Sangare01.PNG' },
+            { nom: "N'GUESSAN", prenom: 'DENIS KOFFI', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-003', photo: 'CERTIFICATS/COLLECTE DE DONNEES/denis03.PNG' },
+            { nom: 'KONE', prenom: 'CHIEMMAILA GRACE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-004', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Kone04.PNG' },
+            { nom: 'SEA', prenom: 'DOUAMIN JASPE AMETISTE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-005', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Sea05.PNG' },
+            { nom: 'KOUAKOU', prenom: 'MIENTKPA PRISCILLE DANIELLE', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-006', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Danielle06.PNG' },
+            { nom: 'MARLENE', prenom: 'COULIBALY KADY', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-002', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Marlene02.PNG' },
+            { nom: 'ALI', prenom: 'BITIBROH KOSSIA MARIE RUTH', formation: 'COLLECTE DE DONNEES', niveau: '', annee: '2026', id: 'CENTEC-GEO-CTD-2026-007', photo: 'CERTIFICATS/COLLECTE DE DONNEES/Kossia07.PNG' },
+            { nom: 'AKOUASSA', prenom: 'DIDO JUNIOR', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-004', photo: 'CERTIFICATS/DIGIMAP/N1/Akouassa1.png' },
+            { nom: 'OUATTARA', prenom: 'YIGUELEHO ERIC JUNIOR', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-005', photo: 'CERTIFICATS/DIGIMAP/N1/ouattara.png' },
+            { nom: 'YAO', prenom: 'ADJOUA FLORE LAURELLE', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-006', photo: 'CERTIFICATS/DIGIMAP/N1/Flore1.png' },
+            { nom: 'OUATTARA', prenom: 'SIAKA', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-007', photo: 'CERTIFICATS/DIGIMAP/N1/Siaka.png' },
+            { nom: 'BINI', prenom: 'TAMIA MELISSA GRACE', formation: 'DIGIMAP', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-DM1-2026-008', photo: 'CERTIFICATS/DIGIMAP/N1/BINI.png' },
+            { nom: 'HENSCHEL', prenom: 'ABRO ELIEZER', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-002', photo: 'CERTIFICATS/DIGIMAP/N2/Henscherl.png' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-003', photo: 'CERTIFICATS/DIGIMAP/N2/Jeremie2.png' },
+            { nom: 'AKOUASSA', prenom: 'DIDO JUNIOR', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-004', photo: 'CERTIFICATS/DIGIMAP/N2/Akouassa2.png' },
+            { nom: 'NOBA', prenom: 'NOBA ARMEL', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-DM2-2026-005', photo: 'CERTIFICATS/DIGIMAP/N2/Armel.png' },
+            { nom: 'ARMAND', prenom: 'BROU TAHUI AKA', formation: 'DIGIMAP', niveau: 'Intermédiaire', annee:'2026', id:'CENTEC-GEO-DM2-2026-006', photo:'CERTIFICATS/DIGIMAP/N2/Armand2.png' },
+            { nom: 'AKOUASSA', prenom: 'DIDO JUNIOR', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-001', photo: 'CERTIFICATS/DIGIMAP/N3/Akouassa3.png' },
+            { nom: 'NOBA', prenom: 'NOBA ARMEL', formation: 'DIGIMAP', niveau: 'Expert', annee: '2026', id: 'CENTEC-GEO-DM3-2026-002', photo: 'CERTIFICATS/DIGIMAP/N3/Armel3.png' },
+            { nom: 'PLEKA', prenom: 'OKOBE JEAN CEDRICK', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-002', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Pleka002.PNG' },
+            { nom: "M'BE", prenom: 'AMON EMMA Esther', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-003', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Esther003.PNG' },
+            { nom: 'DIABATE', prenom: 'JEREMIE', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-001', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Jeremie001.PNG' },
+            { nom: 'CISSE', prenom: 'ISMAEL ABRAHAM', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-004', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Cisse004.PNG' },
+            { nom: 'DIOMANDE', prenom: 'MOHAMED SOGBETY', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-005', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/SOGBETY005.PNG' },
+            { nom: 'YOUAN BI', prenom: 'IRIE CHARLES', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-006', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Charles006.PNG' },
+            { nom: "N'GUESSAN", prenom: 'KONAN PATRICK', formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-007', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Patrick007.PNG' },
+            { nom: 'ARRA', prenom: " N'GBESSO ANGE MICHEL", formation: 'DRONE ET PHOTOGRAMMETRIE', niveau: '', annee: '2026', id: 'CENTEC-GEO-PDP-2026-008', photo: 'CERTIFICATS/DRONE ET PHOTOGRAMMETRIE/Arra008.PNG' },
+            { nom: 'MADOU', prenom: 'LANDEAUX BRIGUI SOPHONIE', formation: 'SF CARTO STATISTIQUE', niveau: '', annee: '2026', id: 'CENTEC-GEO-SFCS-2026-003', photo: 'CERTIFICATS/SF CARTOGRAPHIE STATISTIQUE/Madou03.PNG' },
+            { nom: 'TIA', prenom: 'GUEU BONAVENTUR', formation: 'SF CARTO STATISTIQUE', niveau: '', annee: '2026', id: 'CENTEC-GEO-SFCS-2026-001', photo: 'CERTIFICATS/SF CARTOGRAPHIE STATISTIQUE/TIA01.PNG' },
+            { nom: 'CISSE', prenom: 'MOHAMED JUNIOR ELVIS', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-005', photo: 'CERTIFICATS/TELESENSE PRO/N1/cisse1.PNG' },
+            { nom: 'ZAMBLE', prenom: 'KOUAME MARIUS', formation: 'TELESENSE PRO', niveau: 'Débutant', annee: '2026', id: 'CENTEC-GEO-TSP1-2026-006', photo: 'CERTIFICATS/TELESENSE PRO/N1/Zamble1.PNG' },
+            { nom: 'IDI', prenom: 'MEHDI KENNETH', formation: 'TELESENSE PRO', niveau: 'Intermédiaire', annee: '2026', id: 'CENTEC-GEO-TSP2-2026-004', photo: 'CERTIFICATS/TELESENSE PRO/N2/Kenneth1.PNG' },
+        ];
+
+        // Vérifier si le participant est enregistré (recherche tolérante)
+        function normalize(str) {
+            if (!str) return '';
+            return String(str)
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')            // enlever accents
+                .replace(/[^0-9A-Za-z\u00C0-\u017F\s'\-]/g, '') // garder lettres, chiffres, espaces, ' et -
+                .replace(/\s+/g, ' ')                      // réduire espaces multiples
+                .trim()
+                .toLowerCase();
+        }
+
+        // Pré-calcul des versions normalisées pour accélérer la recherche
+        participants.forEach(p => {
+            p._nom = normalize(p.nom);
+            p._prenom = normalize(p.prenom);
+            p._formation = normalize(p.formation);
+            p._id = normalize(p.id);
+            p._niveau = normalize(p.niveau);
+            p._annee = normalize(p.annee);
+        });
+
+        const nomNorm = normalize(nom);
+        const prenomNorm = normalize(prenom);
+        const formationNorm = normalize(formation);
+        const idNorm = normalize(id);
+        const niveauNorm = normalize(niveau);
+        const anneeNorm = normalize(annee);
+
+        const participant = participants.find(p => {
+            const matchNom = !nomNorm || p._nom.includes(nomNorm) || nomNorm.includes(p._nom);
+            const matchPrenom = !prenomNorm || p._prenom.includes(prenomNorm) || prenomNorm.includes(p._prenom);
+            const matchName = matchNom || matchPrenom; // autorise nom OU prénom
+            const matchFormation = !formationNorm || p._formation.includes(formationNorm) || formationNorm.includes(p._formation);
+            const matchId = !idNorm || p._id.includes(idNorm) || idNorm.includes(p._id);
+
+            // Ne considérer le niveau que pour DIGIMAP et TELESENSE PRO
+            const formationKey = formationNorm || p._formation || '';
+            let matchNiveau;
+            if (formationKey.includes('digi map') || formationKey.includes('telesense')) {
+                matchNiveau = !niveauNorm || !p._niveau || p._niveau === niveauNorm;
+            } else {
+                matchNiveau = true;
+            }
+
+            const matchAnnee = !anneeNorm || !p._annee || p._annee === anneeNorm;
+            return matchName && matchFormation && matchId && matchNiveau && matchAnnee;
+        });
+
+        if (participant) {
+            resultDiv.innerHTML = `
+                <div style="background: rgba(0,198,255,0.12); border: 1px solid var(--secondary); border-radius: 24px; padding: 30px; margin-top: 40px; display: grid; gap: 25px;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--secondary); margin-bottom: 15px;"></i>
+                        <h3 style="color: white; margin-bottom: 10px;">Vérification Réussie</h3>
+                        <p style="color: #e0e6ed; font-size: 1.05rem;">Le certificat de <strong>${participant.prenom} ${participant.nom}</strong> est authentique.</p>
+                    </div>
+                    <div style="display: grid; gap: 20px; grid-template-columns: 1fr 1fr; align-items: start;">
+                        <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 22px;">
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Nom :</strong> ${participant.nom}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Prénom :</strong> ${participant.prenom}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Formation :</strong> ${participant.formation}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Niveau :</strong> ${participant.niveau}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>Année :</strong> ${participant.annee}</p>
+                            <p style="color: #a0aec0; margin: 8px 0;"><strong>ID :</strong> ${participant.id}</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p style="color: #e0e6ed; margin-bottom: 15px;">Photo du certificat :</p>
+                            <button type="button" class="certificate-preview" aria-label="Agrandir le certificat de ${participant.prenom} ${participant.nom}">
+                                <img src="${participant.photo}" alt="Certificat de ${participant.prenom} ${participant.nom}" style="width: 100%; max-width: 100%; border-radius: 20px; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 20px 50px rgba(0,0,0,0.35);">
+                            </button>
+                        </div>
+                    </div>
+                    <p style="color: var(--secondary); font-style: italic; margin-top: 10px; text-align: center;">Félicitations ! Votre certification est confirmée par le CENTEC GEO.</p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        } else {
+            resultDiv.innerHTML = `
+                <div style="background: rgba(255,0,0,0.1); border: 1px solid #ff4444; border-radius: 20px; padding: 30px; text-align: center; margin-top: 40px;">
+                    <i class="fas fa-times-circle" style="font-size: 3rem; color: #ff4444; margin-bottom: 20px;"></i>
+                    <h3 style="color: white; margin-bottom: 15px;">Vérification Échouée</h3>
+                    <p style="color: #e0e6ed; font-size: 1.1rem;">
+                        Désolé, vos informations ne correspondent à aucun participant certifié dans notre base de données.
+                    </p>
+                    <p style="color: #a0aec0; margin-top: 15px;">
+                        Veuillez vérifier vos données ou contacter le CENTEC GEO pour plus d'informations.
+                    </p>
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>
