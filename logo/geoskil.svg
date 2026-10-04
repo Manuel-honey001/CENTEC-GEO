@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 300" width="100%" height="100%">
+  <defs>
+    <!-- Dégradés de couleurs -->
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A75BB" />
+      <stop offset="100%" stop-color="#0B4884" />
+    </linearGradient>
+    
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F26522" />
+      <stop offset="100%" stop-color="#C83800" />
+    </linearGradient>
+
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Ombre sous le marqueur -->
+  <ellipse cx="115" cy="272" rx="55" ry="8" fill="#94A3B8" opacity="0.5"/>
+
+  <!-- ICONE PIN / GLOBE / CIBLE -->
+  <g id="logo-icon">
+    <!-- Bas de la puce (Orange) -->
+    <path d="M 115,265 C 60,195 40,145 40,110 C 40,90 48,72 62,58 L 172,168 C 152,220 115,265 115,265 Z" fill="url(#orangeGrad)"/>
+    
+    <!-- Haut de la puce (Bleu) -->
+    <path d="M 115,15 C 62.5,15 20,57.5 20,110 C 20,130 26,148 37,164 L 164,37 C 148,26 130,15 115,15 Z" fill="url(#blueGrad)"/>
+
+    <!-- Lignes du globe terrestre -->
+    <circle cx="115" cy="110" r="80" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.35"/>
+    <ellipse cx="115" cy="110" rx="80" ry="38" fill="none" stroke="#FFFFFF" stroke-width="2.5" opacity="0.35"/>
+    <line x1="115" y1="30" x2="115" y2="190" stroke="#FFFFFF" stroke-width="2.5" opacity="0.35"/>
+    <line x1="35" y1="110" x2="195" y2="110" stroke="#FFFFFF" stroke-width="2.5" opacity="0.35"/>
+
+    <!-- Reticule / Viseur cible -->
+    <circle cx="115" cy="110" r="42" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+    <circle cx="115" cy="110" r="14" fill="#1A75BB" stroke="#FFFFFF" stroke-width="4"/>
+
+    <!-- Axes de la cible -->
+    <line x1="115" y1="15" x2="115" y2="205" stroke="#FFFFFF" stroke-width="5.5"/>
+    <line x1="20" y1="110" x2="210" y2="110" stroke="#FFFFFF" stroke-width="5.5"/>
+
+    <!-- Flèche montante (Orange) -->
+    <g transform="translate(15, -5)">
+      <path d="M 120,100 L 180,40" stroke="url(#orangeGrad)" stroke-width="12" stroke-linecap="round"/>
+      <polygon points="195,25 155,42 178,65" fill="url(#orangeGrad)"/>
+    </g>
+  </g>
+
+  <!-- TEXTE GEOSKILL -->
+  <g transform="translate(230, 150)">
+    <text font-family="'Arial Black', 'Impact', sans-serif" font-weight="900" font-style="italic" font-size="88" letter-spacing="-1">
+      <tspan fill="#105FA0">GEO</tspan>
+      <tspan fill="#EE6A25">SKILL</tspan>
+    </text>
+  </g>
+
+  <!-- Ligne de séparation -->
+  <line x1="230" y1="172" x2="900" y2="172" stroke="#CBD5E1" stroke-width="2.5"/>
+
+  <!-- Sous-titre -->
+  <text x="230" y="210" font-family="'Segoe UI', 'Arial', sans-serif" font-style="italic" font-weight="600" font-size="28" fill="#475569">
+    Programme Professionnel en Géomatique Appliquée
+  </text>
+</svg>
