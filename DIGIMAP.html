@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=2">
+    <link rel="icon" type="image/png" sizes="512x512" href="./favicon.png?v=2">
+    <title>DIGIMAP | Parcours intégré en cartographie et SIG</title>
+    <meta name="description" content="Découvrez DIGIMAP, le programme intégré du CENTEC GEO en cartographie numérique et SIG : trois phases complémentaires, une seule formation et un tarif unique de 150 000 FCFA.">
+    <meta name="theme-color" content="#0b1d35">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1d4ed8;
+            --secondary: #ff6b00;
+            --bg-main: #f5f1e8;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --text-dark: #1e3a5f;
+            --border: rgba(30, 58, 95, 0.12);
+            --shadow-soft: 0 15px 35px rgba(30, 41, 59, 0.04);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: radial-gradient(circle at 50% 0%, rgba(29, 78, 216, 0.04) 0%, var(--bg-main) 75%);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(243, 244, 238, 0.82);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 107, 0, 0.18);
+            box-shadow: 0 4px 30px rgba(30, 41, 59, 0.04);
+        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 15px; }
+        .logo-container img {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0 4px 10px rgba(255, 107, 0, 0.2));
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .logo-container:hover img {
+            transform: scale(1.08) rotate(-1deg);
+        }
+        .logo-text {
+            border-left: 2px solid rgb(5, 83, 252);
+            padding-left: 15px;
+        }
+        .logo-text h2 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+        .logo-text span {
+            color: var(--secondary);
+            font-size: 0.7rem;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+        .menu-btn {
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+        .menu-btn:hover { background: var(--secondary); transform: translateY(-2px); }
+
+        /* NAV OVERLAY */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 320px;
+            height: 100vh;
+            background: rgba(243, 244, 238, 0.98);
+            backdrop-filter: blur(25px);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            padding: 110px 40px;
+            transition: 0.5s ease;
+            border-left: 1px solid rgba(255, 107, 0, 0.18);
+            box-shadow: -10px 0 40px rgba(30, 41, 59, 0.05);
+        }
+        .nav-overlay.active { right: 0; }
+        .nav-overlay a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .nav-overlay a:hover {
+            color: var(--secondary);
+            padding-left: 12px;
+        }
+        .nav-overlay .close-menu {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            align-self: flex-end;
+            margin-bottom: 35px;
+            cursor: pointer;
+            padding: 0;
+        }
+        .nav-overlay .close-menu:hover {
+            color: var(--secondary);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: linear-gradient(rgba(243, 244, 238, 0.84), rgba(243, 244, 238, 0.96)), url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px;
+        }
+        .hero h1 {
+            display: none;
+        }
+        .hero-logo {
+            max-width: 340px;
+            width: 100%;
+            margin-bottom: 35px;
+            filter: drop-shadow(0 12px 30px rgba(30, 58, 95, 0.12));
+            border-radius: 28px;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 24px;
+            border: 1px solid rgba(30, 58, 95, 0.08);
+        }
+        .hero p {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 32px;
+            max-width: 1000px;
+        }
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 26px;
+        }
+        .hero-badges span {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(30, 58, 95, 0.08);
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .hero .hero-actions {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 0, 0.2);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--text-dark);
+            padding: 16px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 1px solid rgba(30, 58, 95, 0.12);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 8%; max-width: 1400px; margin: auto; }
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 20px auto;
+            border-radius: 2px;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- MODULES --- */
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+        .module-card {
+            background: var(--bg-card);
+            padding: 45px 36px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .module-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 45px rgba(29, 78, 216, 0.06);
+        }
+        .level {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .module-card h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .module-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .module-card ul {
+            text-align: left;
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+        .module-card ul li {
+            margin-bottom: 12px;
+            color: var(--text-main);
+            padding-left: 30px;
+            position: relative;
+            list-style: none;
+        }
+        .module-card ul li::before {
+            content: '\f058';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        .btn-inscription {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 260px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.14);
+        }
+        .btn-inscription:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 35px rgba(255, 107, 0, 0.2);
+        }
+
+        /* --- WHY --- */
+        .why {
+            background: rgba(255, 255, 255, 0.45);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            margin-top: 80px;
+        }
+        .why h2 {
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        .why-box {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            text-align: center;
+        }
+        .why-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+        }
+        .why-box i {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            display: block;
+        }
+        .why-box h3 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .why-box p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .session-history {
+            margin-top: 30px;
+        }
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+        .session-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+        .session-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+        }
+        .session-photo {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .session-content {
+            padding: 24px 22px 28px;
+        }
+        .session-date {
+            display: inline-block;
+            background: rgba(29, 78, 216, 0.08);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .session-content h3 {
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .session-content p {
+            color: var(--text-muted);
+        }
+
+        .gallery-strip {
+            display: flex;
+            gap: 18px;
+            margin-top: 20px;
+            overflow-x: auto;
+            padding: 6px 0 12px;
+            scroll-snap-type: x proximity;
+        }
+        .gallery-strip::-webkit-scrollbar {
+            height: 9px;
+        }
+        .gallery-strip::-webkit-scrollbar-thumb {
+            background: rgba(29, 78, 216, 0.35);
+            border-radius: 999px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            min-width: 260px;
+            width: 260px;
+            height: 210px;
+            flex: 0 0 260px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-soft);
+            background: #dfe7f2;
+            scroll-snap-align: start;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(180deg, rgba(15,23,42,0), rgba(15,23,42,0.8));
+            color: white;
+            padding: 18px 16px 14px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #e6e8df;
+            padding: 100px 8% 40px;
+            border-top: 1px solid rgba(71, 85, 105, 0.1);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+        .footer-grid h2 {
+            color: white;
+            margin-bottom: 25px;
+        }
+        .footer-grid p {
+            color: #a0aec0;
+            margin-bottom: 30px;
+        }
+        .contact-list li {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: #a0aec0;
+            list-style: none;
+        }
+        .contact-list i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            background: rgba(0,198,255,0.1);
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 50px;
+            color: #4a5568;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .director-box { grid-template-columns: 1fr; text-align: center; }
+            .team-member { flex: 0 0 calc(50% - 13px); }
+        }
+        @media (max-width: 600px) {
+            .team-member { flex: 0 0 100%; }
+        }
+        .desktop-nav {
+            display: flex; align-items: center; gap: 0.25rem; margin-left: auto; margin-right: 0.6rem;
+            padding: 4px 8px; background: rgba(15, 23, 42, 0.04); border: 1px solid rgba(15, 23, 42, 0.08); border-radius: 40px;
+        }
+        .desktop-nav a {
+            padding: 0.5rem 0.8rem; border-radius: 20px; color: #1e293b; font-size: 0.78rem; font-weight: 700;
+            text-decoration: none; transition: background 0.2s ease, color 0.2s ease;
+        }
+        .desktop-nav a:hover { color: #0b5ed7; background: rgba(29, 78, 216, 0.08); }
+        .menu-btn { flex: 0 0 46px; background: #e2e8f0; color: #0b5ed7; border: 1px solid #cbd5e1; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
+        .menu-btn:hover { background: #dbeafe; border-color: #2563eb; }
+        .nav-overlay {
+            inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; width: min(280px, calc(100vw - 32px));
+            height: auto; max-height: calc(100dvh - 108px); overflow-y: auto; padding: 16px;
+            border: 1px solid rgba(0, 102, 255, 0.35); border-radius: 16px; visibility: hidden; opacity: 0;
+            pointer-events: none; transform: translateY(-8px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+        .nav-overlay.active {
+            inset: 92px max(16px, calc((100vw - 1280px) / 2)) auto auto; visibility: visible; opacity: 1;
+            pointer-events: auto; transform: translateY(0);
+        }
+        .nav-overlay a { margin: 0; padding: 0.65rem 0.8rem; border-radius: 10px; font-size: 1rem; }
+        .nav-overlay .close-menu { margin: 0 0 8px; }
+        @media (max-width: 1120px) {
+            header { flex-wrap: wrap; }
+            .desktop-nav { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; margin: 4px 0 8px; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 130px; }
+        }
+        @media (max-width: 600px) {
+            .desktop-nav a { padding: 0.4rem 0.55rem; font-size: 0.68rem; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 116px; }
+        }
+
+        /* DIGIMAP learning-path redesign */
+        :root {
+            --primary: #155eef;
+            --secondary: #f07832;
+            --bg-main: #f5f7fb;
+            --bg-card: #ffffff;
+            --text-main: #243247;
+            --text-muted: #64748b;
+            --text-dark: #102a43;
+            --border: #e2e8f0;
+            --shadow-soft: 0 18px 48px rgba(16, 42, 67, 0.08);
+        }
+        body {
+            background: #f5f7fb;
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+        header {
+            min-height: 82px;
+            padding: 8px max(5%, calc((100vw - 1280px) / 2));
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom-color: #e2e8f0;
+            box-shadow: 0 8px 28px rgba(16, 42, 67, 0.07);
+        }
+        .logo-container img { height: 58px; }
+        .logo-text { border-color: var(--primary); }
+        .logo-text h2 { color: var(--text-dark); font-size: 1.2rem; }
+        .logo-text span { color: #64748b; }
+        .desktop-nav {
+            margin-left: auto;
+            margin-right: 0.6rem;
+            padding: 4px 8px;
+            gap: 0.25rem;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+        }
+        .desktop-nav a { color: #334155; font-size: 0.76rem; }
+        .desktop-nav a:hover { color: var(--primary); background: #e2e8f0; }
+        .menu-btn {
+            flex: 0 0 46px;
+            background: #e2e8f0;
+            color: var(--primary);
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1);
+        }
+        .menu-btn:hover { background: #dbeafe; border-color: #93c5fd; }
+        .hero {
+            position: relative;
+            min-height: 590px;
+            height: auto;
+            margin-top: 82px;
+            padding: 82px 7% 90px;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 82% 10%, rgba(21, 94, 239, 0.24), transparent 36%),
+                linear-gradient(135deg, #0b1d35 0%, #102a43 60%, #173b60 100%);
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: auto -10% -65% 45%;
+            height: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            box-shadow: 0 0 0 45px rgba(255,255,255,0.025), 0 0 0 90px rgba(255,255,255,0.02);
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero h1 {
+            display: block;
+            margin: 0 0 12px;
+            color: #fff;
+            font-size: clamp(3rem, 8vw, 5.8rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.04em;
+        }
+        .hero .hero-intro {
+            max-width: 760px;
+            margin: 0 auto 26px;
+            color: #d8e4f3;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            font-weight: 400;
+        }
+        .hero-badges { gap: 9px; margin: 0 0 18px; }
+        .hero-badges span {
+            padding: 7px 13px;
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.16);
+            color: #e8f0fb;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+        }
+        .hero .hero-actions { gap: 12px; }
+        .hero .btn-primary, .hero .btn-secondary {
+            padding: 13px 22px;
+            font-size: 0.84rem;
+            letter-spacing: 0.04em;
+        }
+        .hero .btn-primary { background: var(--secondary); box-shadow: 0 10px 25px rgba(240,120,50,0.22); }
+        .hero .btn-primary:hover { background: #e76820; }
+        .hero .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.22); }
+        .program-poster-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: #d8e4f3;
+            font-size: 0.88rem;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .program-poster-link:hover { color: #fff; }
+        .section { padding: 88px 7%; scroll-margin-top: 90px; }
+        .section-title {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+            font-size: clamp(1.8rem, 4vw, 2.55rem);
+            letter-spacing: -0.025em;
+            text-transform: none;
+        }
+        .section-title::after { margin: 15px auto 18px; background: var(--secondary); }
+        .section-subtitle { margin-bottom: 38px; color: var(--text-muted); }
+        .modules {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 22px;
+        }
+        .module-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 30px 26px 26px;
+            border-radius: 20px;
+            text-align: left;
+            box-shadow: 0 12px 32px rgba(16, 42, 67, 0.06);
+        }
+        .module-card:hover { transform: translateY(-6px); border-color: #bfdbfe; }
+        .module-card:nth-child(2) { border-top: 4px solid var(--primary); }
+        .module-card:nth-child(3) { border-top: 4px solid var(--secondary); }
+        .module-card .level {
+            margin-bottom: 18px;
+            padding: 6px 12px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .module-card h3 { margin-bottom: 10px; color: var(--text-dark); font-size: 1.38rem; }
+        .module-card p { margin-bottom: 16px; font-size: 0.92rem; }
+        .module-card ul { flex: 1; width: 100%; margin-bottom: 22px; padding: 0; }
+        .module-card ul li { margin-bottom: 9px; padding-left: 26px; font-size: 0.88rem; }
+        .module-card ul li::before { color: #16a34a; }
+        .module-card .btn-inscription {
+            max-width: none;
+            padding: 12px 16px;
+            background: #eff6ff;
+            color: var(--primary);
+            box-shadow: none;
+            font-size: 0.78rem;
+        }
+        .module-card .btn-inscription:hover { background: var(--primary); color: #fff; box-shadow: 0 10px 22px rgba(21,94,239,0.18); }
+        .why {
+            margin-top: 50px;
+            padding: 38px;
+            background: #edf3fa;
+            border: 0;
+            box-shadow: none;
+        }
+        .why h2 { color: var(--text-dark); font-size: 1.55rem; }
+        .why-box { padding: 24px 20px; border-radius: 18px; }
+        .why-box i { color: var(--primary); font-size: 2rem; }
+        .why-box h3 { font-size: 1.05rem; }
+        .why-box p { font-size: 0.9rem; }
+        #objectifs .content-box {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
+        }
+        #objectifs .content-box li { color: var(--text-main); }
+        .session-history { margin-top: 0; }
+        .timeline-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+        .session-card { border-radius: 18px; }
+        .session-photo { height: 190px; }
+        .session-content { padding: 20px; }
+        .gallery-item { border-radius: 16px; }
+        footer { padding: 55px 7% 28px; background: #0b1d35; border-top: 0; }
+        .footer-grid { max-width: 1180px; margin: 0 auto; gap: 35px; }
+        .footer-grid h2, .footer-grid h3 { color: #fff !important; margin-bottom: 14px !important; }
+        .footer-grid p, .contact-list li { color: #bdcde0 !important; }
+        .footer-brand { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+        .footer-brand img {
+            display: block;
+            flex: 0 0 auto;
+            width: 138px;
+            height: 138px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(255,255,255,0.28));
+        }
+        .footer-brand-copy { min-width: 0; padding-left: 15px; border-left: 1px solid rgba(255,255,255,0.2); }
+        .footer-brand h2 { margin: 0 0 6px !important; color: #fff; font-size: 1.35rem; line-height: 1.15; }
+        .footer-brand span { display: block; max-width: 220px; color: #bdcde0; font-size: 0.68rem; line-height: 1.5; }
+        .footer-description { max-width: 360px; margin-bottom: 22px !important; font-size: 0.9rem; line-height: 1.7; }
+        .footer-grid > div > h3 { margin-bottom: 20px !important; }
+        .contact-list li { gap: 14px; margin-bottom: 15px; }
+        .contact-list i { color: #bfdbfe; background: rgba(255,255,255,0.1); }
+        .contact-list a { color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+        .contact-list a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+        .footer-contact-form { display: grid; gap: 12px; margin-top: 16px; }
+        .footer-contact-form input,
+        .footer-contact-form textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 13px;
+            outline: none;
+            background: rgba(255,255,255,0.055);
+            color: #f8fafc;
+            font: inherit;
+            font-size: 0.86rem;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .footer-contact-form input::placeholder,
+        .footer-contact-form textarea::placeholder { color: #9fb5cf; }
+        .footer-contact-form input:focus,
+        .footer-contact-form textarea:focus { border-color: #60a5fa; background: rgba(255,255,255,0.08); }
+        .footer-contact-form textarea { min-height: 105px; resize: vertical; }
+        .footer-contact-form button {
+            display: inline-flex;
+            width: fit-content;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .footer-contact-form button:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.2); }
+        .footer-bottom { margin-top: 35px; border-color: rgba(255,255,255,0.14); color: #bdcde0; }
+        @media (max-width: 900px) {
+            header { flex-wrap: wrap; }
+            .desktop-nav { order: 3; flex: 0 0 100%; justify-content: center; flex-wrap: wrap; margin: 4px 0 8px; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 140px; }
+            .hero { margin-top: 140px; min-height: 510px; }
+            .section { padding: 70px 6%; scroll-margin-top: 130px; }
+            .modules, .timeline-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .modules > :last-child:nth-child(odd), .timeline-grid > :last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+                width: min(100%, 520px);
+                justify-self: center;
+            }
+        }
+        @media (max-width: 600px) {
+            header { padding: 8px 4%; }
+            .logo-container { flex: 1 1 auto; min-width: 0; gap: 10px; }
+            .logo-container img { height: 42px; }
+            .logo-text { min-width: 0; padding-left: 9px; }
+            .logo-text h2 { font-size: 1rem; }
+            .logo-text span { max-width: 145px; font-size: 0.55rem; line-height: 1.25; }
+            .menu-btn { margin-left: auto; }
+            .desktop-nav { gap: 2px; padding: 3px; }
+            .desktop-nav a { padding: 0.38rem 0.48rem; font-size: 0.63rem; }
+            .nav-overlay, .nav-overlay.active { inset-block-start: 126px; }
+            .hero { margin-top: 125px; min-height: 490px; padding: 55px 6% 70px; }
+            .hero .hero-actions { width: 100%; }
+            .hero .btn-primary, .hero .btn-secondary { width: 100%; }
+            .program-poster-link { margin-top: 18px; }
+            .section { padding: 58px 5%; }
+            .modules, .timeline-grid { grid-template-columns: 1fr; }
+            .module-card { padding: 26px 22px; }
+            .why { padding: 25px 18px; }
+            #objectifs .content-box { padding: 22px 18px; }
+            footer { padding: 45px 6% 24px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+            .footer-brand { gap: 12px; }
+            .footer-brand img { width: 98px; height: 98px; }
+            .footer-brand-copy { padding-left: 11px; }
+            .footer-brand h2 { font-size: 1.15rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+        }
+
+        /* DIGIMAP integrated-program presentation */
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.8fr);
+            align-items: center;
+            gap: clamp(35px, 7vw, 100px);
+            min-height: 660px;
+            padding: 125px max(6%, calc((100vw - 1180px) / 2)) 85px;
+            background:
+                radial-gradient(ellipse at 18% 15%, rgba(21, 94, 239, 0.2), transparent 38%),
+                linear-gradient(125deg, #08172b 0%, #102a43 58%, #173b60 100%);
+            text-align: left;
+        }
+        .hero::before {
+            inset: auto auto -320px -180px;
+            width: 580px;
+            height: 580px;
+        }
+        .hero-copy { max-width: 690px; }
+        .hero h1 {
+            margin-bottom: 20px;
+            font-size: clamp(3.4rem, 8vw, 6.4rem);
+            letter-spacing: -0.055em;
+        }
+        .hero h1 span { color: #f07832; }
+        .hero .hero-intro {
+            max-width: 620px;
+            margin: 0 0 22px;
+            color: #d8e4f3;
+            font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+        }
+        .hero-badges { justify-content: flex-start; margin-bottom: 25px; }
+        .hero .hero-actions { justify-content: flex-start; margin-top: 26px; }
+        .hero .btn-primary { background: #f07832; }
+        .hero .btn-secondary { background: rgba(255,255,255,0.08); }
+        .hero-price {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+            padding: 11px 15px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.07);
+            color: #e8f0fb;
+            font-size: 0.88rem;
+        }
+        .hero-price strong { color: #ffad79; font-size: 1rem; }
+        .hero-visual {
+            position: relative;
+            display: flex;
+            min-height: 390px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 32px;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 30px;
+            background:
+                linear-gradient(180deg, rgba(7,17,31,0.12) 15%, rgba(7,17,31,0.88) 100%),
+                url('DIGIMAP/11.jpg') center 42% / cover;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.32);
+        }
+        .hero-visual::before {
+            position: absolute;
+            inset: 14px;
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 21px;
+            content: "";
+            pointer-events: none;
+        }
+        .hero-visual img {
+            position: absolute;
+            top: 28px;
+            left: 28px;
+            width: min(58%, 210px);
+            height: 76px;
+            padding: 10px 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.94);
+            object-fit: contain;
+        }
+        .hero-visual-caption { position: relative; z-index: 1; align-self: flex-end; width: 100%; color: #fff; }
+        .hero-visual-caption span {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffad79;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+        .hero-visual-caption strong { display: block; max-width: 360px; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.25; }
+        .program-poster-link { margin-top: 23px; }
+
+        .cohort-section { max-width: 1280px; padding-top: 44px; padding-bottom: 48px; scroll-margin-top: 115px; }
+        .cohort-feature {
+            display: grid;
+            grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+            align-items: center;
+            gap: clamp(24px, 5vw, 58px);
+            overflow: hidden;
+            padding: clamp(24px, 4vw, 44px);
+            border: 1px solid #dce6f2;
+            border-radius: 28px;
+            background:
+                radial-gradient(ellipse at 4% 0%, rgba(21,94,239,0.08), transparent 35%),
+                linear-gradient(135deg, #fff, #f7f9fc);
+            box-shadow: 0 22px 65px rgba(16,42,67,0.09);
+        }
+        .cohort-copy { min-width: 0; }
+        .cohort-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 20px;
+            padding: 8px 12px;
+            border: 1px solid #bbf7d0;
+            border-radius: 999px;
+            background: #f0fdf4;
+            color: #15803d;
+            font-size: 0.72rem;
+            font-weight: 850;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+        .cohort-status::before {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.14);
+            content: "";
+        }
+        .cohort-copy h2 {
+            margin-bottom: 12px;
+            color: #102a43;
+            font-size: clamp(1.8rem, 3.8vw, 2.7rem);
+            line-height: 1.1;
+            letter-spacing: -0.035em;
+        }
+        .cohort-copy h2 span { color: #155eef; }
+        .cohort-copy > p { max-width: 530px; margin-bottom: 20px; color: #52657b; font-size: 0.98rem; }
+        .cohort-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 20px; }
+        .cohort-fact {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            padding: 11px 12px;
+            border: 1px solid #e6edf5;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.72);
+            color: #475569;
+            font-size: 0.75rem;
+            font-weight: 650;
+            line-height: 1.45;
+        }
+        .cohort-fact i { flex: 0 0 auto; margin-top: 2px; color: #155eef; }
+        .cohort-tools { margin: 0 0 20px; }
+        .cohort-tools-label { display: block; margin-bottom: 8px; color: #64748b; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+        .cohort-tools-list { display: flex; flex-wrap: wrap; gap: 6px; }
+        .cohort-tools-list span { padding: 5px 8px; border: 1px solid #e2e8f0; border-radius: 999px; background: #fff; color: #475569; font-size: 0.68rem; font-weight: 700; }
+        .cohort-dates {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 22px 0 24px;
+            padding: 15px 16px;
+            border: 1px solid #e4ebf3;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.85);
+        }
+        .cohort-dates-icon {
+            display: grid;
+            flex: 0 0 44px;
+            width: 44px;
+            height: 44px;
+            place-items: center;
+            border-radius: 14px;
+            background: #eff6ff;
+            color: #155eef;
+            font-size: 1.1rem;
+        }
+        .cohort-dates span { display: block; color: #64748b; font-size: 0.72rem; font-weight: 750; letter-spacing: 0.07em; text-transform: uppercase; }
+        .cohort-dates strong { display: block; margin-top: 3px; color: #102a43; font-size: 1rem; }
+        .cohort-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 48px;
+            padding: 12px 19px;
+            border-radius: 999px;
+            background: #155eef;
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 9px 22px rgba(21,94,239,0.2);
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cohort-cta:hover { transform: translateY(-2px); background: #104ac2; box-shadow: 0 13px 28px rgba(21,94,239,0.25); }
+        .cohort-contact-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+        .cohort-contact-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 13px;
+            border: 1px solid #dce5ef;
+            border-radius: 999px;
+            color: #334155;
+            font-size: 0.76rem;
+            font-weight: 750;
+            text-decoration: none;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+        .cohort-contact-links a:hover { border-color: #93c5fd; background: #eff6ff; }
+        .cohort-contact-links i { color: #155eef; }
+        .cohort-poster {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            padding: 10px;
+            border: 1px solid rgba(16,42,67,0.1);
+            border-radius: 22px;
+            background: #eaf0f8;
+            box-shadow: 0 18px 42px rgba(16,42,67,0.18);
+        }
+        .cohort-poster img { display: block; width: 100%; height: auto; border-radius: 14px; }
+        .cohort-poster-hint {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 11px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 999px;
+            background: rgba(8,23,43,0.82);
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 750;
+            backdrop-filter: blur(8px);
+        }
+
+        .program-intro { max-width: 780px; margin: 0 auto 34px; text-align: center; }
+        .program-intro .section-title { margin-bottom: 8px; }
+        .integrated-program {
+            overflow: hidden;
+            padding: clamp(22px, 4vw, 44px);
+            border: 1px solid #dfe7f1;
+            border-radius: 28px;
+            background: #fff;
+            box-shadow: 0 22px 65px rgba(16, 42, 67, 0.1);
+        }
+        .integrated-program-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 26px;
+        }
+        .integrated-program-heading span {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .integrated-program-heading span i { font-size: 1rem; }
+        .integrated-program-heading strong {
+            padding: 8px 13px;
+            border: 1px solid #fed7aa;
+            border-radius: 999px;
+            background: #fff7ed;
+            color: #c2410c;
+            font-size: 0.75rem;
+        }
+        .phase-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+        .phase-card {
+            position: relative;
+            min-width: 0;
+            padding: 23px 20px 21px;
+            border: 1px solid rgba(148,163,184,0.18);
+            border-radius: 20px;
+            background: linear-gradient(155deg, #142034, #080e19);
+            color: #e8f0fa;
+        }
+        .phase-card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
+        .phase-number {
+            display: grid;
+            width: 40px;
+            height: 40px;
+            place-items: center;
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 13px;
+            background: rgba(56,189,248,0.1);
+            color: #7dd3fc;
+            font-size: 0.78rem;
+            font-weight: 900;
+        }
+        .phase-card:nth-child(2) .phase-number { border-color: rgba(240,120,50,0.35); background: rgba(240,120,50,0.12); color: #ffad79; }
+        .phase-card:nth-child(3) .phase-number { border-color: rgba(114,224,162,0.3); background: rgba(114,224,162,0.1); color: #72e0a2; }
+        .phase-label { color: #aebdd0; font-size: 0.67rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+        .phase-card h3 { margin-bottom: 9px; color: #fff; font-size: 1.15rem; line-height: 1.3; }
+        .phase-card p { margin-bottom: 15px; color: #b7c4d5; font-size: 0.86rem; line-height: 1.65; }
+        .phase-card ul { display: flex; flex-wrap: wrap; gap: 7px; padding: 0; list-style: none; }
+        .phase-card li {
+            padding: 5px 8px;
+            border: 1px solid rgba(148,163,184,0.18);
+            border-radius: 999px;
+            color: #cbd5e1;
+            font-size: 0.68rem;
+        }
+        .program-together {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-left: 3px solid #155eef;
+            border-radius: 0 12px 12px 0;
+            background: #f1f6fd;
+            color: #334155;
+            font-size: 0.88rem;
+        }
+        .program-together i { margin-top: 4px; color: #155eef; }
+        .program-enrollment {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 20px;
+            margin-top: 22px;
+            padding: 22px 24px;
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            background: linear-gradient(110deg, #eff6ff, #fff7ed);
+        }
+        .program-enrollment-label { display: block; margin-bottom: 4px; color: #475569; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+        .program-enrollment h3 { margin-bottom: 3px; color: #102a43; font-size: 1.15rem; }
+        .program-enrollment p { margin: 0; color: #64748b; font-size: 0.82rem; }
+        .program-price { color: #102a43; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 900; letter-spacing: -0.04em; white-space: nowrap; }
+        .program-price span { color: #64748b; font-size: 0.72rem; font-weight: 700; letter-spacing: 0; }
+        .program-enrollment .btn-primary { grid-column: 1 / -1; justify-self: start; padding: 13px 22px; background: #155eef; font-size: 0.82rem; }
+        .program-enrollment .btn-primary:hover { background: #104ac2; }
+        .why { border-radius: 24px; }
+        .contact-list a { color: inherit; text-decoration: none; }
+        .contact-list a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+        .why {
+            position: relative;
+            overflow: hidden;
+            margin-top: 54px;
+            padding: clamp(28px, 5vw, 54px);
+            border: 1px solid rgba(148, 183, 219, 0.18);
+            background:
+                radial-gradient(ellipse at 92% 8%, rgba(21, 94, 239, 0.24), transparent 34%),
+                linear-gradient(135deg, #0b1d35, #102a43 66%, #132f4d);
+            box-shadow: 0 24px 60px rgba(16, 42, 67, 0.16);
+        }
+        .why::after {
+            position: absolute;
+            top: -105px;
+            right: -80px;
+            width: 260px;
+            height: 260px;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 50%;
+            box-shadow: 0 0 0 32px rgba(255,255,255,0.025), 0 0 0 64px rgba(255,255,255,0.02);
+            content: "";
+            pointer-events: none;
+        }
+        .why-heading { position: relative; z-index: 1; max-width: 700px; margin: 0 auto 30px; text-align: center; }
+        .why-kicker, .objectives-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            color: #ffad79;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .why h2 { margin: 0 0 9px; color: #fff; font-size: clamp(1.7rem, 3.5vw, 2.25rem); }
+        .why-heading p { max-width: 590px; margin: 0 auto; color: #bdcde0; font-size: 0.94rem; }
+        .why-grid { position: relative; z-index: 1; gap: 14px; }
+        .why-box {
+            padding: 23px 20px;
+            border: 1px solid rgba(255,255,255,0.11);
+            border-radius: 18px;
+            background: rgba(255,255,255,0.055);
+            text-align: left;
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        }
+        .why-box:hover { transform: translateY(-5px); border-color: rgba(255,173,121,0.55); background: rgba(255,255,255,0.09); }
+        .why-box i {
+            display: grid;
+            width: 43px;
+            height: 43px;
+            place-items: center;
+            margin: 0 0 17px;
+            border: 1px solid rgba(255,173,121,0.25);
+            border-radius: 14px;
+            background: rgba(240,120,50,0.12);
+            color: #ffad79;
+            font-size: 1.15rem;
+        }
+        .why-box h3 { margin-bottom: 8px; color: #fff; font-size: 1rem; }
+        .why-box p { color: #bdcde0; font-size: 0.85rem; line-height: 1.65; }
+        #objectifs { position: relative; }
+        .objectives-heading { max-width: 770px; margin: 0 auto 30px; text-align: center; }
+        .objectives-heading .section-title { margin-bottom: 8px; }
+        .objectives-heading .section-subtitle { margin-bottom: 0; }
+        .objectives-kicker { color: #155eef; }
+        #objectifs .content-box {
+            max-width: 1040px;
+            padding: clamp(22px, 4vw, 38px);
+            border-color: #e2eaf4;
+            border-radius: 24px;
+            box-shadow: 0 22px 55px rgba(16,42,67,0.08);
+        }
+        .objectives-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+        .objective-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            min-height: 118px;
+            padding: 19px;
+            border: 1px solid #e7edf5;
+            border-radius: 17px;
+            background: linear-gradient(145deg, #fff, #f8faff);
+        }
+        .objective-icon {
+            display: grid;
+            flex: 0 0 42px;
+            width: 42px;
+            height: 42px;
+            place-items: center;
+            border-radius: 13px;
+            background: #eff6ff;
+            color: #155eef;
+        }
+        .objective-item strong { display: block; margin: 1px 0 5px; color: #102a43; font-size: 0.92rem; line-height: 1.4; }
+        .objective-item p { margin: 0; color: #64748b; font-size: 0.82rem; line-height: 1.55; }
+        .objectives-result {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 15px 17px;
+            border-radius: 14px;
+            background: #eff6ff;
+            color: #334155;
+            font-size: 0.86rem;
+        }
+        .objectives-result i { margin-top: 4px; color: #155eef; }
+        .objectives-result strong { color: #102a43; }
+
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; min-height: auto; gap: 34px; padding-top: 160px; }
+            .hero-copy { max-width: 760px; }
+            .hero-visual { min-height: 320px; }
+            .cohort-feature { grid-template-columns: 1fr; }
+            .cohort-copy { order: 1; }
+            .cohort-poster { order: 2; width: min(100%, 620px); margin: 0 auto; }
+            .phase-grid { grid-template-columns: 1fr; }
+            .phase-card { padding: 20px; }
+        }
+        @media (max-width: 600px) {
+            .hero { padding: 145px 5% 60px; }
+            .hero h1 { font-size: clamp(3rem, 17vw, 4.5rem); }
+            .hero-badges { justify-content: flex-start; }
+            .hero .hero-actions { flex-direction: column; align-items: stretch; }
+            .hero .btn-primary, .hero .btn-secondary { width: 100%; text-align: center; }
+            .hero-visual { min-height: 260px; border-radius: 22px; }
+            .hero-visual img { top: 24px; left: 24px; }
+            .cohort-section { padding-top: 28px; padding-bottom: 34px; }
+            .cohort-feature { gap: 22px; padding: 20px; border-radius: 22px; }
+            .cohort-status { margin-bottom: 16px; }
+            .cohort-facts { grid-template-columns: 1fr; }
+            .cohort-dates { align-items: flex-start; }
+            .cohort-cta { width: 100%; text-align: center; }
+            .cohort-contact-links a { flex: 1 1 auto; justify-content: center; }
+            .cohort-poster { padding: 7px; border-radius: 17px; }
+            .cohort-poster img { border-radius: 11px; }
+            .cohort-poster-hint { right: 14px; bottom: 14px; }
+            .integrated-program { padding: 20px 16px; border-radius: 22px; }
+            .integrated-program-heading { align-items: flex-start; flex-direction: column; }
+            .program-enrollment { grid-template-columns: 1fr; padding: 20px; }
+            .program-enrollment .btn-primary { grid-column: auto; justify-self: stretch; text-align: center; }
+            .objectives-grid { grid-template-columns: 1fr; }
+            .objective-item { min-height: 0; padding: 16px; }
+            .why { margin-top: 38px; padding: 25px 18px; }
+            .why-box { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="https://manuel-honey001.github.io/CENTEC-GEO/" class="logo-container">
+        <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO" loading="lazy">
+        <div class="logo-text">
+            <h2>CENTEC GEO</h2>
+            <span>Centre National d'Étude en Territoire et Cartographie CI</span>
+        </div>
+    </a>
+    <nav class="desktop-nav" aria-label="Menu principal">
+        <a href="#accueil">Accueil</a>
+        <a href="#cohorte-2">Cohorte 2</a>
+        <a href="#modules">Parcours</a>
+        <a href="#objectifs">Compétences</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Ouvrir le menu" aria-controls="navOverlay" aria-expanded="false"><i class="fas fa-bars"></i></button>
+</header>
+
+<nav class="nav-overlay" id="navOverlay" aria-label="Menu principal">
+    <button class="close-menu" onclick="toggleMenu()" aria-label="Fermer le menu">
+        <i class="fas fa-times"></i>
+    </button>
+    <a href="#cohorte-2" onclick="toggleMenu()">DIGIMAP Cohorte 2</a>
+    <a href="#modules" onclick="toggleMenu()">Le parcours intégré</a>
+    <a href="#objectifs" onclick="toggleMenu()">Compétences visées</a>
+    <a href="#historique" onclick="toggleMenu()">Sessions précédentes</a>
+    <a href="#contact" onclick="toggleMenu()">Contacter CENTEC GEO</a>
+    <a href="index.html#formations" onclick="toggleMenu()">Toutes les formations</a>
+</nav>
+
+<section class="hero" id="accueil">
+        <div class="hero-copy">
+            <div class="hero-badges" data-aos="fade-down" data-aos-delay="100">
+                <span>Programme certifiant</span>
+                <span>Parcours intégré</span>
+                <span>Cartographie & SIG</span>
+            </div>
+            <h1 data-aos="fade-down">DIGI<span>MAP</span></h1>
+            <p class="hero-intro" data-aos="fade-up" data-aos-delay="200">Transformez les données géographiques en cartes, analyses et projets utiles. DIGIMAP vous accompagne dans une formation pratique qui réunit les compétences essentielles des SIG, du premier traitement au livrable professionnel.</p>
+            <div class="hero-price" data-aos="fade-up" data-aos-delay="300">
+                <i class="fas fa-tag" aria-hidden="true"></i>
+                Le programme complet <strong>150 000 FCFA</strong>
+            </div>
+            <div class="hero-actions" data-aos="fade-up" data-aos-delay="400">
+                <a href="#cohorte-2" class="btn-primary">Voir la cohorte en cours</a>
+                <a href="#modules" class="btn-secondary">Explorer les 3 phases</a>
+            </div>
+            <a href="Images/DIGIMAP PROGRAME.jpg" class="program-poster-link" target="_blank" rel="noopener">
+                <i class="fas fa-file-image" aria-hidden="true"></i>
+                Voir la présentation détaillée du programme
+            </a>
+        </div>
+        <div class="hero-visual" role="img" aria-label="Apprenants en formation DIGIMAP au CENTEC GEO">
+            <img src="logo/Digi Map.svg" alt="" aria-hidden="true">
+            <div class="hero-visual-caption">
+                <span>La géomatique, concrètement</span>
+                <strong>Comprendre le territoire. Produire des solutions.</strong>
+            </div>
+        </div>
+</section>
+
+<section class="section cohort-section" id="cohorte-2" aria-labelledby="cohort-title">
+    <div class="cohort-feature" data-aos="fade-up">
+        <div class="cohort-copy">
+            <span class="cohort-status">Session en cours</span>
+            <h2 id="cohort-title">DIGIMAP <span>2e cohorte</span></h2>
+            <p>La session a débuté le 10 octobre. Contactez le CENTEC GEO pour vérifier les modalités possibles d’intégration avant la fin des cours.</p>
+            <div class="cohort-dates">
+                <span class="cohort-dates-icon"><i class="fas fa-calendar-days" aria-hidden="true"></i></span>
+                <div>
+                    <span>Session du 10 octobre au</span>
+                    <strong>6 décembre 2026</strong>
+                </div>
+            </div>
+            <div class="cohort-facts" aria-label="Points forts de la formation selon l’affiche de la cohorte">
+                <div class="cohort-fact"><i class="fas fa-laptop-file" aria-hidden="true"></i><span>80 % de pratique et projets appliqués</span></div>
+                <div class="cohort-fact"><i class="fas fa-certificate" aria-hidden="true"></i><span>Certification professionnelle par niveau</span></div>
+            </div>
+            <div class="cohort-tools">
+                <span class="cohort-tools-label">Outils présentés dans le programme</span>
+                <div class="cohort-tools-list" aria-label="Outils du programme">
+                    <span>QGIS</span><span>ArcGIS</span><span>Google Earth Pro</span><span>PostGIS</span><span>Python</span><span>Leaflet</span>
+                </div>
+            </div>
+            <a class="cohort-cta" href="mailto:centrecartographie@gmail.com?subject=Informations%20sur%20DIGIMAP%20-%202e%20cohorte&body=Bonjour%2C%20je%20souhaite%20obtenir%20des%20informations%20sur%20la%202e%20cohorte%20DIGIMAP%20en%20cours%2C%20notamment%20sur%20les%20modalit%C3%A9s%20pour%20la%20rejoindre.%20Merci.">
+                Demander si je peux encore rejoindre la cohorte <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            <div class="cohort-contact-links" aria-label="Contacter CENTEC GEO">
+                <a href="tel:+2250713177415"><i class="fas fa-phone" aria-hidden="true"></i> Appeler le CENTEC GEO</a>
+                <a href="mailto:centrecartographie@gmail.com?subject=Question%20sur%20la%20DIGIMAP%202e%20cohorte"><i class="fas fa-envelope" aria-hidden="true"></i> Écrire un e-mail</a>
+            </div>
+        </div>
+        <a class="cohort-poster" href="Images/DIGIMAP tout savoir.jpg" target="_blank" rel="noopener" aria-label="Ouvrir l’affiche complète de DIGIMAP 2e cohorte">
+            <img src="Images/DIGIMAP tout savoir.jpg" alt="Affiche officielle du programme de certification DIGIMAP, deuxième cohorte : début des cours le 10 octobre et fin le 6 décembre 2026.">
+            <span class="cohort-poster-hint"><i class="fas fa-up-right-from-square" aria-hidden="true"></i> Agrandir l’affiche</span>
+        </a>
+    </div>
+</section>
+
+<section class="section" id="modules">
+        <div class="program-intro" data-aos="fade-up">
+            <h2 class="section-title">Un programme, trois phases complémentaires</h2>
+            <p class="section-subtitle">DIGIMAP est une seule formation complète. Ses trois phases sont travaillées conjointement : elles ne constituent ni trois formations séparées ni trois inscriptions.</p>
+        </div>
+
+        <div class="integrated-program" data-aos="fade-up">
+            <div class="integrated-program-heading">
+                <span><i class="fas fa-layer-group" aria-hidden="true"></i> Les trois dimensions de DIGIMAP</span>
+                <strong><i class="fas fa-link" aria-hidden="true"></i> Un seul parcours intégré</strong>
+            </div>
+            <div class="phase-grid">
+                <article class="phase-card">
+                    <div class="phase-card-top"><span class="phase-number">01</span><span class="phase-label">Fondamentaux</span></div>
+                    <h3>Comprendre et structurer</h3>
+                    <p>Découvrez les systèmes d’information géographique, les données spatiales et les bases de la cartographie numérique.</p>
+                    <ul><li>Notions SIG</li><li>QGIS</li><li>Données géographiques</li><li>Premières cartes</li></ul>
+                </article>
+                <article class="phase-card">
+                    <div class="phase-card-top"><span class="phase-number">02</span><span class="phase-label">Analyse spatiale</span></div>
+                    <h3>Analyser et représenter</h3>
+                    <p>Traitez et croisez les données pour répondre à des questions territoriales et produire des cartes thématiques.</p>
+                    <ul><li>Géotraitement</li><li>Analyse spatiale</li><li>Cartographie thématique</li><li>Données territoriales</li></ul>
+                </article>
+                <article class="phase-card">
+                    <div class="phase-card-top"><span class="phase-number">03</span><span class="phase-label">Expertise & projet</span></div>
+                    <h3>Concevoir des solutions</h3>
+                    <p>Mobilisez des méthodes avancées et développez des livrables adaptés à des projets géomatiques concrets.</p>
+                    <ul><li>Analyses avancées</li><li>Automatisation</li><li>Webmapping</li><li>Projet SIG</li></ul>
+                </article>
+            </div>
+            <p class="program-together"><i class="fas fa-circle-info" aria-hidden="true"></i><span>Ces phases se déroulent dans le même parcours et sont menées ensemble. Vous vous inscrivez une seule fois pour bénéficier de l’ensemble du programme.</span></p>
+            <div class="program-enrollment" id="inscription">
+                <div>
+                    <span class="program-enrollment-label">Une inscription · Le programme complet</span>
+                    <h3>Un tarif unique pour les trois phases</h3>
+                    <p>Accédez à l’ensemble du parcours DIGIMAP, de la découverte des SIG au projet géomatique.</p>
+                </div>
+                <div class="program-price">150 000 <span>FCFA</span></div>
+                <a href="mailto:centrecartographie@gmail.com?subject=Inscription%20au%20programme%20complet%20DIGIMAP&body=Bonjour%2C%20je%20souhaite%20m%E2%80%99inscrire%20au%20programme%20complet%20DIGIMAP%20au%20tarif%20unique%20de%20150%20000%20FCFA.%20Merci%20de%20me%20communiquer%20les%20prochaines%20%C3%A9tapes." class="btn-primary">Demander mon inscription <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+    <!-- POURQUOI CHOISIR -->
+    <div class="why" data-aos="fade-up">
+        <div class="why-heading">
+            <span class="why-kicker"><i class="fas fa-compass" aria-hidden="true"></i> Une formation tournée vers l’action</span>
+            <h2>Pourquoi choisir DIGIMAP ?</h2>
+            <p>Un programme pensé pour vous faire pratiquer la géomatique et transformer vos acquis en compétences mobilisables sur le terrain.</p>
+        </div>
+        <div class="why-grid">
+            <div class="why-box">
+                <i class="fas fa-laptop-file" aria-hidden="true"></i>
+                <h3>Apprendre en pratiquant</h3>
+                <p>Manipulez des données géographiques et réalisez des exercices de cartographie et d’analyse tout au long du parcours.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-route" aria-hidden="true"></i>
+                <h3>Un parcours cohérent</h3>
+                <p>Les fondamentaux, l’analyse spatiale et le projet avancé sont réunis dans une seule formation, sans inscription séparée par phase.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-map-location-dot" aria-hidden="true"></i>
+                <h3>Des compétences concrètes</h3>
+                <p>Produisez des cartes thématiques et mobilisez l’analyse spatiale pour mieux comprendre les territoires.</p>
+            </div>
+            <div class="why-box">
+                <i class="fas fa-people-group" aria-hidden="true"></i>
+                <h3>Un accompagnement humain</h3>
+                <p>Progressez avec l’encadrement du CENTEC GEO et échangez autour de projets et de situations géographiques réels.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="objectifs">
+    <div class="objectives-heading" data-aos="fade-up">
+        <span class="objectives-kicker"><i class="fas fa-bullseye" aria-hidden="true"></i> Ce que vous saurez faire</span>
+        <h2 class="section-title">Des compétences qui prennent forme</h2>
+        <p class="section-subtitle">À travers les trois phases intégrées de DIGIMAP, vous apprendrez à passer de la donnée géographique à un résultat clair et exploitable.</p>
+    </div>
+    <div class="content-box" data-aos="fade-up">
+        <div class="objectives-grid">
+            <article class="objective-item">
+                <span class="objective-icon"><i class="fas fa-database" aria-hidden="true"></i></span>
+                <div><strong>Organiser des données géographiques</strong><p>Comprendre les données spatiales, les structurer et les préparer dans un environnement SIG.</p></div>
+            </article>
+            <article class="objective-item">
+                <span class="objective-icon"><i class="fas fa-map" aria-hidden="true"></i></span>
+                <div><strong>Créer des cartes lisibles et utiles</strong><p>Représenter l’information territoriale avec des cartes thématiques adaptées à leur objectif.</p></div>
+            </article>
+            <article class="objective-item">
+                <span class="objective-icon"><i class="fas fa-chart-area" aria-hidden="true"></i></span>
+                <div><strong>Réaliser des analyses spatiales</strong><p>Explorer les relations entre les données et éclairer la compréhension d’une problématique territoriale.</p></div>
+            </article>
+            <article class="objective-item">
+                <span class="objective-icon"><i class="fas fa-diagram-project" aria-hidden="true"></i></span>
+                <div><strong>Contribuer à un projet géomatique</strong><p>Mobiliser les compétences acquises pour construire et présenter un livrable adapté à un besoin concret.</p></div>
+            </article>
+        </div>
+        <p class="objectives-result"><i class="fas fa-flag-checkered" aria-hidden="true"></i><span><strong>Votre objectif final :</strong> transformer des données géographiques en cartes, analyses et résultats compréhensibles pour appuyer un projet ou une décision.</span></p>
+    </div>
+</section>
+
+<section class="section session-history" id="historique">
+    <h2 class="section-title" data-aos="fade-up">Historique de nos formations</h2>
+    <p class="section-subtitle" data-aos="fade-up">Des sessions pratiques, des apprenants engagés et des résultats concrets sur le terrain.</p>
+
+    <div class="timeline-grid">
+        <article class="session-card" data-aos="fade-up">
+            <img class="session-photo" src="DIGIMAP/1.jpg" alt="Session DIGIMAP 2024">
+            <div class="session-content">
+                <span class="session-date">Février 2026</span>
+                <h3>Session 2026 - Module 1</h3>
+                <p>Première cohorte d'auditeurs sensibilisés aux fondamentaux du SIG, du QGIS et de la cartographie numérique.</p>
+            </div>
+        </article>
+
+        <article class="session-card" data-aos="fade-up" data-aos-delay="150">
+            <img class="session-photo" src="DIGIMAP/DIGIMAP 1.jpg" alt="Session DIGIMAP 2025">
+            <div class="session-content">
+                <span class="session-date">Juin 2025</span>
+                <h3>Session 2025 - Analyse spatiale</h3>
+                <p>Ateliers sur les géotraitements, la production de cartes thématiques et l’exploitation de données territoriales.</p>
+            </div>
+        </article>
+
+        <article class="session-card" data-aos="fade-up" data-aos-delay="300">
+            <img class="session-photo" src="DIGIMAP/11.jpg" alt="Session DIGIMAP 2026">
+            <div class="session-content">
+                <span class="session-date">Septembre 2026</span>
+                <h3>Session 2026 - Expertise</h3>
+                <p>Approfondissement des compétences en cartographie avancée, webmapping et gestion de projets géomatiques.</p>
+            </div>
+        </article>
+    </div>
+
+    <div class="gallery-strip" style="margin-top: 35px;" data-aos="fade-up">
+        <div class="gallery-item">
+            <img src="DIGIMAP/DIGIMAP 3.jpg" alt="Formation DIGIMAP 1">
+            <div class="gallery-caption">Atelier SIG</div>
+        </div>
+        <div class="gallery-item">
+            <img src="DIGIMAP/FB_IMG_1791141377971.jpg" alt="Formation DIGIMAP 2">
+            <div class="gallery-caption">Cartographie</div>
+        </div>
+        <div class="gallery-item">
+            <img src="DIGIMAP/FB_IMG_1791142579297.jpg" alt="Formation DIGIMAP 3">
+            <div class="gallery-caption">Analyse territoriale</div>
+        </div>
+        <div class="gallery-item">
+            <img src="DIGIMAP/FB_IMG_1791141365761.jpg" alt="Formation DIGIMAP 4">
+            <div class="gallery-caption">Projet final</div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">
+                <img src="CENTEC GEO LOGO.png" alt="Logo CENTEC GEO">
+                <div class="footer-brand-copy">
+                    <h2>CENTEC GEO</h2>
+                    <span>Centre National d’Étude en Territoire et Cartographie CI</span>
+                </div>
+            </div>
+            <p class="footer-description">L’expertise géospatiale de référence en Côte d'Ivoire. Formations et solutions en cartographie, SIG et télédétection.</p>
+            <a href="mailto:centrecartographie@gmail.com?subject=Inscription%20au%20programme%20DIGIMAP" class="btn-primary">Parler de mon inscription</a>
+        </div>
+        <div>
+            <h3>Contact</h3>
+            <ul class="contact-list">
+                <li><i class="fas fa-map-marker-alt"></i> Cocody 2 Plateaux, Abidjan</li>
+                <li><i class="fas fa-phone-alt"></i> <a href="tel:+2250713177415">+225 07 13 17 74 15</a></li>
+                <li><i class="fas fa-envelope"></i> <a href="mailto:centrecartographie@gmail.com">centrecartographie@gmail.com</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Écrivez-nous</h3>
+            <form class="footer-contact-form" action="mailto:centrecartographie@gmail.com" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Votre nom" autocomplete="name" aria-label="Votre nom" required>
+                <input type="email" name="email" placeholder="Votre e-mail" autocomplete="email" aria-label="Votre e-mail" required>
+                <textarea name="message" rows="4" placeholder="Votre message" aria-label="Votre message" required></textarea>
+                <button type="submit">Envoyer <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 CENTEC-GEO — CENTRE NATIONAL D'ÉTUDE EN TERRITOIRE ET CARTOGRAPHIE CI. Tous droits réservés.
+    </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    AOS.init({ duration: 1000, once: true });
+
+    function toggleMenu() {
+        const nav = document.getElementById('navOverlay');
+        const button = document.querySelector('.menu-btn');
+        if (!nav || !button) return;
+        const isOpen = nav.classList.toggle('active');
+        button.setAttribute('aria-expanded', String(isOpen));
+        button.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    }
+    window.toggleMenu = toggleMenu;
+
+    // ===== OUTSIDE CLICK MENU =====
+    document.addEventListener('click', (e) => {
+        const nav = document.getElementById('navOverlay');
+        const btn = document.querySelector('.menu-btn');
+        if (!nav || !btn) return;
+        if (!nav.contains(e.target) && !btn.contains(e.target)) {
+            nav.classList.remove('active');
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Ouvrir le menu');
+        }
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            const nav = document.getElementById('navOverlay');
+            if (nav && nav.classList.contains('active')) toggleMenu();
+        }
+    });
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (!target) return;
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    });
+});
+</script>
+
+</body>
+</html>
