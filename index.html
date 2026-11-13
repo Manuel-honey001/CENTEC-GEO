@@ -652,6 +652,16 @@
             font-size: 0.7rem;
             line-height: 1.35;
         }
+        .training-cost {
+            display: flex;
+            align-items: baseline;
+            gap: 7px;
+            margin: 0 0 16px;
+            color: #cbd5e1;
+            font-size: 0.78rem;
+        }
+        .training-cost i { color: var(--training-accent); }
+        .training-cost strong { color: #fff; font-size: 0.95rem; }
         .training-card-cta {
             display: inline-flex;
             align-items: center;
@@ -933,11 +943,25 @@
             position: relative;
             isolation: isolate;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             min-height: min(900px, 100svh);
+            padding: 125px 6% 60px;
             background-image:
-                linear-gradient(115deg, rgba(7, 11, 20, 0.9), rgba(7, 11, 20, 0.55) 58%, rgba(7, 11, 20, 0.78)),
-                url('TELESENSE-PRO/FB_IMG_1791142573142.jpg');
-            background-position: center;
+                linear-gradient(115deg, rgba(7, 11, 20, 0.9), rgba(7, 11, 20, 0.84) 58%, rgba(7, 11, 20, 0.88)),
+                url('Images/CENTEC Aff.jpg');
+            background-position: center, center 42%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: min(900px, 100%);
+            padding: clamp(24px, 4vw, 42px) 0;
+            text-shadow: 0 3px 20px rgba(0, 0, 0, 0.9);
         }
         .hero::after {
             content: "";
@@ -998,6 +1022,10 @@
             max-width: 760px;
             margin: 0 auto 34px;
             text-align: center;
+        }
+        @media (max-width: 600px) {
+            .hero { background-position: center, 62% center; padding-inline: 5%; }
+            .hero-content { padding: 22px 0; }
         }
         .section-heading .section-subtitle { margin-bottom: 0; }
         .service-filters {
@@ -1369,6 +1397,7 @@
 </nav>
 
 <section class="hero" id="accueil">
+    <div class="hero-content">
     <span class="hero-kicker" data-aos="fade-down"><i class="fas fa-location-dot" aria-hidden="true"></i> Géomatique · Formation · Innovation</span>
     <h1 data-aos="fade-down" data-aos-duration="1200">CENTEC GEO</h1>
     <p data-aos="fade-up" data-aos-delay="400">Maîtriser la géomatique pour mieux comprendre et gérer les territoires</p>
@@ -1380,6 +1409,7 @@
         <span><i class="fas fa-map" aria-hidden="true"></i>SIG & cartographie</span>
         <span><i class="fas fa-satellite" aria-hidden="true"></i>Télédétection</span>
         <span><i class="fas fa-drone" aria-hidden="true"></i>Expertise terrain</span>
+    </div>
     </div>
 </section>
 
@@ -1582,12 +1612,13 @@
             </div>
             <div class="training-card-body">
                 <h3>DIGIMAP</h3>
-                <p class="training-card-description">Progressez des fondamentaux de QGIS à l’analyse spatiale et à la réalisation de projets SIG professionnels.</p>
-                <p class="training-outcome"><i class="fas fa-bullseye" aria-hidden="true"></i><span>Votre objectif : produire des cartes thématiques et piloter des projets géomatiques.</span></p>
+                <p class="training-card-description">Progressez des fondamentaux de QGIS à l'analyse spatiale et à la réalisation de projets SIG professionnels.</p>
+                <p class="training-outcome"><i class="fas fa-bullseye" aria-hidden="true"></i><span>Votre objectif : produire des cartes thématiques et piloter des projets en géomatique.</span></p>
                 <ul class="training-tags" aria-label="Compétences et outils">
                     <li>QGIS</li><li>Géotraitement</li><li>Analyse spatiale</li><li>Webmapping</li>
                 </ul>
-                <span class="training-card-cta">Explorer les 3 niveaux <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                <p class="training-cost"><i class="fas fa-tag" aria-hidden="true"></i> Coût de la formation : <strong>150 000 FCFA</strong></p>
+                <span class="training-card-cta">Explorer le programme complet <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
             </div>
         </a>
         <a href="telesence-pro.html" class="training-card training-card--telesense" data-aos="fade-up" data-aos-delay="100" aria-label="Découvrir la formation TeleSense Pro">
@@ -1598,12 +1629,13 @@
             </div>
             <div class="training-card-body">
                 <h3>TeleSense Pro</h3>
-                <p class="training-card-description">Apprenez à exploiter des images optiques et radar, de Sentinel et Landsat jusqu’aux cartes d’aide à la décision.</p>
+                <p class="training-card-description">Apprenez à exploiter des images optiques et radar, de Sentinel et Landsat jusqu'aux cartes d'aide à la décision.</p>
                 <p class="training-outcome"><i class="fas fa-bullseye" aria-hidden="true"></i><span>Votre objectif : analyser les changements du territoire et automatiser vos traitements.</span></p>
                 <ul class="training-tags" aria-label="Compétences et outils">
                     <li>Google Earth Engine</li><li>NDVI / NDWI</li><li>ENVI</li><li>SNAP</li><li>Python</li>
                 </ul>
-                <span class="training-card-cta">Explorer les 3 niveaux <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                <p class="training-cost"><i class="fas fa-tag" aria-hidden="true"></i> Coût de la formation : <strong>150 000 FCFA</strong></p>
+                <span class="training-card-cta">Explorer le programme complet <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
             </div>
         </a>
         <a href="E-enqueteur.html" class="training-card training-card--enqueteur" data-aos="fade-up" aria-label="Découvrir la formation E-Enquêteur">
@@ -1619,6 +1651,7 @@
                 <ul class="training-tags" aria-label="Compétences et outils">
                     <li>KoboToolbox</li><li>OSMTracker</li><li>QField</li><li>QGIS</li><li>SPSS</li>
                 </ul>
+                <p class="training-cost"><i class="fas fa-tag" aria-hidden="true"></i> Coût de la formation : <strong>70 000 F</strong></p>
                 <span class="training-card-cta">Voir le contenu de la formation <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
             </div>
         </a>
@@ -1735,7 +1768,7 @@
             <div class="news-track" id="newsTrack" aria-live="off">
                 <article class="news-card" role="group" aria-roledescription="diapositive" aria-label="1 sur 2">
                     <div class="news-video-wrapper">
-                        <video class="news-video" controls playsinline poster="Images/image graduation.jpg">
+                        <video class="news-video" controls playsinline webkit-playsinline preload="metadata" poster="Images/image graduation.jpg">
                             <source src="VIDEO/Video graduation.mp4" type="video/mp4">
                             Votre navigateur ne supporte pas la lecture vidéo.
                         </video>
@@ -1749,7 +1782,7 @@
                 </article>
                 <article class="news-card" role="group" aria-roledescription="diapositive" aria-label="2 sur 2" aria-hidden="true" inert>
                     <div class="news-video-wrapper">
-                        <video class="news-video" controls playsinline poster="Images/Image fig.jpg">
+                        <video class="news-video" controls playsinline webkit-playsinline preload="metadata" poster="Images/Image fig.jpg">
                             <source src="VIDEO/FIG-2026.mp4" type="video/mp4">
                             Votre navigateur ne supporte pas la lecture vidéo.
                         </video>
@@ -1786,7 +1819,7 @@
             </div>
             <div class="team-member" data-aos="fade-up" data-aos-delay="200">
                 <img src="Images/Elieze 1.jpg" alt="Eliezer Kouacou" class="member-img" loading="lazy">
-                <div class="team-member-name">KOUACOU NIANGORAN ELIEZER</div>
+                <div class="team-member-name">KOUACOU GNANGORAN ELIEZER</div>
                 <div class="team-member-job"><span>Directeur Adjoint<br>Directeur des opérations - CENTEC GEO</span></div>
                 <p class="team-member-expertise"><strong>Domaines d’expertise</strong>SIG · Télédétection · Analyse spatiale · Gestion des opérations · Production de données géographiques</p>
             </div>
@@ -2099,7 +2132,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (newsCarousel && newsTrack) {
         const newsSlides = Array.from(newsTrack.querySelectorAll('.news-card'));
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const supportsNewsAutoAdvance = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         let newsIndex = 0;
+        let newsRotationPaused = false;
 
         function showNews(index) {
             const previousSlide = newsSlides[newsIndex];
@@ -2137,10 +2172,16 @@ document.addEventListener("DOMContentLoaded", function () {
             showNews(newsIndex + direction);
         });
 
-        if (!reducedMotion.matches && newsSlides.length > 1) {
+        newsCarousel.addEventListener('pointerdown', () => {
+            newsRotationPaused = true;
+        }, { passive: true });
+        newsCarousel.addEventListener('focusin', () => {
+            newsRotationPaused = true;
+        });
+
+        if (!reducedMotion.matches && supportsNewsAutoAdvance && newsSlides.length > 1) {
             window.setInterval(() => {
-                const isPaused = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-                    && newsCarousel.matches(':hover');
+                const isPaused = newsRotationPaused || newsCarousel.matches(':hover');
                 const isVideoPlaying = newsSlides.some(slide => {
                     const video = slide.querySelector('video');
                     return video && !video.paused && !video.ended;
